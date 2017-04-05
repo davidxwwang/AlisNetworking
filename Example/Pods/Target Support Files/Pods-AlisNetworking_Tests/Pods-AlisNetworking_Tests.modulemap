@@ -1,0 +1,6 @@
+framework module Pods_AlisNetworking_Tests {
+  umbrella header "Pods-AlisNetworking_Tests-umbrella.h"
+
+  export *
+  module * { export * }
+}
