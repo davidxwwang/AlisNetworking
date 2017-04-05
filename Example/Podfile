@@ -1,0 +1,14 @@
+use_frameworks!
+
+target 'AlisNetworking_Example' do
+  pod 'AlisNetworking', :path => '../'
+
+  target 'AlisNetworking_Tests' do
+    inherit! :search_paths
+
+    pod 'Specta'
+  pod 'Expecta'
+  pod 'FBSnapshotTestCase'
+  pod 'Expecta+Snapshots'
+  end
+end
