@@ -9,7 +9,4 @@
 @import UIKit;
 
 @interface AlisViewController : UIViewController
-
-@property(copy,nonatomic)NSString *currentRequest;
-
 @end

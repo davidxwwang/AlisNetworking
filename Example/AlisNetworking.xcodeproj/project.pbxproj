@@ -62,11 +62,11 @@
 		6D910EC23740F49F4C3992D5 /* Pods-AlisNetworking_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AlisNetworking_Example.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AlisNetworking_Example/Pods-AlisNetworking_Example.debug.xcconfig"; sourceTree = "<group>"; };
 		71719F9E1E33DC2100824A3D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		873B8AEA1B1F5CCA007FD442 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Main.storyboard; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		8BBADF24540747FE87605ACC /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
+		8BBADF24540747FE87605ACC /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
 		92EE325FD3B508223DB6EBDA /* Pods-AlisNetworking_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AlisNetworking_Example.release.xcconfig"; path = "Pods/Target Support Files/Pods-AlisNetworking_Example/Pods-AlisNetworking_Example.release.xcconfig"; sourceTree = "<group>"; };
-		A6F78954D46747709632C455 /* AlisNetworking.podspec */ = {isa = PBXFileReference; includeInIndex = 1; name = AlisNetworking.podspec; path = ../AlisNetworking.podspec; sourceTree = "<group>"; };
+		A6F78954D46747709632C455 /* AlisNetworking.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = AlisNetworking.podspec; path = ../AlisNetworking.podspec; sourceTree = "<group>"; };
 		D6420C92B381742B65BFA68E /* Pods-AlisNetworking_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AlisNetworking_Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-AlisNetworking_Tests/Pods-AlisNetworking_Tests.release.xcconfig"; sourceTree = "<group>"; };
-		F920202A7224C55D67D9C8D7 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; name = README.md; path = ../README.md; sourceTree = "<group>"; };
+		F920202A7224C55D67D9C8D7 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */

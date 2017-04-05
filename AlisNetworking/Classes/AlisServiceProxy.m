@@ -10,6 +10,7 @@
 #import <objc/runtime.h>
 #import "AlisRequestManager.h"
 #import "service.h"
+#import "NSString+help.h"
 
 //  首先查找订阅的服务（网络接口）
 //对资源的操作包括：
@@ -124,7 +125,7 @@ void requestContainer(id self, SEL _cmd) {
             float progress = (float)(receivedSize)/expectedSize;
             NSLog(@"下载／上传进度---->%f",progress);
             if ([request.context.makeRequestClass respondsToSelector:@selector(handlerServiceResponse:serviceName:progress:)]) {
-                [request.context.makeRequestClass handlerServiceResponse:request serviceName:[weakSelf toLocalServiceName:request.serviceName] progress:progress];
+                [request.context.makeRequestClass handlerServiceResponse:request serviceName:[request.serviceName toLocalServiceName] progress:progress];
             }
         };
     }
@@ -165,7 +166,7 @@ void requestContainer(id self, SEL _cmd) {
     return nil;
 }
 
-- (NSDictionary *)additionalInfo{
+- (NSDictionary *)additionalInfo:(NSString *)serviceName{
     return nil;
 }
 
@@ -185,7 +186,7 @@ void requestContainer(id self, SEL _cmd) {
     return AlisHTTPMethodGET;
 }
 
-- (AlisRequestType)requestType{
+- (AlisRequestType)requestType:(NSString *)serviceName{
     return AlisRequestNormal;
 }
 
@@ -217,19 +218,6 @@ void requestContainer(id self, SEL _cmd) {
     NSString *value = agentServiceActionKeys[type];
     return value;
     
-}
-/**
- 全局serviceName变为local的serviceName 
- @param globalServiceName 全局serviceName
- @return local的serviceName
- */
-- (NSString *)toLocalServiceName:(NSString *)globalServiceName{
-    if (globalServiceName == nil) return nil;
-    NSArray *serviceArray = [globalServiceName componentsSeparatedByString:@"_"];
-    if (serviceArray.count == 2) {
-        return serviceArray[1];
-    }
-    return nil;
 }
 
 #pragma mark --

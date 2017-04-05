@@ -80,27 +80,6 @@
     }
 }
 
-- (void)startRequestModel:(id<AlisRequestProtocol>)requestModel{
-    // if (![self canRequest:requestModel]) return;
-    //request 请求的回调都在该类中
-    ServiceAction serviceAction = requestModel.currentService.serviceAction;
-    if (serviceAction == Resume) {
-        [self start_Request:^(AlisRequest *request) {
-            request.bindRequestModel = requestModel; //绑定业务层对应的requestModel
-            request.serviceName = requestModel.currentService.serviceName;
-            [self prepareRequest:request requestModel:requestModel];
-            //如果是同步请求
-            if (self.config.enableSync) {
-                dispatch_semaphore_wait(_semaphore, DISPATCH_TIME_FOREVER);
-            }
-            
-        }];
-    }
-    else if (serviceAction == Cancel){
-        [self cancelRequestByIdentifier:requestModel.currentService.serviceName];
-    }
-}
-
 - (void)startRequestModel:(id<AlisRequestProtocol>)requestModel service:(Service *)service{
     // if (![self canRequest:requestModel]) return;
     //request 请求的回调都在该类中
@@ -154,79 +133,6 @@
 - (void)prepareRequest:(AlisRequest *)request requestModel:(id<AlisRequestProtocol>)requestModel service:(Service *)service{
     [self adapteAlisRequest:request requestModel:requestModel service:service];
 }
-
-//访问网络前的最后准备，准备好请求地址，头head，参数parameters，body，url，回调方法等等
-- (void)prepareRequest:(AlisRequest *)request requestModel:(id<AlisRequestProtocol>)requestModel{
-    
-    // NSAssert([requestModel respondsToSelector:@selector(api)], @"request API should not nil");
-    
-    if ([requestModel respondsToSelector:@selector(requestType)]) {
-        request.requestType = [requestModel requestType];
-    }
-    
-    if ([requestModel respondsToSelector:@selector(httpMethod)]) {
-        request.httpMethod = [requestModel httpMethod];
-    }
-    
-    NSString *urlString = nil;//[NSMutableString string];
-    if (request.server) {
-        if ([requestModel respondsToSelector:@selector(api)]) {
-            urlString = [NSString stringWithFormat:@"%@%@",request.server,[requestModel api]];
-        }
-    }else if (request.useGeneralServer == YES){
-        if ([requestModel respondsToSelector:@selector(api)]) {
-            urlString = [NSString stringWithFormat:@"%@%@",_config.generalServer,[requestModel api]];
-        }
-    }else if(request.url){
-        urlString = request.url;
-    }
-    
-    NSAssert(urlString, @"url should not nil");
-    request.url = urlString;//[requestModel url];
-    
-    NSMutableDictionary *header = [NSMutableDictionary dictionary];
-    NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
-    
-    
-    if ([requestModel respondsToSelector:@selector(requestHead)]) {
-        [header addEntriesFromDictionary:[requestModel requestHead]];
-    }
-    if (request.useGeneralHeaders) {
-        [header addEntriesFromDictionary:self.config.generalHeader];
-    }
-    
-    
-    if ([requestModel respondsToSelector:@selector(requestParams)]) {
-        [parameters addEntriesFromDictionary:[requestModel requestParams]];
-    }
-    if (request.useGeneralParameters) {
-        [parameters addEntriesFromDictionary:self.config.generalParamters];
-    }
-    
-    request.header = header;
-    request.parameters = parameters;
-    
-    //请求的回调
-    request.finishBlock = ^(AlisRequest *request ,AlisResponse *response ,AlisError *error){
-        if(self.config.enableSync){
-            dispatch_semaphore_signal(_semaphore);
-        }
-        //各个业务层的回调
-        if (error) {
-            [self failureWithError:error withRequest:request];
-        }
-        else{
-            [self successWithResponse:response withRequest:request];
-        }
-    };
-    
-    __weak typeof (request) weakRequest = request;
-    request.progressBlock = ^(AlisRequest *request,long long receivedSize, long long expectedSize){
-        //各个业务层的回调
-        weakRequest.bindRequestModel.businessLayer_requestProgressBlock(request,receivedSize,expectedSize);
-    };
-}
-
 
 - (void)failureWithError:(AlisError *)error withRequest:(AlisRequest *)request{
     __weak typeof (request) weakRequest = request;

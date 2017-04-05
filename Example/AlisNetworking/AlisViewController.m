@@ -23,7 +23,6 @@ static NSString *testApi = @"/1442142801331138639111.mp4";
     [super viewDidLoad];
     [[AlisServiceProxy shareManager] injectService:self];
     [[AlisPluginManager manager]registerALLPlugins];
-    _currentRequest = @"uploadData";
     [[AlisRequestManager sharedManager] setupConfig:^(AlisRequestConfig *config) {
         config.generalServer = testServer;
         config.callBackQueue = dispatch_queue_create("david", DISPATCH_QUEUE_CONCURRENT);
@@ -83,49 +82,47 @@ static NSString *testApi = @"/1442142801331138639111.mp4";
     }]; 
 }
 
-
-
 #pragma mark -- http 
-- (AlisRequestType)requestType{
-    if (ServiceEqual(_currentRequest, @"AskDemo")) {
-        return AlisRequestUpload;
+- (AlisRequestType)requestType:(NSString *)serviceName{
+    if (ServiceEqual(serviceName, @"AskDemo")) {
+        return AlisRequestNormal;
     }
-    return AlisRequestUpload;
+    return AlisRequestNormal;
 }
 
-- (NSString *)server{
-    if (ServiceEqual(_currentRequest, @"AskDemo")) {
+- (NSString *)server:(NSString *)serviceName{
+    if (ServiceEqual(serviceName, @"AskDemo")) {
         return @"https://httpbin.org";
     }
     return nil;
 }
 
-- (NSString *)api{
-    if (ServiceEqual(_currentRequest, @"AskDemo")) {
+- (NSString *)api:(NSString *)serviceName{
+    if (ServiceEqual(serviceName, @"AskDemo")) {
         return @"/get";
     }
     
     return nil;
 }
 
-- (NSDictionary *)requestParams{
-    if (ServiceEqual(_currentRequest, @"AskDemo")) {
+- (NSDictionary *)requestParams:(NSString *)serviceName{
+    if (ServiceEqual(serviceName, @"AskDemo")) {
         return @{@"method": @"get"};
     }
     return nil;
 }
 
-- (NSData *)uploadData{
+- (NSData *)uploadData:(NSString *)serviceName{
     NSData *data = [@"testdata" dataUsingEncoding:NSUTF8StringEncoding];
     return data;
 }
 
-- (NSString *)fileURL{
-    if (ServiceEqual(_currentRequest, @"AskDemo")) {
+- (NSString *)fileURL:(NSString *)serviceName{
+    if (ServiceEqual(serviceName, @"AskDemo")) {
         NSString *path = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)[0];
         NSString *realPath = [NSString stringWithFormat:@"%@%@",path,@"/demo.mp4"];
         return realPath;
-    }else if (ServiceEqual(_currentRequest, @"uploadData")) {
+    }else if (ServiceEqual(serviceName, @"uploadData")) {
         NSString *path = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)[0];
         NSString *realPath = [NSString stringWithFormat:@"%@%@",path,@"/demo.mp4"];
         NSString *__path = [NSString stringWithFormat:@"%@%@",@"file://localhost/",realPath];
@@ -135,19 +132,19 @@ static NSString *testApi = @"/1442142801331138639111.mp4";
 }
 
 //附加消息
-- (NSDictionary *)additionalInfo{
+- (NSDictionary *)additionalInfo:(NSString *)serviceName{
     return nil;
 }
 
 - (void)handlerServiceResponse:(AlisRequest *)request serviceName:(NSString *)serviceName response:(AlisResponse *)response{
-    if (ServiceEqual(_currentRequest, @"AskDemo")) {
+    if (ServiceEqual(serviceName, @"AskDemo")) {
     }
     
     NSLog(@"%@ back",serviceName);
 }
 
 - (void)handlerServiceResponse:(AlisRequest *)request serviceName:(NSString *)serviceName progress:(float)progress{
-    if (ServiceEqual(_currentRequest, @"AskDemo")) {
+    if (ServiceEqual(serviceName, @"AskDemo")) {
     }
     
     NSLog(@"%@ back",serviceName);
