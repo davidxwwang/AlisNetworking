@@ -32,6 +32,8 @@
         return Resume;
     }else if ([yy isEqualToString:@"cancel"]) {
         return Cancel;
+    }else if ([yy isEqualToString:@"suspend"]) {
+        return Suspend;
     }
     
     return Resume;

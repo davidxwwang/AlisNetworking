@@ -11,7 +11,7 @@
 			<key>protocol</key>
 			<string>http</string>
 			<key>api</key>
-			<string>asa</string>
+			<string>/1442142801331138639111.mp4</string>
 		</dict>
 		<key>AskDemo</key>
 		<dict>
@@ -19,17 +19,17 @@
 			<string>get</string>
 			<key>protocol</key>
 			<string>HTTP</string>
-			<key>New item</key>
-			<string></string>
 		</dict>
-		<key>AskName</key>
+		<key>AskCitieslist</key>
 		<dict>
 			<key>httpMethod</key>
 			<string>GET</string>
 			<key>protocol</key>
 			<string>HTTP</string>
 			<key>api</key>
-			<string>/1442142801331138639111.mp4</string>
+			<string>/v4/gym/citieslist</string>
+			<key>server</key>
+			<string>https://api-testesports.alisports.com</string>
 		</dict>
 	</dict>
 	<key>VCService3</key>

@@ -33,7 +33,10 @@ typedef void(^AlisRequestProgressRequest)(AlisRequest *request ,long long receiv
 
 
 //定义了一种服务
-@property(copy,nonatomic)Service *currentService;
+//@property(copy,nonatomic)Service *currentService;
+//当前服务的容器，成员是字典，key 为服务的全局名称，value为发出服务请求的类（类型为“Service”）
+@property(strong,nonatomic)NSMutableDictionary *currentServeContainer;
+
 
 //可以提供服务的项目
 @property(strong,nonatomic)NSDictionary *candidateServices;

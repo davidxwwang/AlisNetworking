@@ -14,8 +14,8 @@
 
 @interface AlisRequestManager : NSObject
 
-+ (AlisRequestManager *)sharedManager;
-+ (AlisRequestManager *)manager;
++ (AlisRequestManager * _Nonnull)sharedManager;
++ (AlisRequestManager * _Nonnull)manager;
 
 /**
  HTTPS 网站集合
@@ -27,15 +27,15 @@
  */
 @property(strong,nonatomic)NSMutableArray *certSet;
 
-//所有请求的数组，元素为alirequest，请求发出，加入数组；请求结束，取消从数组中删掉；请求暂停不删除
+//所有请求的数组，元素为Alirequest，请求发出，加入数组；请求结束，取消从数组中删掉；请求暂停不删除
 @property(strong,nonatomic,nullable)NSMutableDictionary *requestSet;
 
 @property(strong,nonatomic,nullable)AlisRequestContext *requestContext;
 
-@property(strong,nonatomic)dispatch_semaphore_t semaphore;
+@property(strong,nonatomic)dispatch_semaphore_t _Nonnull semaphore;
 
-- (void)startRequest:(AlisRequest *)request;
-- (void)startRequestModel:(id<AlisRequestProtocol>)requestModel;
+- (void)startRequest:(AlisRequest * _Nonnull)request;
+- (void)startRequestModel:(id<AlisRequestProtocol> _Nonnull)requestModel;
 
 /**
  发出请求
@@ -45,16 +45,16 @@
  */
 - (void)startRequestModel:(id<AlisRequestProtocol> _Nonnull)requestModel service:(Service * _Nonnull)service;
 
-- (void)cancelRequest:(AlisRequest *)request;
+- (void)cancelRequest:(AlisRequest * _Nonnull)request;
 
 //注意：
-- (void)cancel_Request:( id<AlisRequestProtocol>)request;
-- (void)cancelRequestByIdentifier:(NSString *)requestIdentifier;
-- (void)cancelRequestwithServiceName:(NSString *)requestIdentifier;
+- (void)cancel_Request:( id<AlisRequestProtocol> _Nonnull)request;
+- (void)cancelRequestByIdentifier:(NSString * _Nonnull)requestIdentifier;
+- (void)cancelRequestwithServiceName:(NSString * _Nonnull)requestIdentifier;
 
 //设置请求的公有属性，server，head等
 @property(strong,nonatomic,nullable)AlisRequestConfig *config;
-- (void)setupConfig:(void(^)(AlisRequestConfig *config)) block;
+- (void)setupConfig:(void(^)(AlisRequestConfig * _Nullable config)) block;
 
 /*
  在这里提供了两个请求的方法，建议用第二个，因为这样使得用户层和网络协议层隔离了，用户层完全感觉不到
@@ -65,8 +65,8 @@
  所有AlisRequest的回调（成功）都在AlisRequestManager中，再在AlisRequestManager中向用户层发回调。
  */
 
-- (void)failureWithError:(AlisError *)error withRequest:(AlisRequest *)request;
-- (void)successWithResponse:(AlisResponse *)response withRequest:(AlisRequest *)request;
+- (void)failureWithError:(AlisError * _Nullable)error withRequest:(AlisRequest *)request;
+- (void)successWithResponse:(AlisResponse * _Nullable)response withRequest:(AlisRequest * _Nullable)request;
 
 - (void)sendChainRequest:
 (AlisChainRConfigBlock)chainRequestConfigBlock
@@ -76,13 +76,8 @@
 
 @end
 
-
-
-#pragma mark - XMChainRequest
-
-
 /**
- V1版 把所有结果都返回，不要管太多
+ V1版 把所有结果都返回，暂时不要管太多
  */
 @interface AlisChainRequest : NSObject
 

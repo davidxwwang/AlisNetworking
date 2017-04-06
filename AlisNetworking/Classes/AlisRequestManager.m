@@ -98,9 +98,15 @@
     else if (serviceAction == Cancel){
         [self cancelRequestByIdentifier:service.serviceName];
     }
+    else if (serviceAction == Suspend){
+        [self suspendRequestByIdentifier:service.serviceName];
+    }
 }
 
 - (void)start_Request:(AlisRequestConfigBlock)requestConfigBlock{
+    
+    NSArray *xx =  self.requestSet;
+    //[request.bindRequestModel.currentServeContainer removeObjectForKey:serviceName];
     AlisRequest *request = [[AlisRequest alloc]init];
     requestConfigBlock(request);
     [self startRequest:request];
@@ -117,16 +123,42 @@
     if (request == nil)  return;
     if(request.bindRequest){
         [request.bindRequest cancel];
-        [self.requestSet removeObjectForKey:request.bindRequestModel.currentService.serviceName];
+        NSString *serviceName = request.serviceName;
+        if (serviceName) {
+            [self.requestSet removeObjectForKey:serviceName];
+            [request.bindRequestModel.currentServeContainer removeObjectForKey:serviceName];
+        }
     }    
 }
 
 - (void)cancelRequestByIdentifier:(NSString *)requestIdentifier{
     if (requestIdentifier == nil)  return;
     AlisRequest *request = _requestSet[requestIdentifier];
+    
     [self cancelRequest:request];
     
 }
+
+- (void)suspendRequest:(AlisRequest *)request{
+    if (request == nil)  return;
+    if(request.bindRequest){
+        [request.bindRequest suspend];
+//        NSString *serviceName = request.serviceName;
+//        if (serviceName) {
+//            [self.requestSet removeObjectForKey:serviceName];
+//            [request.bindRequestModel.currentServeContainer removeObjectForKey:serviceName];
+//        }
+    }    
+}
+
+- (void)suspendRequestByIdentifier:(NSString *)requestIdentifier{
+    if (requestIdentifier == nil)  return;
+    AlisRequest *request = _requestSet[requestIdentifier];
+    
+    [self suspendRequest:request];
+    
+}
+
 
 #pragma mark ---
 //访问网络前的最后准备，准备好请求地址，头head，参数parameters，body，url，回调方法等等
@@ -145,10 +177,11 @@
         weakRequest.bindRequestModel.businessLayer_requestFinishBlock(request,nil,error);
     }
     
-    if (request.retryCount > 0 ) {
-        request.retryCount --;
-        [self startRequest:request];
-    }
+    //重试次数，这个需要商榷，如果是主动取消的，就没有必要重试了，应该根据错误类型区别对待
+//    if (request.retryCount > 0 ) {
+//        request.retryCount --;
+//        [self startRequest:request];
+//    }
     
 }
 
@@ -166,7 +199,11 @@
     
     // [self clearBlocks:request];
     //请求成功，删除请求
-    [self.requestSet removeObjectForKey:request.bindRequestModel.currentService.serviceName];
+    NSString *serviceName = request.serviceName;
+    if (serviceName) {
+        [self.requestSet removeObjectForKey:serviceName];
+        [request.bindRequestModel.currentServeContainer removeObjectForKey:serviceName];
+    }
 }
 
 - (void)clearBlocks:(AlisRequest *)request{

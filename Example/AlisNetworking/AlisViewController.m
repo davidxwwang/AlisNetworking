@@ -31,7 +31,7 @@ static NSString *testApi = @"/1442142801331138639111.mp4";
         
     }];
     
-    //resumeService1(@"uploadData");
+   
     
     UIButton *button = [[UIButton alloc]initWithFrame:CGRectMake(0, 100, 100, 50)];
     [button setTitle:@"链式请求" forState:UIControlStateNormal];
@@ -39,15 +39,28 @@ static NSString *testApi = @"/1442142801331138639111.mp4";
     [self.view addSubview:button];
     [button addTarget:self action:@selector(chainRequest) forControlEvents:UIControlEventTouchUpInside];
     
-    UIButton *button2 = [[UIButton alloc]initWithFrame:CGRectMake(100, 200, 50, 50)];
+    UIButton *button2 = [[UIButton alloc]initWithFrame:CGRectMake(100, 200, 100, 50)];
     [button2 setTitle:@"一般请求" forState:UIControlStateNormal];
     button2.backgroundColor = [UIColor redColor];
     [self.view addSubview:button2];
     [button2 addTarget:self action:@selector(normalRequest) forControlEvents:UIControlEventTouchUpInside];
+    
+    UIButton *button3 = [[UIButton alloc]initWithFrame:CGRectMake(200, 200, 100, 50)];
+    [button3 setTitle:@"取消一般请求" forState:UIControlStateNormal];
+    button3.backgroundColor = [UIColor redColor];
+    [self.view addSubview:button3];
+    [button3 addTarget:self action:@selector(cancelNormalRequest) forControlEvents:UIControlEventTouchUpInside];
+
 }
 
 - (void)normalRequest{
-    resumeService(@"AskDemo");
+   // resumeService(@"AskDemo");
+    //resumeService(@"AskCitieslist");
+     resumeService(@"uploadData");
+}
+
+- (void)cancelNormalRequest{
+    suspendService(@"uploadData");
 }
 
 - (void)chainRequest{
@@ -87,36 +100,38 @@ static NSString *testApi = @"/1442142801331138639111.mp4";
     if (ServiceEqual(serviceName, @"AskDemo")) {
         return AlisRequestNormal;
     }
-    return AlisRequestNormal;
+    return AlisRequestDownload;
 }
 
-- (NSString *)server:(NSString *)serviceName{
-    if (ServiceEqual(serviceName, @"AskDemo")) {
-        return @"https://httpbin.org";
-    }
-    return nil;
-}
+//- (NSString *)server:(NSString *)serviceName{
+////    if (ServiceEqual(serviceName, @"AskDemo")) {
+////        return @"https://httpbin.org";
+////    }
+//    if (ServiceEqual(serviceName, @"AskDemo")) {
+//        return @"https://api-testesports.alisports.com";
+//    }
+//    return nil;
+//}
+//
+//- (NSString *)api:(NSString *)serviceName{
+//    if (ServiceEqual(serviceName, @"AskDemo")) {
+//        return @"/v4/gym/citieslist";//@"/get";
+//    }
+//    return nil;
+//}
+//
+//- (NSDictionary *)requestParams:(NSString *)serviceName{
+//    if (ServiceEqual(serviceName, @"AskDemo")) {
+//        return @{@"method": @"get"};
+//    }
+//    return nil;
+//}
 
-- (NSString *)api:(NSString *)serviceName{
-    if (ServiceEqual(serviceName, @"AskDemo")) {
-        return @"/get";
-    }
-    
-    return nil;
-}
-
-- (NSDictionary *)requestParams:(NSString *)serviceName{
-    if (ServiceEqual(serviceName, @"AskDemo")) {
-        return @{@"method": @"get"};
-    }
-    return nil;
-}
-
-- (NSData *)uploadData:(NSString *)serviceName{
-    NSData *data = [@"testdata" dataUsingEncoding:NSUTF8StringEncoding];
-    return data;
-}
-
+//- (NSData *)uploadData:(NSString *)serviceName{
+//    NSData *data = [@"testdata" dataUsingEncoding:NSUTF8StringEncoding];
+//    return data;
+//}
+//
 - (NSString *)fileURL:(NSString *)serviceName{
     if (ServiceEqual(serviceName, @"AskDemo")) {
         NSString *path = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)[0];
@@ -130,14 +145,14 @@ static NSString *testApi = @"/1442142801331138639111.mp4";
     }
     return nil;
 }
-
-//附加消息
-- (NSDictionary *)additionalInfo:(NSString *)serviceName{
-    return nil;
-}
+//
+////附加消息
+//- (NSDictionary *)additionalInfo:(NSString *)serviceName{
+//    return nil;
+//}
 
 - (void)handlerServiceResponse:(AlisRequest *)request serviceName:(NSString *)serviceName response:(AlisResponse *)response{
-    if (ServiceEqual(serviceName, @"AskDemo")) {
+    if (ServiceEqual(serviceName, @"AskDemo")) { 
     }
     
     NSLog(@"%@ back",serviceName);

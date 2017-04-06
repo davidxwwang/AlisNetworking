@@ -496,6 +496,7 @@
 		61920B0C6AACCF3C3D2994F691C96E18 /* Pods-AlisNetworking_Tests-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-AlisNetworking_Tests-umbrella.h"; sourceTree = "<group>"; };
 		6303AF311E95345200FCC448 /* NSString+help.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+help.h"; sourceTree = "<group>"; };
 		6303AF321E95345200FCC448 /* NSString+help.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+help.m"; sourceTree = "<group>"; };
+		638B8D081E95E17B00A6AD5B /* README */ = {isa = PBXFileReference; lastKnownFileType = text; path = README; sourceTree = "<group>"; };
 		655A963CE83C0303E02DE8925CF03EF3 /* EXPMatchers+raiseWithReason.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "EXPMatchers+raiseWithReason.h"; path = "Expecta/Matchers/EXPMatchers+raiseWithReason.h"; sourceTree = "<group>"; };
 		671D4B809C02A248A3C1E81364AFF495 /* EXPMatchers+conformTo.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "EXPMatchers+conformTo.m"; path = "Expecta/Matchers/EXPMatchers+conformTo.m"; sourceTree = "<group>"; };
 		692A8C6E409B6801329368832825D18D /* AFNetworkingPlugin.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = AFNetworkingPlugin.h; sourceTree = "<group>"; };
@@ -1301,6 +1302,7 @@
 		FF5F8F4CE321A59AFCF2621E6D526BED /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				638B8D081E95E17B00A6AD5B /* README */,
 				6E14A858E3DB4612DCBFFD3DC703A446 /* AlisRequest.h */,
 				F0601C0E2FB70490BEBD3404CDFE5CFB /* AlisRequest.m */,
 				52930C391C40791CD5F3E9709F8B565F /* AlisRequestConfig.h */,

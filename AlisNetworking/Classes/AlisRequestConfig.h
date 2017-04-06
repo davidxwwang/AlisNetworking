@@ -31,7 +31,7 @@
 
 - (instancetype)initWithInfo:(NSDictionary *)info;
 
-@property(copy,nonatomic)NSDictionary *responseInfo;
+@property(strong,nonatomic)NSDictionary *responseInfo;
 
 @end
 

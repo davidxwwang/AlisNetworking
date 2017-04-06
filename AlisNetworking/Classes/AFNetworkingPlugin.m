@@ -64,20 +64,27 @@
 - (void)download:(AlisRequest *)request config:(AlisRequestConfig *)config{
     NSString *httpMethod = [self httpMethodConverter:request.httpMethod];
     NSAssert(httpMethod, @"httpMethod can not be nil");
-    
-    NSError *error = nil;
-    NSMutableURLRequest *__request = [_sessionManager.requestSerializer requestWithMethod:httpMethod URLString:request.url parameters:request.parameters error:&error];
-    __request.timeoutInterval = request.timeoutInterval;
-    __request.allHTTPHeaderFields = request.header;
-    
-    NSURLSessionDownloadTask *downloadtask = [_sessionManager downloadTaskWithRequest:__request progress:^(NSProgress * _Nonnull downloadProgress) {
         
+    NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
+    AFURLSessionManager *manager = [[AFURLSessionManager alloc] initWithSessionConfiguration:configuration];
+    
+    NSURL *URL = [NSURL URLWithString:request.url];
+    NSURLRequest *__request = [NSURLRequest requestWithURL:URL];
+    
+    NSURLSessionDownloadTask *downloadtask = [manager downloadTaskWithRequest:__request progress:^(NSProgress * _Nonnull downloadProgress) {
+        if (request.progressBlock) {
+            request.progressBlock(request,downloadProgress.completedUnitCount,downloadProgress.totalUnitCount);
+        }
     } destination:^NSURL * _Nonnull(NSURL * _Nonnull targetPath, NSURLResponse * _Nonnull response) {
         NSString *__path = [NSString stringWithFormat:@"%@%@",@"file://localhost/",request.downloadPath];
-        return [NSURL URLWithString:__path];
+        return [NSURL URLWithString:request.downloadPath];
         
     } completionHandler:^(NSURLResponse * _Nonnull response, NSURL * _Nullable filePath, NSError * _Nullable error) {
-        
+        if (request.finishBlock) {
+            AlisResponse *response = [self perseResponse:filePath request:request];
+            AlisError *_error = [self perseError:error];
+            request.finishBlock(request,nil,_error);
+        }
     }];
     
     request.bindRequest = downloadtask;
@@ -93,8 +100,7 @@
     NSMutableURLRequest *__request = [_sessionManager.requestSerializer requestWithMethod:httpMethod URLString:request.url parameters:request.parameters error:&error];
     __request.timeoutInterval = request.timeoutInterval;
     __request.allHTTPHeaderFields = request.header;
-
-    
+      
     if (error && request.finishBlock) {
         AlisError *_error = [self perseError:error];
         request.finishBlock(request,nil,_error);
@@ -160,7 +166,7 @@
 
 - (AlisResponse *)perseResponse:(id)rawResponse request:(AlisRequest *)request
 {
-    if ( !rawResponse ) {
+    if (!rawResponse ) {
         return nil;
     }
     NSDictionary *data = (NSDictionary *)rawResponse;

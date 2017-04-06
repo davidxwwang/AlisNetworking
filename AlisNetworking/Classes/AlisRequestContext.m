@@ -24,8 +24,8 @@
 
 - (instancetype)init{
     if (self = [super init]) {
-//        [[AFNetworkReachabilityManager  manager] startMonitoring];
-//        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(networkingReachabilityDidChange:) name:AFNetworkingReachabilityDidChangeNotification object:nil];
+        [[AFNetworkReachabilityManager  manager] startMonitoring];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(networkingReachabilityDidChange:) name:AFNetworkingReachabilityDidChangeNotification object:nil];
         
     }
     return self;
@@ -37,12 +37,12 @@
 
 - (void)networkingReachabilityDidChange:(NSNotification *)notification{
     NSDictionary *userinfo = notification.userInfo;
-//    if (!userinfo || !userinfo[AFNetworkingReachabilityNotificationStatusItem]) return;
-//    
-//    NSNumber *status = userinfo[AFNetworkingReachabilityNotificationStatusItem];
-//    
-//    self.networkReachabilityStatus = AlisNetworkReachabilityStatusReachableViaWiFi;
-//    
+    if (!userinfo || !userinfo[AFNetworkingReachabilityNotificationStatusItem]) return;
+    
+    NSNumber *status = userinfo[AFNetworkingReachabilityNotificationStatusItem];
+    
+    self.networkReachabilityStatus = AlisNetworkReachabilityStatusReachableViaWiFi;
+    
     
     //    AFNetworkReachabilityStatus reachStatus = userinfo[AFNetworkingReachabilityNotificationStatusItem];
     //    NSLog(@"");

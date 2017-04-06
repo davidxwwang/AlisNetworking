@@ -14,10 +14,10 @@
 @class AlisRequest,AlisResponse,AlisError,AlisUpLoadFormData;
 
 
-typedef void(^AlisRequestStartRequest) (void);
-typedef void(^AlisRequestCancelRequest) (void);
-typedef void(^AlisRequestFinishRequest) (AlisRequest *request ,AlisResponse *response ,AlisError *error);
-typedef void(^AlisRequestProgressRequest)(AlisRequest *request ,long long receivedSize, long long expectedSize);
+typedef void(^AlisRequestStartBlock) (void);
+typedef void(^AlisRequestCancelBlock) (void);
+typedef void(^AlisRequestFinishBlock) (AlisRequest *request ,AlisResponse *response ,AlisError *error);
+typedef void(^AlisRequestProgressBlock)(AlisRequest *request ,long long receivedSize, long long expectedSize);
 
 @interface AlisRequest : NSObject
 
@@ -75,10 +75,10 @@ typedef void(^AlisRequestProgressRequest)(AlisRequest *request ,long long receiv
 @property (nonatomic, assign) BOOL useGeneralParameters;
 
 
-@property(copy,nonatomic,nullable) AlisRequestStartRequest startBlock;
-@property(copy,nonatomic,nullable) AlisRequestCancelRequest cancelBlock;
-@property(copy,nonatomic,nullable) AlisRequestFinishRequest finishBlock;
-@property(copy,nonatomic,nullable) AlisRequestProgressRequest progressBlock;
+@property(copy,nonatomic,nullable) AlisRequestStartBlock startBlock;
+@property(copy,nonatomic,nullable) AlisRequestCancelBlock cancelBlock;
+@property(copy,nonatomic,nullable) AlisRequestFinishBlock finishBlock;
+@property(copy,nonatomic,nullable) AlisRequestProgressBlock progressBlock;
 
 
 - (void)addFormDataWithName:(NSString *)name fileData:(NSData *)fileData;

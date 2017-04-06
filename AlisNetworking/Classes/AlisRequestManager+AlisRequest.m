@@ -27,7 +27,7 @@
     // NSAssert([requestModel respondsToSelector:@selector(api)], @"request API should not nil");
     /***************************设置请求类型（上传／下载等）**************************/
     if ([service.serviceAgent respondsToSelector:@selector(requestType:)]) {
-        request.requestType = [service.serviceAgent requestType:request.context.serviceName];
+        request.requestType = [service.serviceAgent requestType:localServiceName];
     }
     
     if (request.requestType == AlisRequestUnknow) {
@@ -43,7 +43,7 @@
         if ([service.serviceAgent respondsToSelector:@selector(fileURL:)]) {
             request.downloadPath = [service.serviceAgent fileURL:localServiceName];
         }else if ([requestModel respondsToSelector:@selector(fileURL:)]) {
-            request.downloadPath = [requestModel fileURL:localServiceName];
+            request.downloadPath = [requestModel fileURL:request.context.serviceName];
         }
         if(request.downloadPath == nil){
             NSLog(@"下载任务，没有设置下载的路径!!!");
@@ -70,9 +70,9 @@
         request.httpMethod = [service.serviceAgent httpMethod:localServiceName];
     }
     
-    if ((request.httpMethod == AlisHTTPMethodUnknow)) {
+    if(request.httpMethod == AlisHTTPMethodUnknow){
         if ([requestModel respondsToSelector:@selector(httpMethod:)]) {
-            request.httpMethod = [requestModel httpMethod:localServiceName];
+            request.httpMethod = [requestModel httpMethod:request.context.serviceName];
         }else{
             NSLog(@"'httpMethod' 没有设置，默认在AlisRequest中设置");
         }
@@ -85,23 +85,27 @@
     
     if (request.api == nil) {
         if ([requestModel respondsToSelector:@selector(api:)]) {
-            request.api = [requestModel api:localServiceName];
+            request.api = [requestModel api:request.context.serviceName];
         }else{
             NSLog(@"'api' 没有设置，这个必须手动设置");
         }
     }
-    /***************************设置请求类型（上传／下载等）**************************/
+    /***************************设置请求域名 **************************/
     if ([service.serviceAgent respondsToSelector:@selector(server:)]) {
         request.server = [service.serviceAgent server:localServiceName];
     }
-    
+        
     if (request.server == nil) {
         if ([requestModel respondsToSelector:@selector(server:)]) {
-            request.server = [requestModel server:localServiceName];
-        }else if (request.useGeneralServer == YES){
+            request.server = [requestModel server:request.context.serviceName];
+        }
+        
+        if ( request.server == nil && request.useGeneralServer == YES){
             request.server = self.config.generalServer;
-        }else{
-            NSLog(@"'server' 没有设置，这个必须手动设置");
+        }
+        
+        if ( request.server == nil){
+            NSLog(@"'server' 没有设置，这个要设置");
         }
     }
 
@@ -118,7 +122,7 @@
     }
     if ([requestModel respondsToSelector:@selector(requestHead:)]) {
         if ([requestModel requestHead:localServiceName]){ 
-            [header addEntriesFromDictionary:[requestModel requestHead:localServiceName]];
+            [header addEntriesFromDictionary:[requestModel requestHead:request.context.serviceName]];
         }
     }
     if (request.useGeneralHeaders) {
@@ -140,7 +144,7 @@
         }
     }
     if ([requestModel respondsToSelector:@selector(requestParams:)]) {
-        NSDictionary *params = [requestModel requestParams:localServiceName];
+        NSDictionary *params = [requestModel requestParams:request.context.serviceName];
         if(params){
             [header addEntriesFromDictionary:params];
         }
@@ -175,6 +179,7 @@
         //各个业务层的回调
         weakRequest.bindRequestModel.businessLayer_requestProgressBlock(request,receivedSize,expectedSize);
     };
+    
     return request;
 }
 @end

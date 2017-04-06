@@ -88,6 +88,8 @@ NSArray* MSArrayFromMainBundle(NSString *filename){
     NSArray *array = MSArrayFromMainBundle(@"plugins.plist");
 
     NSString *plistPath =  @"/Users/david/Documents/AlisNetworking/AlisNetworking/Classes/plugins.plist";
+    
+    //NSString *plistPath =  @"../../AlisNetworking/Classes/plugins.plist";
     NSString *plistPath2 = [[NSBundle mainBundle] pathForResource:@"plugins" ofType:@"plist"];
     if (![[NSFileManager defaultManager] fileExistsAtPath:plistPath]) {
         return;

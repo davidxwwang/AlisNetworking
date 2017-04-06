@@ -12,6 +12,9 @@
 #import "service.h"
 #import "NSString+help.h"
 
+#define ResumeResource @"resume"
+#define CancelResource @"cancel"
+#define SuspendResource @"suspend"
 //  首先查找订阅的服务（网络接口）
 //对资源的操作包括：
 //   （1）对资源的操作。
@@ -20,7 +23,7 @@
 //APP中所有的请求服务都保存在该字典中
 static NSDictionary *candidateRequestServices;
 
-void fetchCandidateRequestServices1()
+void fetchCandidateRequestServices()
 {
     if (candidateRequestServices != nil) return;
     NSString *plistPath = @"/Users/david/Documents/AlisNetworking/AlisNetworking/Classes/RequestConfig.plist";
@@ -73,9 +76,12 @@ void requestContainer(id self, SEL _cmd) {
     ServiceType ser= [Service convertServiceTypeFromString:serviceType[@"protocol"]];
     ServiceAction action= [Service convertServiceActionFromString:serviceAction];
     
-    ((id<AlisRequestProtocol>)self).currentService = [[Service alloc]init:ser serviceName:globalServiceName serviceAction:action serviceAgent:currentServiceAgent];
+    Service *currentService = [[Service alloc]init:ser serviceName:globalServiceName serviceAction:action serviceAgent:currentServiceAgent];
     
-    [[AlisRequestManager sharedManager]startRequestModel:self service: ((id<AlisRequestProtocol>)self).currentService];
+    if (globalServiceName && currentService) {
+        ((id<AlisRequestProtocol>)self).currentServeContainer[globalServiceName] = currentService;
+    }
+    [[AlisRequestManager sharedManager]startRequestModel:self service:currentService];
     
 }
 
@@ -89,7 +95,7 @@ void requestContainer(id self, SEL _cmd) {
 
 @implementation AlisServiceProxy
 
-@synthesize currentService,candidateServices,businessLayer_requestFinishBlock,businessLayer_requestProgressBlock;
+@synthesize currentServeContainer,candidateServices,businessLayer_requestFinishBlock,businessLayer_requestProgressBlock;
 
 + (AlisServiceProxy *)shareManager{
     static AlisServiceProxy *_manager = nil;
@@ -103,20 +109,18 @@ void requestContainer(id self, SEL _cmd) {
 
 - (instancetype)init{
     if (self = [super init]) {
-        fetchCandidateRequestServices1();
+        fetchCandidateRequestServices();
         self.serviceAgents = [NSMutableDictionary dictionary];
         __weak typeof (self) weakSelf = self;
         self.businessLayer_requestFinishBlock = ^(AlisRequest *request ,AlisResponse *response ,AlisError *error){
             NSLog(@"在业务层完成了请求成功的回调");
             if (error) {
                 NSLog(@"失败了:原因->");
-                if ([request.context.makeRequestClass respondsToSelector:@selector(handlerServiceResponse:serviceName:error:)]) {
-                    [request.context.makeRequestClass handlerServiceResponse:request serviceName:nil response:response];
-                }
+                [weakSelf handlerServiceResponse:request serviceName:request.serviceName error:error];
             }
             else{
                 if ([request.context.makeRequestClass respondsToSelector:@selector(handlerServiceResponse:serviceName:response:)]) {
-                    [request.context.makeRequestClass handlerServiceResponse:request serviceName:nil response:response];
+                    [request.context.makeRequestClass handlerServiceResponse:request serviceName:[request.serviceName toLocalServiceName] response:response];
                 }
             }
         };
@@ -128,19 +132,26 @@ void requestContainer(id self, SEL _cmd) {
                 [request.context.makeRequestClass handlerServiceResponse:request serviceName:[request.serviceName toLocalServiceName] progress:progress];
             }
         };
+        
+        self.currentServeContainer = [NSMutableDictionary dictionary];
     }
     return self;
 }
 
 + (BOOL)resolveInstanceMethod:(SEL)sel{
     NSString *selString = NSStringFromSelector(sel);
-    if ([selString containsString:@"resume_"]) {
-        class_addMethod([self class], sel, (IMP)requestContainer, "@:");
-        return YES;
+    NSString *resourceAction = [selString resourceAction];//对资源的操作
+    if (resourceAction ) {
+        NSArray *resourceActions = @[ResumeResource,CancelResource,SuspendResource];
+        if ([resourceActions containsObject:resourceAction]) {
+            class_addMethod([self class], sel, (IMP)requestContainer, "@:");
+            return YES;
+        }
+        else{
+            return NO;//[super resolveInstanceMethod:sel];
+        }
     }
-    else{
-        return NO;//[super resolveInstanceMethod:sel];
-    }
+   
     return NO;//[super resolveInstanceMethod:sel];
 }
 
@@ -158,11 +169,15 @@ void requestContainer(id self, SEL _cmd) {
 - (void)handlerServiceResponse:(AlisRequest *)request serviceName:(NSString *)serviceName progress:(float)progress{
 }
 
+- (void)handlerServiceResponse:(AlisRequest *)request serviceName:(NSString *)serviceName error:(AlisError *)error{
+}
+
 #pragma mark -- request parameters
-- (NSDictionary *)requestHead{
+- (NSDictionary *)requestHead:(NSString *)serviceName{
     return nil;
 }
-- (NSData *)uploadData{
+
+- (NSData *)uploadData:(NSString *)serviceName{
     return nil;
 }
 
@@ -170,28 +185,37 @@ void requestContainer(id self, SEL _cmd) {
     return nil;
 }
 
-- (NSString *)fileURL{
+- (NSString *)fileURL:(NSString *)serviceName{
     return nil;
 }
 
-- (NSDictionary *)requestParams{
+- (NSDictionary *)requestParams:(NSString *)serviceName{
     return nil;
 }
 
-- (NSString *)api{
-    NSString *api = [self getParam:@"api"];
+- (NSString *)api:(NSString *)serviceName{
+    NSString *api = [self getParam:@"api" serviceName:serviceName];
     if (api){
         return api;
     }
-    return AlisHTTPMethodGET;
+    return nil;
 }
+
+- (NSString *)server:(NSString *)serviceName{
+    NSString *server = [self getParam:@"server" serviceName:serviceName];
+    if (server){
+        return server;
+    }
+    return nil;
+}
+
 
 - (AlisRequestType)requestType:(NSString *)serviceName{
     return AlisRequestNormal;
 }
 
-- (AlisHTTPMethodType)httpMethod{
-    NSString *httpMothod = [self getParam:@"httpMethod"];
+- (AlisHTTPMethodType)httpMethod:(NSString *)serviceName{
+    NSString *httpMothod = [self getParam:@"httpMethod" serviceName:serviceName];
     if (httpMothod) 
         return AlisHTTPMethodGET;
     
@@ -199,11 +223,11 @@ void requestContainer(id self, SEL _cmd) {
 }
 
 #pragma mark -- help
-- (NSString *)getParam:(NSString *)type{
-    if (type == nil) return nil;
+- (NSString *)getParam:(NSString *)type serviceName:(NSString *)globalServiceName{
+    NSParameterAssert(type && globalServiceName);
     
-    Service *service = self.currentService;
-    NSArray *sep = [service.serviceName componentsSeparatedByString:@"_"];
+    Service *service = self.currentServeContainer[globalServiceName];
+    NSArray *sep = [globalServiceName componentsSeparatedByString:@"_"];
     
     if (sep.count < 2 || sep == nil) {
         NSLog(@"service.serviceName 有问题");

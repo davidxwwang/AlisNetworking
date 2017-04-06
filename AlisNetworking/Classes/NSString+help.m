@@ -24,5 +24,15 @@
     return nil;
 }
 
+- (NSString *)resourceAction{
+    if (self == nil) return nil;
+    NSArray *serviceArray = [self componentsSeparatedByString:@"_"];
+    if (serviceArray.count == 2) {
+        return serviceArray[0];
+    }
+    return nil;
+
+}
+
 
 @end

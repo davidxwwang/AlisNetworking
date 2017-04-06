@@ -10,7 +10,8 @@
 
 typedef NS_ENUM(NSInteger, ServiceAction) {
     Resume,
-    Cancel
+    Cancel,
+    Suspend
 };
 
 typedef NS_ENUM(NSInteger, ServiceType) {

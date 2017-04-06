@@ -14,10 +14,12 @@
 #define resumeService(yy) {[AlisServiceProxy shareManager].currentServiceAgent = self;\
 [[AlisServiceProxy shareManager] performSelector:NSSelectorFromString([@"resume_"  stringByAppendingFormat:@"%@", yy])];}
 
+#define cancelService(yy) {[AlisServiceProxy shareManager].currentServiceAgent = self;\
+[[AlisServiceProxy shareManager] performSelector:NSSelectorFromString([@"cancel_"  stringByAppendingFormat:@"%@", yy])];}
 
-//#define resumeService1(yy) ([[AlisServiceProxy shareManager] performSelector:NSSelectorFromString([@"resume_"  stringByAppendingFormat:@"%@", yy])])
-#define cancelService(yy) ([self performSelector:NSSelectorFromString([@"cancel_"  stringByAppendingFormat:@"%@", yy])])
-#define suspendService(yy) ([self performSelector:NSSelectorFromString([@"suspend_"  stringByAppendingFormat:@"%@", yy])])
+#define suspendService(yy) {[AlisServiceProxy shareManager].currentServiceAgent = self;\
+[[AlisServiceProxy shareManager] performSelector:NSSelectorFromString([@"suspend_"  stringByAppendingFormat:@"%@", yy])];}
+
 #define ServiceEqual(yy,xx) ([yy isEqualToString:xx])
 
 // VC 的service层
