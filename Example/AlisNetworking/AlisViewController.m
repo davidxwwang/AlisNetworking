@@ -5,7 +5,9 @@
 //  Created by xingwang.wxw on 04/05/2017.
 //  Copyright (c) 2017 xingwang.wxw. All rights reserved.
 //
-
+#import "AlisJsonParseProtocol.h"
+#import "AlisJsonParseManager.h"
+#import "CityInfo.h"
 #import "AlisPluginManager.h"
 #import "AlisRequestManager.h"
 #import "AlisServiceProxy.h"
@@ -55,8 +57,8 @@ static NSString *testApi = @"/1442142801331138639111.mp4";
 
 - (void)normalRequest{
    // resumeService(@"AskDemo");
-    //resumeService(@"AskCitieslist");
-     resumeService(@"uploadData");
+    resumeService(@"AskCitieslist");
+    // resumeService(@"uploadData");
 }
 
 - (void)cancelNormalRequest{
@@ -98,6 +100,8 @@ static NSString *testApi = @"/1442142801331138639111.mp4";
 #pragma mark -- http 
 - (AlisRequestType)requestType:(NSString *)serviceName{
     if (ServiceEqual(serviceName, @"AskDemo")) {
+        return AlisRequestNormal;
+    }else if (ServiceEqual(serviceName, @"AskCitieslist")) {
         return AlisRequestNormal;
     }
     return AlisRequestDownload;
@@ -155,6 +159,9 @@ static NSString *testApi = @"/1442142801331138639111.mp4";
     if (ServiceEqual(serviceName, @"AskDemo")) { 
     }
     
+    AlisJsonParseManager *manager = [AlisJsonParseManager sharedManager];
+    id<AlisJsonParseProtocol> plugin = [manager plugin:@"EXTensionParse"];
+    NSArray *demo = [plugin parseJsonValue:[CityInfo class] jsonData:response.responseInfo ];
     NSLog(@"%@ back",serviceName);
 }
 
