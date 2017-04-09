@@ -10,7 +10,7 @@
 #define AlisRequestConst_h
 #import <Foundation/Foundation.h>
 
-@class AlisRequest,AlisChainRequest,AlisRequestManager,AlisError;
+@class AlisRequest,AlisChainRequest,AlisRequestManager,AlisError,AlisResponse;
 /**
  网络状况
  */
@@ -42,6 +42,11 @@ typedef NS_ENUM(NSInteger, AlisHTTPMethodType) {
     AlisHTTPMethodPUT    = 4,    //!< PUT
     AlisHTTPMethodPATCH  = 5,    //!< PATCH
 };
+
+typedef void(^AlisRequestStartBlock) (void);
+typedef void(^AlisRequestCancelBlock) (void);
+typedef void(^AlisRequestFinishBlock) (AlisRequest *request ,AlisResponse *response ,AlisError *error);
+typedef void(^AlisRequestProgressBlock)(AlisRequest *request ,long long receivedSize, long long expectedSize);
 
 typedef void(^AlisRequestConfigBlock)( AlisRequest *_Nonnull request);
 

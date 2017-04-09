@@ -30,6 +30,8 @@
 			<string>/v4/gym/citieslist</string>
 			<key>server</key>
 			<string>https://api-testesports.alisports.com</string>
+			<key>parseClass</key>
+			<string>CityInfo</string>
 		</dict>
 	</dict>
 	<key>VCService3</key>

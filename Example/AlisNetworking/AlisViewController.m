@@ -57,7 +57,7 @@ static NSString *testApi = @"/1442142801331138639111.mp4";
 
 - (void)normalRequest{
    // resumeService(@"AskDemo");
-    resumeService(@"AskCitieslist");
+    resumeService1(@"AskCitieslist");
     // resumeService(@"uploadData");
 }
 
@@ -158,10 +158,10 @@ static NSString *testApi = @"/1442142801331138639111.mp4";
 - (void)handlerServiceResponse:(AlisRequest *)request serviceName:(NSString *)serviceName response:(AlisResponse *)response{
     if (ServiceEqual(serviceName, @"AskDemo")) { 
     }
-    
+      request.parseClass = @"CityInfo";
     AlisJsonParseManager *manager = [AlisJsonParseManager sharedManager];
     id<AlisJsonParseProtocol> plugin = [manager plugin:@"EXTensionParse"];
-    NSArray *demo = [plugin parseJsonValue:[CityInfo class] jsonData:response.responseInfo ];
+    id demo = [plugin parseJsonValue:NSClassFromString(request.parseClass) jsonData:response.responseInfo ];
     NSLog(@"%@ back",serviceName);
 }
 

@@ -5,7 +5,7 @@
 //  Created by alisports on 2017/2/22.
 //  Copyright © 2017年 alisports. All rights reserved.
 //
-#import <CommonCrypto/CommonDigest.h>
+#import "NSString+help.h"
 #import "AlisRequestManager.h"
 #import "AlisRequestContext.h"
 #import "AlisRequestConfig.h"
@@ -59,8 +59,16 @@
     
 }
 
-- (void)startRequest:(AlisRequest *)request
-{
+- (void)startRequest:(AlisRequest *)request{
+    
+    //查找合适的plugin
+//    NSDictionary *allPlugins = [self.pluginManager allPlugins];
+//    for (NSString *pluginKey in allPlugins.allKeys) {
+//        id<AlisPluginProtocol> plugin = [self.pluginManager plugin:pluginKey];
+//        NSArray *temp = [plugin supportSevervice];
+//        NSLog(@"！");
+//    }
+    
     id<AlisPluginProtocol> plugin = [self.pluginManager plugin:@"AFNetwoking"];
     if (plugin == nil) {
         NSLog(@"对应的插件不存在！");
@@ -70,7 +78,7 @@
     //在这里解析两部分，一部分是公共的--AlisRequestConfig，一部分是自己的,
     [plugin perseRequest:request config:_config];
     //设置请求的MD5值。注：可以有其他方式
-    request.identifier = [self md5WithString:request.url];
+    request.identifier = [request.url md5WithString];
     NSString *requestIdentifer = request.context.serviceName;
     if (requestIdentifer) {
         (self.requestSet)[requestIdentifer] = request;
@@ -93,7 +101,7 @@
             if (self.config.enableSync) {
                 dispatch_semaphore_wait(_semaphore, DISPATCH_TIME_FOREVER);
             }
-        }];
+        } service:service];
     }
     else if (serviceAction == Cancel){
         [self cancelRequestByIdentifier:service.serviceName];
@@ -103,13 +111,20 @@
     }
 }
 
-- (void)start_Request:(AlisRequestConfigBlock)requestConfigBlock{
-    
-    NSArray *xx =  self.requestSet;
-    //[request.bindRequestModel.currentServeContainer removeObjectForKey:serviceName];
-    AlisRequest *request = [[AlisRequest alloc]init];
-    requestConfigBlock(request);
-    [self startRequest:request];
+- (void)start_Request:(AlisRequestConfigBlock)requestConfigBlock service:(Service *)service{
+    AlisRequest *request = nil;
+    if (service) {
+        AlisRequest *_request = self.requestSet[service.serviceName];
+        
+        if (_request) {
+            request = _request;
+        }
+        else{
+            request = [[AlisRequest alloc]init];//一个全新的请求
+            requestConfigBlock(request);
+        }
+        [self startRequest:request];
+    }
 }
 
 - (NSMutableDictionary *)requestSet{
@@ -136,18 +151,12 @@
     AlisRequest *request = _requestSet[requestIdentifier];
     
     [self cancelRequest:request];
-    
 }
 
 - (void)suspendRequest:(AlisRequest *)request{
     if (request == nil)  return;
     if(request.bindRequest){
         [request.bindRequest suspend];
-//        NSString *serviceName = request.serviceName;
-//        if (serviceName) {
-//            [self.requestSet removeObjectForKey:serviceName];
-//            [request.bindRequestModel.currentServeContainer removeObjectForKey:serviceName];
-//        }
     }    
 }
 
@@ -156,9 +165,7 @@
     AlisRequest *request = _requestSet[requestIdentifier];
     
     [self suspendRequest:request];
-    
 }
-
 
 #pragma mark ---
 //访问网络前的最后准备，准备好请求地址，头head，参数parameters，body，url，回调方法等等
@@ -227,28 +234,6 @@
     return YES;
 }
 
-/**
- 计算MD5
- 
- @param string string description
- @return return value description
- */
-- (NSString *)md5WithString:(NSString *)string {
-    NSAssert(string, @"string should not nil");
-    const char *cStr = [string UTF8String];
-    unsigned char result[16];
-    CC_MD5(cStr, (unsigned int) strlen(cStr), result);
-    
-    NSString *md5String = [NSString stringWithFormat:
-                           @"%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x",
-                           result[0], result[1], result[2], result[3],
-                           result[4], result[5], result[6], result[7],
-                           result[8], result[9], result[10], result[11],
-                           result[12], result[13], result[14], result[15]
-                           ];
-    
-    return md5String;
-}
 
 #pragma mark -- https
 - (void)addSSLPinningURL:(NSString *)url {
@@ -307,7 +292,7 @@
         //在这里解析两部分，一部分是公共的--AlisRequestConfig，一部分是自己的,
         [plugin perseRequest:chainRequest.runningRequest config:_config];
         //设置请求的MD5值。注：可以有其他方式
-        chainRequest.runningRequest.identifier = [self md5WithString:chainRequest.runningRequest.url];
+        chainRequest.runningRequest.identifier = [chainRequest.runningRequest.url md5WithString];
         NSString *requestIdentifer = chainRequest.runningRequest.context.serviceName;
 //        if (requestIdentifer) {
 //            (self.requestSet)[requestIdentifer] = request;

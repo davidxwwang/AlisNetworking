@@ -45,7 +45,6 @@ void requestContainer(id self, SEL _cmd) {
             return;
         }
     }
-    
     NSString *currentServiceAgentString = NSStringFromClass([currentServiceAgent class]);
     NSDictionary *agentRequestServices = candidateRequestServices[currentServiceAgentString];
     if (agentRequestServices == nil) {
@@ -120,7 +119,10 @@ void requestContainer(id self, SEL _cmd) {
             }
             else{
                 if ([request.context.makeRequestClass respondsToSelector:@selector(handlerServiceResponse:serviceName:response:)]) {
-                    [request.context.makeRequestClass handlerServiceResponse:request serviceName:[request.serviceName toLocalServiceName] response:response];
+                    NSString *name = request.serviceName;
+                    
+                    
+//                    [request.context.makeRequestClass handlerServiceResponse:request serviceName:[request.serviceName toLocalServiceName] response:response];
                 }
             }
         };

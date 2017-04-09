@@ -16,6 +16,13 @@ typedef void(^AlisRequestProgressRequest)(AlisRequest *request ,long long receiv
 
 @protocol AlisRequestProtocol <NSObject>
 
+/**
+ 解析接口返回的JSON数据的类
+
+ @return return 解析接口返回的JSON数据的类
+ */
+- (Class)parseClass;
+
 - (AlisRequestType)requestType:(NSString *)serviceName;
 //相对路径
 - (NSString *)api:(NSString *)serviceName;

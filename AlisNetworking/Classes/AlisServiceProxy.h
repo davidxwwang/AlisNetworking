@@ -14,6 +14,8 @@
 #define resumeService(yy) {[AlisServiceProxy shareManager].currentServiceAgent = self;\
 [[AlisServiceProxy shareManager] performSelector:NSSelectorFromString([@"resume_"  stringByAppendingFormat:@"%@", yy])];}
 
+#define resumeService1(yy) {[[AlisServiceProxy shareManager] performSelector:NSSelectorFromString([@"resume_"  stringByAppendingFormat:@"%@_%@", yy,NSStringFromClass([self class])])];}
+
 #define cancelService(yy) {[AlisServiceProxy shareManager].currentServiceAgent = self;\
 [[AlisServiceProxy shareManager] performSelector:NSSelectorFromString([@"cancel_"  stringByAppendingFormat:@"%@", yy])];}
 

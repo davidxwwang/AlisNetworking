@@ -30,6 +30,7 @@
 #import "Service.h"
 #import "CookieManager.h"
 #import "NSString+help.h"
+#import "UIImageView+AlisRequest.h"
 
 FOUNDATION_EXPORT double AlisNetworkingVersionNumber;
 FOUNDATION_EXPORT const unsigned char AlisNetworkingVersionString[];

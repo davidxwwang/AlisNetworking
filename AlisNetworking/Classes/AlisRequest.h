@@ -13,15 +13,14 @@
 
 @class AlisRequest,AlisResponse,AlisError,AlisUpLoadFormData;
 
-
-typedef void(^AlisRequestStartBlock) (void);
-typedef void(^AlisRequestCancelBlock) (void);
-typedef void(^AlisRequestFinishBlock) (AlisRequest *request ,AlisResponse *response ,AlisError *error);
-typedef void(^AlisRequestProgressBlock)(AlisRequest *request ,long long receivedSize, long long expectedSize);
-
 @interface AlisRequest : NSObject
 
 + (AlisRequest *)request;
+
+/**
+ 解析接口返回JSON数据的类
+ */
+@property(copy,nonatomic)NSString *parseClass;
 
 //请求所处的上下文，先假定为发出请求的类，也可以新增属性：例如->网络环境，电量，内存状况等。
 //方便后期的回调
