@@ -2,8 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>AlisViewController</key>
-	<dict>
 		<key>uploadData</key>
 		<dict>
 			<key>httpMethod</key>
@@ -33,38 +31,5 @@
 			<key>parseClass</key>
 			<string>CityInfo</string>
 		</dict>
-	</dict>
-	<key>VCService3</key>
-	<dict/>
-	<key>VCService2</key>
-	<dict>
-		<key>uploadAliyun</key>
-		<dict>
-			<key>httpMethod</key>
-			<string>POST</string>
-			<key>protocol</key>
-			<string>http</string>
-			<key>api</key>
-			<string>/save</string>
-		</dict>
-		<key>AskName</key>
-		<dict>
-			<key>httpMethod</key>
-			<string>get</string>
-			<key>protocol</key>
-			<string>http</string>
-			<key>api</key>
-			<string>/1442142801331138639111.mp4</string>
-		</dict>
-		<key>SaveLocalData</key>
-		<dict>
-			<key>New item</key>
-			<string></string>
-			<key>New item - 2</key>
-			<string></string>
-			<key>New item - 3</key>
-			<string></string>
-		</dict>
-	</dict>
 </dict>
 </plist>

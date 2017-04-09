@@ -11,16 +11,17 @@
 #import "AlisRequestProtocol.h"
 #import <Foundation/Foundation.h>
 
-#define resumeService(yy) {[AlisServiceProxy shareManager].currentServiceAgent = self;\
-[[AlisServiceProxy shareManager] performSelector:NSSelectorFromString([@"resume_"  stringByAppendingFormat:@"%@", yy])];}
 
-#define resumeService1(yy) {[[AlisServiceProxy shareManager] performSelector:NSSelectorFromString([@"resume_"  stringByAppendingFormat:@"%@_%@", yy,NSStringFromClass([self class])])];}
+/**
+ 完整的对资源的操作，包括 资源的操作者，资源名，操作资源的方式
+ 资源访问格式: eg-->resume_AskCitiesInfo_AlisVierwController
+ @param yy 资源名称
+ */
+#define resumeService(yy) {[[AlisServiceProxy shareManager] performSelector:NSSelectorFromString([@"resume_"  stringByAppendingFormat:@"%@_%@", yy,NSStringFromClass([self class])])];}
 
-#define cancelService(yy) {[AlisServiceProxy shareManager].currentServiceAgent = self;\
-[[AlisServiceProxy shareManager] performSelector:NSSelectorFromString([@"cancel_"  stringByAppendingFormat:@"%@", yy])];}
+#define cancelService(yy) {[[AlisServiceProxy shareManager] performSelector:NSSelectorFromString([@"cancel_"  stringByAppendingFormat:@"%@_%@", yy,NSStringFromClass([self class])])];}
 
-#define suspendService(yy) {[AlisServiceProxy shareManager].currentServiceAgent = self;\
-[[AlisServiceProxy shareManager] performSelector:NSSelectorFromString([@"suspend_"  stringByAppendingFormat:@"%@", yy])];}
+#define suspendService(yy) {[[AlisServiceProxy shareManager] performSelector:NSSelectorFromString([@"suspend_"  stringByAppendingFormat:@"%@_%@", yy,NSStringFromClass([self class])])];}
 
 #define ServiceEqual(yy,xx) ([yy isEqualToString:xx])
 
@@ -43,13 +44,10 @@
 
 + (AlisServiceProxy *)shareManager;
 
-@property(copy,nonatomic)NSString *currentServiceName;
-
-
 /**
- 当前服务的agent，例如AlisViewController网络请求，
+ 委托服务类的集合
  */
-@property(strong,nonatomic)id<AlisRequestProtocol> currentServiceAgent;
+@property(strong,nonatomic)NSMutableDictionary *serviceAgents;
 
 @end
 

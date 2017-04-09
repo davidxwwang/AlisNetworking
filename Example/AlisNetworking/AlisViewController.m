@@ -57,7 +57,7 @@ static NSString *testApi = @"/1442142801331138639111.mp4";
 
 - (void)normalRequest{
    // resumeService(@"AskDemo");
-    resumeService1(@"AskCitieslist");
+    resumeService(@"AskCitieslist");
     // resumeService(@"uploadData");
 }
 

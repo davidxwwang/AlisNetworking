@@ -15,6 +15,7 @@
 #define ResumeResource @"resume"
 #define CancelResource @"cancel"
 #define SuspendResource @"suspend"
+
 //  首先查找订阅的服务（网络接口）
 //对资源的操作包括：
 //   （1）对资源的操作。
@@ -35,45 +36,35 @@ void fetchCandidateRequestServices()
 }
 
 void requestContainer(id self, SEL _cmd) {
-    //当前服务的类
-    id<AlisRequestProtocol> currentServiceAgent = nil;    
-    
-    if ([self isKindOfClass:[AlisServiceProxy class]]) {
-        currentServiceAgent = ((AlisServiceProxy *)self).currentServiceAgent;
-        if (currentServiceAgent == nil) {
-            NSLog(@"服务的类不存在，请检查");
-            return;
-        }
-    }
-    NSString *currentServiceAgentString = NSStringFromClass([currentServiceAgent class]);
-    NSDictionary *agentRequestServices = candidateRequestServices[currentServiceAgentString];
-    if (agentRequestServices == nil) {
-        NSLog(@"plist 中没有为 配置请求服务");
-        return;
-    }
-    // NSDictionary *requestServices = ((id<AlisRequestProtocol>)self).candidateServices;
-    
+
     NSArray *serviceArray = [NSStringFromSelector(_cmd) componentsSeparatedByString:@"_"];
-    if(serviceArray.count < 2) return;
-    
-    NSString *serviceAction = serviceArray[0];
-    NSString *localServiceName = serviceArray[1];
-    
-    //如果该类的服务项目不包括该项服务,就终止请求
-    //消息转发过来,如果requestServices = nil，从注册的地方在查找
-    if (![[agentRequestServices allKeys] containsObject:localServiceName]){
-        NSLog(@"在plist中没有为该服务配置对应的数据");
+    if(serviceArray.count != 3){
+        NSLog(@"注意：对资源的访问格式有问题");
         return;
     } 
     
+    NSString *serviceAction = serviceArray[0];
+    NSString *localServiceName = serviceArray[1];
+    NSString *currentServiceAgentString = serviceArray[2];
+    
+    NSDictionary *requestServiceInfo = candidateRequestServices[localServiceName];
+    if (requestServiceInfo == nil) {
+        NSLog(@"plist 中没有为该服务配置请求服务");
+        return;
+    }
     //之后的AlisRequest唯一绑定一个serviceName，表示请求为这个网络请求的service服务 
     //注意：globalServiceName 为该服务的唯一全局的识别码
-    NSString *globalServiceName = [NSString stringWithFormat:@"%@_%@",NSStringFromClass([currentServiceAgent class]),localServiceName];
+    NSString *globalServiceName = [NSString stringWithFormat:@"%@_%@",currentServiceAgentString,localServiceName];
     
-    // 这个好像做成属性不太好，因为是实时变化的
-    NSDictionary* serviceType = agentRequestServices[localServiceName];
-    ServiceType ser= [Service convertServiceTypeFromString:serviceType[@"protocol"]];
+    ServiceType ser= [Service convertServiceTypeFromString:requestServiceInfo[@"protocol"]];
     ServiceAction action= [Service convertServiceActionFromString:serviceAction];
+    
+    NSDictionary *cc = ((AlisServiceProxy *)self).serviceAgents;
+    id currentServiceAgent = cc[currentServiceAgentString];
+    
+    if( currentServiceAgent == nil){
+        NSLog(@"%@ 没有注册服务，请先调用 'injectService' 方法注册服务",currentServiceAgentString);
+    }
     
     Service *currentService = [[Service alloc]init:ser serviceName:globalServiceName serviceAction:action serviceAgent:currentServiceAgent];
     
@@ -85,11 +76,6 @@ void requestContainer(id self, SEL _cmd) {
 }
 
 @interface AlisServiceProxy ()
-/**
- 委托者
- */
-@property(strong,nonatomic)NSMutableDictionary *serviceAgents;
-
 @end
 
 @implementation AlisServiceProxy
@@ -121,8 +107,7 @@ void requestContainer(id self, SEL _cmd) {
                 if ([request.context.makeRequestClass respondsToSelector:@selector(handlerServiceResponse:serviceName:response:)]) {
                     NSString *name = request.serviceName;
                     
-                    
-//                    [request.context.makeRequestClass handlerServiceResponse:request serviceName:[request.serviceName toLocalServiceName] response:response];
+                    [request.context.makeRequestClass handlerServiceResponse:request serviceName:[request.serviceName toLocalServiceName] response:response];
                 }
             }
         };
@@ -236,11 +221,9 @@ void requestContainer(id self, SEL _cmd) {
         return nil;
     }
     
-    NSString *agentClass = sep[0];
-    NSString *agentServiceAction = sep[1];
+    NSString *resourceName = sep[1];
     
-    NSDictionary *agentClassKeys = candidateRequestServices[agentClass];
-    NSDictionary *agentServiceActionKeys = agentClassKeys[agentServiceAction];
+    NSDictionary *agentServiceActionKeys = candidateRequestServices[resourceName];
     NSString *value = agentServiceActionKeys[type];
     return value;
     
