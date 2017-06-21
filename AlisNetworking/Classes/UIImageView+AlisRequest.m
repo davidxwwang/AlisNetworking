@@ -20,7 +20,7 @@ dispatch_sync(dispatch_get_main_queue(), block);\
 
 @implementation UIImageView (AlisRequest)
 
-- (void)alis_setImageWithURL:(NSURL *)url placeholderImage:(UIImage *)placeholder options:(NSUInteger)options progress:(AlisRequestProgressBlock)progressBlock completed:(AlisRequestFinishBlock)completedBlock {
+- (void)alis_setImageWithURL:(NSURL *)url whichPlugin:(whichPlugin)whichPlugin placeholderImage:(UIImage *)placeholder options:(NSUInteger)options progress:(AlisRequestProgressBlock)progressBlock completed:(AlisRequestFinishBlock)completedBlock {
     
    // [self cancelCurrentImageLoad];
     self.image = placeholder;

@@ -10,18 +10,29 @@
 
 @implementation AlisRequestConfig
 
+- (instancetype)init{
+    if (self == [super init]) {
+        self.callBackQueue = dispatch_queue_create("AlisRequest", DISPATCH_QUEUE_CONCURRENT);
+    }
+    return self;
+}
+
+- (void)setApplicationCircumstance:(ApplicationServiceType)applicationCircumstance{
+    _applicationCircumstance = applicationCircumstance;
+
+}
+
 @end
 
 @implementation AlisResponse
 
-- (instancetype)initWithInfo:(NSDictionary *)info
-{
+- (instancetype)initWithInfo:(NSDictionary *)info{
     if (self == [super init]) {
         self.responseInfo = info;
     }
-    
     return self;
 }
+
 @end
 
 

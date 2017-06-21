@@ -5,18 +5,21 @@
 //  Created by xingwang.wxw on 04/05/2017.
 //  Copyright (c) 2017 xingwang.wxw. All rights reserved.
 //
-#import "AlisJsonParseProtocol.h"
+#import "AlisJsonParsePluginProtocol.h"
 #import "AlisJsonParseManager.h"
 #import "CityInfo.h"
 #import "AlisPluginManager.h"
 #import "AlisRequestManager.h"
 #import "AlisServiceProxy.h"
 #import "AlisViewController.h"
+#import "AlisJsonParserProtocol.h"
+#import "UIImageView+AlisRequest.h"
+#import "AlisJsonModel.h"
 
 static NSString *testServer = @"http://baobab.wdjcdn.com";
 static NSString *testApi = @"/1442142801331138639111.mp4";
 
-@interface AlisViewController ()<AlisRequestProtocol>
+@interface AlisViewController ()<AlisRequestProtocol,AlisJsonParserProtocol>
 @end
 
 @implementation AlisViewController
@@ -27,13 +30,9 @@ static NSString *testApi = @"/1442142801331138639111.mp4";
     [[AlisPluginManager manager]registerALLPlugins];
     [[AlisRequestManager sharedManager] setupConfig:^(AlisRequestConfig *config) {
         config.generalServer = testServer;
-        config.callBackQueue = dispatch_queue_create("david", DISPATCH_QUEUE_CONCURRENT);
         config.enableSync = NO;
         // config.generalHeader = @{@"xx":@"yy"};
-        
     }];
-    
-   
     
     UIButton *button = [[UIButton alloc]initWithFrame:CGRectMake(0, 100, 100, 50)];
     [button setTitle:@"链式请求" forState:UIControlStateNormal];
@@ -63,6 +62,11 @@ static NSString *testApi = @"/1442142801331138639111.mp4";
 
 - (void)cancelNormalRequest{
     suspendService(@"uploadData");
+    UIImageView *image = [[UIImageView alloc]init];
+    [image alis_setImageWithURL:[NSURL URLWithString:@"https://oneimg.oss-cn-hangzhou.aliyuncs.com/xu01_test/20161207/1481090430466.jpg"] placeholderImage:nil options:0 progress:nil completed:^(AlisRequest *request, AlisResponse *response, AlisError *error) {
+        NSLog(@"");
+        
+    }];
 }
 
 - (void)chainRequest{
@@ -155,13 +159,10 @@ static NSString *testApi = @"/1442142801331138639111.mp4";
 //    return nil;
 //}
 
-- (void)handlerServiceResponse:(AlisRequest *)request serviceName:(NSString *)serviceName response:(AlisResponse *)response{
-    if (ServiceEqual(serviceName, @"AskDemo")) { 
+- (void)handlerServiceResponse:(AlisRequest *)request serviceName:(NSString *)serviceName response:(id)response{
+    if (ServiceEqual(serviceName, @"AskDemo")) {
     }
-      request.parseClass = @"CityInfo";
-    AlisJsonParseManager *manager = [AlisJsonParseManager sharedManager];
-    id<AlisJsonParseProtocol> plugin = [manager plugin:@"EXTensionParse"];
-    id demo = [plugin parseJsonValue:NSClassFromString(request.parseClass) jsonData:response.responseInfo ];
+    
     NSLog(@"%@ back",serviceName);
 }
 
@@ -171,6 +172,17 @@ static NSString *testApi = @"/1442142801331138639111.mp4";
     
     NSLog(@"%@ back",serviceName);
 }
+
+- (AlisJsonModel *)parserBaseJsonValue:(NSDictionary *)jsonData{
+    NSAssert(jsonData, @"JSON 数据为空");
+    AlisJsonModel *jsonModel = [[AlisJsonModel alloc]init];
+    jsonModel.resMsg = jsonData[@"xx"];
+    jsonModel.resCode = 0;
+    jsonModel.data = jsonData[@"data"];
+    
+    return jsonModel;
+}
+
 
 @end
 

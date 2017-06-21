@@ -89,7 +89,11 @@
 }
 
 - (void)startRequestModel:(id<AlisRequestProtocol>)requestModel service:(Service *)service{
-    // if (![self canRequest:requestModel]) return;
+    if (![self canRequest:requestModel]){
+        NSLog(@"网络中断，无法访问");
+        return;
+    }
+        
     //request 请求的回调都在该类中
     ServiceAction serviceAction = service.serviceAction;
     if (serviceAction == Resume) {

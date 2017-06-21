@@ -77,6 +77,19 @@
             NSLog(@"'httpMethod' 没有设置，默认在AlisRequest中设置");
         }
     }
+    
+    /*************************接口返回JSON数据的解析类************************/
+    if ([service.serviceAgent respondsToSelector:@selector(parseClass:)]) {
+        request.parseClass = [service.serviceAgent parseClass:localServiceName];
+    }
+    
+    if (request.parseClass == nil) {
+        if ([requestModel respondsToSelector:@selector(api:)]) {
+            request.parseClass = [requestModel parseClass:request.context.serviceName];
+        }else{
+            NSLog(@"'parseClass' 没有设置，这个需要手动设置");
+        }
+    }
     /***************************设置请求URL**************************/
     /************************由域名和相对路径组成**********************/
     if ([service.serviceAgent respondsToSelector:@selector(api:)]) {

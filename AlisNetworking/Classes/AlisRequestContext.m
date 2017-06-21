@@ -41,7 +41,7 @@
     
     NSNumber *status = userinfo[AFNetworkingReachabilityNotificationStatusItem];
     
-    self.networkReachabilityStatus = AlisNetworkReachabilityStatusReachableViaWiFi;
+    self.networkReachabilityStatus = status;
     
     
     //    AFNetworkReachabilityStatus reachStatus = userinfo[AFNetworkingReachabilityNotificationStatusItem];

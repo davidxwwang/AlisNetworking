@@ -19,9 +19,10 @@ typedef void(^AlisRequestProgressRequest)(AlisRequest *request ,long long receiv
 /**
  解析接口返回的JSON数据的类
 
- @return return 解析接口返回的JSON数据的类
+ @param serviceName 资源名称
+ @return 解析接口返回的JSON数据的类
  */
-- (Class)parseClass;
+- (NSString *)parseClass:(NSString *)serviceName;
 
 - (AlisRequestType)requestType:(NSString *)serviceName;
 //相对路径
@@ -44,10 +45,6 @@ typedef void(^AlisRequestProgressRequest)(AlisRequest *request ,long long receiv
 //当前服务的容器，成员是字典，key 为服务的全局名称，value为发出服务请求的类（类型为“Service”）
 @property(strong,nonatomic)NSMutableDictionary *currentServeContainer;
 
-
-//可以提供服务的项目
-@property(strong,nonatomic)NSDictionary *candidateServices;
-
 //或者可以改为代理
 @property(copy,nonatomic)AlisRequestFinishRequest businessLayer_requestFinishBlock;
 @property(copy,nonatomic)AlisRequestProgressRequest businessLayer_requestProgressBlock;
@@ -61,7 +58,7 @@ typedef void(^AlisRequestProgressRequest)(AlisRequest *request ,long long receiv
 - (NSDictionary *)additionalInfo:(NSString *)serviceName;
 
 //处理访问资源后的结果
-- (void)handlerServiceResponse:(AlisRequest *)request  serviceName:(NSString *)serviceName  response:(AlisResponse *)response;
+- (void)handlerServiceResponse:(AlisRequest *)request  serviceName:(NSString *)serviceName  response:(id)response;
 
 /**
  访问资源的程度，一般是http 上传下载

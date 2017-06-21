@@ -8,8 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
+typedef NSString *(^whichPlugin) (NSArray *plugins);
+
 @interface UIImageView (AlisRequest)
 
-- (void)alis_setImageWithURL:(NSURL *)url placeholderImage:(UIImage *)placeholder options:(NSUInteger)options progress:(AlisRequestProgressBlock)progressBlock completed:(AlisRequestFinishBlock)completedBlock ;    
+- (void)alis_setImageWithURL:(NSURL *)url placeholderImage:(UIImage *)placeholder options:(NSUInteger)options progress:(AlisRequestProgressBlock)progressBlock completed:(AlisRequestFinishBlock)completedBlock ; 
+
+- (void)alis_setImageWithURL:(NSURL *)url  whichPlugin:(whichPlugin)whichPlugin placeholderImage:(UIImage *)placeholder options:(NSUInteger)options progress:(AlisRequestProgressBlock)progressBlock completed:(AlisRequestFinishBlock)completedBlock ;
 
 @end

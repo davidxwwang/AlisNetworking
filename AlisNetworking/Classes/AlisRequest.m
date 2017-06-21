@@ -25,7 +25,7 @@
         _useGeneralParameters = YES;
         
         _requestType = AlisRequestNormal;
-        _httpMethod = AlisHTTPMethodPOST;
+        _httpMethod = AlisHTTPMethodGET;
         _bindRequestModel = nil;
         _retryCount = 3;
         

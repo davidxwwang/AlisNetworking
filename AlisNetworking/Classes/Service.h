@@ -49,13 +49,16 @@ typedef NS_ENUM(NSInteger, ServiceType) {
 /**
  服务的类
  */
-@property(strong,nonatomic,readonly)id serviceAgent;
+@property(strong,nonatomic,readonly)id serviceAgent;//requestDelegate
 
 /**
  服务返回后的解释类，HTTP中接口返回后的解释类
  */
-@property(copy,nonatomic,readonly)NSString *parseClass;
+@property(copy,nonatomic,readonly)NSString *parseClass;// responseModel
 
-
+/**
+ 服务返回后的基础解释类，HTTP中接口返回后的基础解释类
+ */
+@property(copy,nonatomic,readonly)NSString *baseParseClass;// responseModel
 
 @end

@@ -12,6 +12,8 @@
 #import "service.h"
 #import "NSString+help.h"
 
+#import "AlisJsonParseManager.h"
+
 #define ResumeResource @"resume"
 #define CancelResource @"cancel"
 #define SuspendResource @"suspend"
@@ -24,8 +26,8 @@
 //APP中所有的请求服务都保存在该字典中
 static NSDictionary *candidateRequestServices;
 
-void fetchCandidateRequestServices()
-{
+void fetchCandidateRequestServices(){
+    
     if (candidateRequestServices != nil) return;
     NSString *plistPath = @"/Users/david/Documents/AlisNetworking/AlisNetworking/Classes/RequestConfig.plist";
     
@@ -43,8 +45,8 @@ void requestContainer(id self, SEL _cmd) {
         return;
     } 
     
-    NSString *serviceAction = serviceArray[0];
-    NSString *localServiceName = serviceArray[1];
+    NSString *serviceAction             = serviceArray[0];
+    NSString *localServiceName          = serviceArray[1];
     NSString *currentServiceAgentString = serviceArray[2];
     
     NSDictionary *requestServiceInfo = candidateRequestServices[localServiceName];
@@ -68,11 +70,12 @@ void requestContainer(id self, SEL _cmd) {
     
     Service *currentService = [[Service alloc]init:ser serviceName:globalServiceName serviceAction:action serviceAgent:currentServiceAgent];
     
+    //如果连续两次同样请求
     if (globalServiceName && currentService) {
         ((id<AlisRequestProtocol>)self).currentServeContainer[globalServiceName] = currentService;
     }
-    [[AlisRequestManager sharedManager]startRequestModel:self service:currentService];
     
+    [[AlisRequestManager sharedManager]startRequestModel:self service:currentService];
 }
 
 @interface AlisServiceProxy ()
@@ -80,7 +83,7 @@ void requestContainer(id self, SEL _cmd) {
 
 @implementation AlisServiceProxy
 
-@synthesize currentServeContainer,candidateServices,businessLayer_requestFinishBlock,businessLayer_requestProgressBlock;
+@synthesize currentServeContainer,businessLayer_requestFinishBlock,businessLayer_requestProgressBlock;
 
 + (AlisServiceProxy *)shareManager{
     static AlisServiceProxy *_manager = nil;
@@ -105,9 +108,7 @@ void requestContainer(id self, SEL _cmd) {
             }
             else{
                 if ([request.context.makeRequestClass respondsToSelector:@selector(handlerServiceResponse:serviceName:response:)]) {
-                    NSString *name = request.serviceName;
-                    
-                    [request.context.makeRequestClass handlerServiceResponse:request serviceName:[request.serviceName toLocalServiceName] response:response];
+                    [weakSelf parseJSONData:request response:response];
                 }
             }
         };
@@ -150,7 +151,7 @@ void requestContainer(id self, SEL _cmd) {
     _serviceAgents[classString] = object;
 }
 
-- (void)handlerServiceResponse:(AlisRequest *)request serviceName:(NSString *)serviceName response:(AlisResponse *)response{
+- (void)handlerServiceResponse:(AlisRequest *)request serviceName:(NSString *)serviceName response:(id)response{
 }
 
 - (void)handlerServiceResponse:(AlisRequest *)request serviceName:(NSString *)serviceName progress:(float)progress{
@@ -196,6 +197,13 @@ void requestContainer(id self, SEL _cmd) {
     return nil;
 }
 
+- (NSString *)parseClass:(NSString *)serviceName{
+    NSString *parseClass = [self getParam:@"parseClass" serviceName:serviceName];
+    if (parseClass){
+        return parseClass;
+    }
+    return nil;
+}
 
 - (AlisRequestType)requestType:(NSString *)serviceName{
     return AlisRequestNormal;
@@ -209,9 +217,35 @@ void requestContainer(id self, SEL _cmd) {
     return AlisHTTPMethodGET;
 }
 
-#pragma mark -- help
-- (NSString *)getParam:(NSString *)type serviceName:(NSString *)globalServiceName{
-    NSParameterAssert(type && globalServiceName);
+#pragma mark -- help --
+
+/**
+ JSON--->Model 解析
+ 考虑json格式错误
+ */
+- (void)parseJSONData:(AlisRequest *)request response:(AlisResponse *)response{
+    
+    id<AlisRequestProtocol> requestObject = request.context.makeRequestClass;
+    if (requestObject == nil) {
+        NSLog(@"发出该资源请求的类不存在");
+        return;
+    }
+    AlisJsonParseManager *manager = [AlisJsonParseManager sharedManager];
+    id parsedData = [manager parseJsonValue:requestObject parseClass:NSClassFromString(request.parseClass) plunginKey:@"EXTensionParse" jsonData:response.responseInfo];
+    
+    [requestObject handlerServiceResponse:request serviceName:[request.serviceName toLocalServiceName] response:parsedData];
+}
+
+
+/**
+ 从plist文件中读取资源的相关信息
+
+ @param resourceSubkey 资源子信息的名称 
+ @param globalServiceName 资源全局名称
+ @return 资源子信息的数据，例如 server，api等值
+ */
+- (NSString *)getParam:(NSString *)resourceSubkey serviceName:(NSString *)globalServiceName{
+    NSParameterAssert(resourceSubkey && globalServiceName);
     
     Service *service = self.currentServeContainer[globalServiceName];
     NSArray *sep = [globalServiceName componentsSeparatedByString:@"_"];
@@ -224,7 +258,7 @@ void requestContainer(id self, SEL _cmd) {
     NSString *resourceName = sep[1];
     
     NSDictionary *agentServiceActionKeys = candidateRequestServices[resourceName];
-    NSString *value = agentServiceActionKeys[type];
+    NSString *value = agentServiceActionKeys[resourceSubkey];
     return value;
     
 }

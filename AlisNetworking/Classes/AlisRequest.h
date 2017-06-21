@@ -59,7 +59,7 @@
 @property (nonatomic, assign) AlisRequestType requestType;
 
 /**
- 请求的HTTP方法, 默认`AlisHTTPMethodPOST`
+ 请求的HTTP方法, 默认`AlisHTTPMethodGET`
  */
 @property (nonatomic, assign) AlisHTTPMethodType httpMethod;
 
@@ -88,7 +88,7 @@
 /**
  下载路径
  */
-@property(copy,nonatomic)NSString *downloadPath;
+@property(copy,nonatomic,nullable)NSString *downloadPath;
 
 @end
 
@@ -96,7 +96,7 @@
 //上传文件，都需要以下信息
 @interface AlisUpLoadFormData : NSObject
 
-@property(copy,nonatomic)NSString *name;
+@property(copy,nonatomic,nonnull)NSString *name;
 @property(copy,nonatomic,nullable)NSString *fileName;
 
 //fileData优先级更高一些
@@ -105,7 +105,7 @@
 
 @property(copy,nonatomic,nullable)NSString *mimeType;
 
-+ (instancetype)formUploadDataWithName:(NSString *)name fileData:(NSData *)fileData;
-+ (instancetype)formUploadDataWithName:(NSString *)name fileURL:(NSURL *)fileURL;
++ (instancetype)formUploadDataWithName:(NSString * _Nonnull)name fileData:(NSData *)fileData;
++ (instancetype)formUploadDataWithName:(NSString * _Nonnull)name fileURL:(NSURL * _Nonnull)fileURL;
 
 @end
