@@ -63,9 +63,13 @@ static NSString *testApi = @"/1442142801331138639111.mp4";
 - (void)cancelNormalRequest{
     suspendService(@"uploadData");
     UIImageView *image = [[UIImageView alloc]init];
-    [image alis_setImageWithURL:[NSURL URLWithString:@"https://oneimg.oss-cn-hangzhou.aliyuncs.com/xu01_test/20161207/1481090430466.jpg"] placeholderImage:nil options:0 progress:nil completed:^(AlisRequest *request, AlisResponse *response, AlisError *error) {
-        NSLog(@"");
+    [image alis_setImageWithURL:@"https://oneimg.oss-cn-hangzhou.aliyuncs.com/xu01_test/20161207/1481090430466.jpg" whichPlugin:^NSString *(NSArray *plugins) {
+        return @"SDWebimage";
         
+    } placeholderImage:nil options:0 progress:^(AlisRequest *request, long long receivedSize, long long expectedSize) {
+        
+    } completed:^(AlisRequest *request, AlisResponse *response, AlisError *error) {
+         NSLog(@"finished");
     }];
 }
 

@@ -49,5 +49,10 @@
  */
 @property(strong,nonatomic)NSMutableDictionary *serviceAgents;
 
+/**
+ 可以提供服务项目的集合
+ */
+@property(strong,nonatomic)NSDictionary *candidateRequestServices;
+
 @end
 

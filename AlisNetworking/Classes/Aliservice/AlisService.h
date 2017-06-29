@@ -7,6 +7,7 @@
 //
 #import "AlisHttpServiceItem.h"
 #import "AlisRequestProtocol.h"
+#import "AlisServiceProxy.h"
 #import <Foundation/Foundation.h>
 
 typedef NS_ENUM(NSInteger, ServiceAction) {
@@ -27,10 +28,14 @@ typedef NS_ENUM(NSInteger, ServiceType) {
 
 @interface AlisService : NSObject<NSCopying>
 
-+ (ServiceType)convertServiceTypeFromString:(NSString *)yy;
-+ (ServiceAction)convertServiceActionFromString:(NSString *)yy;
+/**
+ 产生一项服务
 
-- (instancetype)init:(ServiceType)serviceType serviceName:(NSString *)serviceName serviceAction:(ServiceAction)serviceAction serviceAgent:(id)serviceAgent;
+ @param globalService 全局服务名称
+ @param serviceProxy 服务代理
+ */
+- (instancetype)initWith:(NSArray *)globalService 
+                    serviceProxy:(AlisServiceProxy *)serviceProxy;
 
 /**
  包含网络请求的信息
@@ -60,7 +65,7 @@ typedef NS_ENUM(NSInteger, ServiceType) {
 /**
  服务返回后的解释类，HTTP中接口返回后的解释类
  */
-@property(copy,nonatomic,readonly)NSString *parseClass;// responseModel
+//@property(copy,nonatomic,readonly)NSString *parseClass;// responseModel
 
 /**
  服务返回后的基础解释类，HTTP中接口返回后的基础解释类

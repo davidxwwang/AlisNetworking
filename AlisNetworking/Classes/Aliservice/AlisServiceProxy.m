@@ -25,23 +25,6 @@
 //   （2）取消对资源的操作（资源目前的状态是操作过程中，例如：大文件的下载，上传）
 //   （3）暂停对资源的操作
 //APP中所有的请求服务都保存在该字典中
-static NSDictionary *candidateRequestServices;
-
-/**
- 从plist中读取网络请求的配置，例如 服务器地址，api，请求方式(get/post etc)等
- */
-void fetchCandidateRequestServices(){
-    
-    if (candidateRequestServices != nil) return;
-    candidateRequestServices = [[AlisServicesManager sharedManager]allAlisServices];
-//    NSString *plistPath = @"/Users/david/Documents/AlisNetworking/AlisNetworking/Classes/RequestConfig.plist";
-//    
-//    if (![[NSFileManager defaultManager] fileExistsAtPath:plistPath]) return;
-//    
-//    NSDictionary *availableRequestServices = [[NSDictionary alloc]initWithContentsOfFile:plistPath];
-//    candidateRequestServices = [NSDictionary dictionaryWithDictionary:availableRequestServices];
-}
-
 
 /**
  分解请求，并向AlisRequestManager发出请求
@@ -55,31 +38,8 @@ void requestContainer(id self, SEL _cmd) {
         NSLog(@"注意：对资源的访问格式有问题");
         return;
     } 
-    
-    NSString *serviceAction             = serviceArray[0];
-    NSString *localServiceName          = serviceArray[1];
-    NSString *currentServiceAgentString = serviceArray[2];
-    
-    AlisHttpServiceItem *alisHttpServiceItem = candidateRequestServices[localServiceName];
-    if (alisHttpServiceItem == nil) {
-        NSLog(@"没有为该服务配置请求服务");
-        return;
-    }
-    //之后的AlisRequest唯一绑定一个serviceName，表示请求为这个网络请求的service服务 
-    //注意：globalServiceName 为该服务的唯一全局的识别码
-    NSString *globalServiceName = [NSString stringWithFormat:@"%@_%@",currentServiceAgentString,localServiceName];
-    
-    NSDictionary *cc = ((AlisServiceProxy *)self).serviceAgents;
-    id currentServiceAgent = cc[currentServiceAgentString];
-    if( currentServiceAgent == nil){
-        NSLog(@"%@ 没有注册服务，请先调用 'injectService' 方法注册服务",currentServiceAgentString);
-    }
-    
-    AlisService *currentService = [[AlisService alloc]init];
-    currentService.HttpServiceItem = alisHttpServiceItem;
-    currentService.serviceName = globalServiceName;
-    currentService.serviceAgent = currentServiceAgent;
-    
+    AlisService *currentService = [[AlisService alloc]initWith:serviceArray serviceProxy:(AlisServiceProxy *)self];
+    NSString *globalServiceName = currentService.serviceName;
     //如果连续两次同样请求
     if (globalServiceName && currentService) {
         ((id<AlisRequestProtocol>)self).currentServeContainer[globalServiceName] = currentService;
@@ -89,8 +49,8 @@ void requestContainer(id self, SEL _cmd) {
 }
 
 
-
 @interface AlisServiceProxy ()
+
 @end
 
 @implementation AlisServiceProxy
@@ -107,9 +67,14 @@ void requestContainer(id self, SEL _cmd) {
     return _manager;
 }
 
+- (void)fetchCandidateRequestServices{
+    if (_candidateRequestServices != nil) return;
+    _candidateRequestServices = [[AlisServicesManager sharedManager]allAlisServices];
+}
+
 - (instancetype)init{
     if (self = [super init]) {
-        fetchCandidateRequestServices();
+        [self fetchCandidateRequestServices];
         self.serviceAgents = [NSMutableDictionary dictionary];
         __weak typeof (self) weakSelf = self;
         self.businessLayer_requestFinishBlock = ^(AlisRequest *request ,AlisResponse *response ,AlisError *error){
@@ -272,7 +237,7 @@ void requestContainer(id self, SEL _cmd) {
     
     NSString *resourceName = sep[1];
     
-    NSDictionary *agentServiceActionKeys = candidateRequestServices[resourceName];
+    NSDictionary *agentServiceActionKeys = _candidateRequestServices[resourceName];
     NSString *value = agentServiceActionKeys[resourceSubkey];
     return value;
     
