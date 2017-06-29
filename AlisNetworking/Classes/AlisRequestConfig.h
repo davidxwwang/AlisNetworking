@@ -57,9 +57,11 @@ typedef enum {
 
 @interface AlisResponse : NSObject
 
-- (instancetype)initWithInfo:(NSDictionary *)info;
+@property(assign,nonatomic)NSInteger responseCode;
+@property(copy  ,nonatomic)NSString  * _Nullable responseMSG;
+@property(strong,nonatomic)NSDictionary * _Nullable responseInfo;
 
-@property(strong,nonatomic)NSDictionary *responseInfo;
+- (instancetype)initWithInfo:(NSDictionary *_Nullable)info;
 
 @end
 

@@ -16,6 +16,10 @@ typedef void(^AlisRequestProgressRequest)(AlisRequest *request ,long long receiv
 
 @protocol AlisRequestProtocol <NSObject>
 
+//添加请求前后的处理
+- (id)beforeRequest:(id)data;
+- (id)afterRequest:(id)data;
+
 /**
  解析接口返回的JSON数据的类
 

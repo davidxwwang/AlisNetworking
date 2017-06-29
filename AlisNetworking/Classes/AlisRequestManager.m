@@ -11,8 +11,9 @@
 #import "AlisRequestConfig.h"
 #import "AlisPluginManager.h"
 #import "AlisRequestConst.h"
-#import "Service.h"
+#import "AlisService.h"
 #import "AlisRequestManager+AlisRequest.h"
+typedef NSDictionary *(^ PreRequestBlcok) (void);
 
 #define ALIS_SAFE_BLOCK(BlockName, ...) ({ !BlockName ? nil : BlockName(__VA_ARGS__); })
 
@@ -21,6 +22,9 @@
 @property(weak,nonatomic) id<AlisRequestProtocol>requestModel;
 
 @property(strong,nonatomic)AlisPluginManager *pluginManager;
+
+//请求前的预处理BLOCK，可能加一些服务器定制的东西，例如：时间戳等
+@property(copy,nonatomic)PreRequestBlcok preRequestBlcok;
 
 @end
 
@@ -50,6 +54,13 @@
     return self;
 }
 
+- (NSMutableDictionary *)requestSet{
+    if (_requestSet == nil) {
+        _requestSet = [NSMutableDictionary dictionary];
+    }
+    return _requestSet;
+}
+
 #pragma mark -- config
 - (void)setupConfig:(void (^)(AlisRequestConfig *config))block
 {
@@ -57,38 +68,15 @@
     block(__config);
     self.config = __config;
     
+    self.preRequestBlcok = ^NSDictionary *(void) {
+        //eg 时间戳
+//        NSString *timestampString = [NSString stringWithFormat:@"%ld",(long)[[NSDate date] timeIntervalSince1970] ];
+//        return @[@"timestamp":timestampString];
+        return nil;
+    };
 }
 
-- (void)startRequest:(AlisRequest *)request{
-    
-    //查找合适的plugin
-//    NSDictionary *allPlugins = [self.pluginManager allPlugins];
-//    for (NSString *pluginKey in allPlugins.allKeys) {
-//        id<AlisPluginProtocol> plugin = [self.pluginManager plugin:pluginKey];
-//        NSArray *temp = [plugin supportSevervice];
-//        NSLog(@"！");
-//    }
-    
-    id<AlisPluginProtocol> plugin = [self.pluginManager plugin:@"AFNetwoking"];
-    if (plugin == nil) {
-        NSLog(@"对应的插件不存在！");
-        return;
-    }
-    
-    //在这里解析两部分，一部分是公共的--AlisRequestConfig，一部分是自己的,
-    [plugin perseRequest:request config:_config];
-    //设置请求的MD5值。注：可以有其他方式
-    request.identifier = [request.url md5WithString];
-    NSString *requestIdentifer = request.context.serviceName;
-    if (requestIdentifer) {
-        (self.requestSet)[requestIdentifer] = request;
-    }
-    else{
-        NSLog(@"warning: 请求资源的名称不能为空");
-    }
-}
-
-- (void)startRequestModel:(id<AlisRequestProtocol>)requestModel service:(Service *)service{
+- (void)startRequestModel:(id<AlisRequestProtocol>)requestModel service:(AlisService *)service{
     if (![self canRequest:requestModel]){
         NSLog(@"网络中断，无法访问");
         return;
@@ -100,6 +88,8 @@
         [self start_Request:^(AlisRequest *request) {
             request.bindRequestModel = requestModel; //绑定业务层对应的requestModel
             request.serviceName = service.serviceName;
+            
+            request.preParameters = self.preRequestBlcok();
             [self prepareRequest:request requestModel:requestModel service:service];
             //如果是同步请求
             if (self.config.enableSync) {
@@ -115,7 +105,7 @@
     }
 }
 
-- (void)start_Request:(AlisRequestConfigBlock)requestConfigBlock service:(Service *)service{
+- (void)start_Request:(AlisRequestConfigBlock)requestConfigBlock service:(AlisService *)service{
     AlisRequest *request = nil;
     if (service) {
         AlisRequest *_request = self.requestSet[service.serviceName];
@@ -131,11 +121,38 @@
     }
 }
 
-- (NSMutableDictionary *)requestSet{
-    if (_requestSet == nil) {
-        _requestSet = [NSMutableDictionary dictionary];
+#pragma mark --- 对Request的操作 ---
+/**
+ 发出请求
+ @param request 封装的请求
+ */
+- (void)startRequest:(AlisRequest *)request{
+    //查找合适的plugin
+    //    NSDictionary *allPlugins = [self.pluginManager allPlugins];
+    //    for (NSString *pluginKey in allPlugins.allKeys) {
+    //        id<AlisPluginProtocol> plugin = [self.pluginManager plugin:pluginKey];
+    //        NSArray *temp = [plugin supportSevervice];
+    //        NSLog(@"！");
+    //    }
+    
+    id<AlisPluginProtocol> plugin = [self.pluginManager plugin:@"AFNetwoking"];
+    if (plugin == nil) {
+        NSLog(@"对应的插件不存在！");
+        return;
     }
-    return _requestSet;
+    
+    //设置请求的MD5值。注：可以有其他方式
+    request.identifier = [request.url md5WithString];
+    NSString *requestIdentifer = request.context.serviceName; 
+    if (requestIdentifer) {
+        (self.requestSet)[requestIdentifer] = request;
+    }
+    else{
+        NSLog(@"warning: 请求资源的名称不能为空");
+    }
+    
+    //plugin发出请求，在这里解析两部分，一部分是公共的--AlisRequestConfig，一部分是自己的,
+    [plugin perseRequest:request config:_config];
 }
 
 - (void)cancelRequest:(AlisRequest *)request{
@@ -171,9 +188,9 @@
     [self suspendRequest:request];
 }
 
-#pragma mark ---
+#pragma mark --- 
 //访问网络前的最后准备，准备好请求地址，头head，参数parameters，body，url，回调方法等等
-- (void)prepareRequest:(AlisRequest *)request requestModel:(id<AlisRequestProtocol>)requestModel service:(Service *)service{
+- (void)prepareRequest:(AlisRequest *)request requestModel:(id<AlisRequestProtocol>)requestModel service:(AlisService *)service{
     [self adapteAlisRequest:request requestModel:requestModel service:service];
 }
 
@@ -237,7 +254,6 @@
     
     return YES;
 }
-
 
 #pragma mark -- https
 - (void)addSSLPinningURL:(NSString *)url {

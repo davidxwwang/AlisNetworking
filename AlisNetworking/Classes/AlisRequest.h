@@ -47,6 +47,8 @@
 
 //请求参数
 @property(strong,nonatomic,nullable) NSDictionary<NSString *,id> *parameters;
+//请求前强加的参数，eg：时间戳
+@property(strong,nonatomic) NSDictionary<NSString *,id> *preParameters;
 
 //请求头
 @property(strong,nonatomic,nullable) NSDictionary<NSString *,NSString *> *header;

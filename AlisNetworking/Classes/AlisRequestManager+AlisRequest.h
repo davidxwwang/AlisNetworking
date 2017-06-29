@@ -10,6 +10,6 @@
 
 @interface AlisRequestManager (AlisRequest)
 
-- (AlisRequest *)adapteAlisRequest:(AlisRequest *)request requestModel:(id<AlisRequestProtocol>)requestModel service:(Service *)service;
+- (AlisRequest *)adapteAlisRequest:(AlisRequest *)request requestModel:(id<AlisRequestProtocol>)requestModel service:(AlisService *)service;
 
 @end

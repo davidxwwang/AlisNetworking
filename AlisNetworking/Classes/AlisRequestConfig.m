@@ -28,7 +28,10 @@
 
 - (instancetype)initWithInfo:(NSDictionary *)info{
     if (self == [super init]) {
-        self.responseInfo = info;
+        //todo 适配型
+        self.responseCode = [info[@"res_code"] integerValue];
+        self.responseMSG =  info[@"res_msg"];
+        self.responseInfo = info[@"data"];
     }
     return self;
 }

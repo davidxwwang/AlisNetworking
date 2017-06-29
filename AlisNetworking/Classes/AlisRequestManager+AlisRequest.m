@@ -7,25 +7,26 @@
 //
 
 /**
- 按照转过来的参数，组装AlisRequest
+ 按照传过来的参数，组装AlisRequest
 
  @param AlisRequest 
  @return 
  
  */
-#import "Service.h"
+#import "AlisService.h"
 #import "AlisRequestManager+AlisRequest.h"
 #import "NSString+help.h"
 
 @implementation AlisRequestManager (AlisRequest)
 
-- (AlisRequest *)adapteAlisRequest:(AlisRequest *)request requestModel:(id<AlisRequestProtocol>)requestModel service:(Service *)service{
+- (AlisRequest *)adapteAlisRequest:(AlisRequest *)request requestModel:(id<AlisRequestProtocol>)requestModel service:(AlisService *)service{
     //设置请求的上下文
     request.context.makeRequestClass = service.serviceAgent;
     request.context.serviceName = service.serviceName;
     NSString *localServiceName = [request.context.serviceName toLocalServiceName];
     // NSAssert([requestModel respondsToSelector:@selector(api)], @"request API should not nil");
-    /***************************设置请求类型（上传／下载等）**************************/
+    /*****************
+     **********设置请求类型（上传／下载等）**************************/
     if ([service.serviceAgent respondsToSelector:@selector(requestType:)]) {
         request.requestType = [service.serviceAgent requestType:localServiceName];
     }
@@ -84,8 +85,8 @@
     }
     
     if (request.parseClass == nil) {
-        if ([requestModel respondsToSelector:@selector(api:)]) {
-            request.parseClass = [requestModel parseClass:request.context.serviceName];
+        if (service.HttpServiceItem.parseClass) {
+            request.parseClass = service.HttpServiceItem.parseClass;
         }else{
             NSLog(@"'parseClass' 没有设置，这个需要手动设置");
         }
@@ -97,8 +98,8 @@
     }
     
     if (request.api == nil) {
-        if ([requestModel respondsToSelector:@selector(api:)]) {
-            request.api = [requestModel api:request.context.serviceName];
+        if (service.HttpServiceItem.api) {
+            request.api = service.HttpServiceItem.api;
         }else{
             NSLog(@"'api' 没有设置，这个必须手动设置");
         }
@@ -109,8 +110,8 @@
     }
         
     if (request.server == nil) {
-        if ([requestModel respondsToSelector:@selector(server:)]) {
-            request.server = [requestModel server:request.context.serviceName];
+        if (service.HttpServiceItem.server) {
+            request.server = service.HttpServiceItem.server;
         }
         
         if ( request.server == nil && request.useGeneralServer == YES){
@@ -153,26 +154,29 @@
     if ([service.serviceAgent respondsToSelector:@selector(requestParams:)]) {
         NSDictionary *params = [service.serviceAgent requestParams:localServiceName];
         if(params){
-            [header addEntriesFromDictionary:params];
+            [parameters addEntriesFromDictionary:params];
         }
     }
     if ([requestModel respondsToSelector:@selector(requestParams:)]) {
         NSDictionary *params = [requestModel requestParams:request.context.serviceName];
         if(params){
-            [header addEntriesFromDictionary:params];
+            [parameters addEntriesFromDictionary:params];
         }
     }
     if (request.useGeneralParameters) {
         NSDictionary *params = self.config.generalParamters;
         if(params){
-            [header addEntriesFromDictionary:params];
+            [parameters addEntriesFromDictionary:params];
         }
     }
+    
+    if (request.preParameters ) {
+         [parameters addEntriesFromDictionary:request.preParameters];
+    }
     if (parameters == nil || parameters.count == 0) {
-        NSLog(@"'head' 一无所有");
+        NSLog(@"'请求参数' 一无所有");
     }
     request.parameters = parameters;
-    
     /***************************设置请求的回调**************************/
     request.finishBlock = ^(AlisRequest *request ,AlisResponse *response ,AlisError *error){
         if(self.config.enableSync){

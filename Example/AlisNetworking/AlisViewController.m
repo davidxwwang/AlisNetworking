@@ -173,15 +173,15 @@ static NSString *testApi = @"/1442142801331138639111.mp4";
     NSLog(@"%@ back",serviceName);
 }
 
-- (AlisJsonModel *)parserBaseJsonValue:(NSDictionary *)jsonData{
-    NSAssert(jsonData, @"JSON 数据为空");
-    AlisJsonModel *jsonModel = [[AlisJsonModel alloc]init];
-    jsonModel.resMsg = jsonData[@"xx"];
-    jsonModel.resCode = 0;
-    jsonModel.data = jsonData[@"data"];
-    
-    return jsonModel;
-}
+//- (AlisJsonModel *)parserBaseJsonValue:(NSDictionary *)jsonData{
+//    NSAssert(jsonData, @"JSON 数据为空");
+//    AlisJsonModel *jsonModel = [[AlisJsonModel alloc]init];
+//    jsonModel.resMsg = jsonData[@"xx"];
+//    jsonModel.resCode = 0;
+//    jsonModel.data = jsonData[@"data"];
+//    
+//    return jsonModel;
+//}
 
 
 @end

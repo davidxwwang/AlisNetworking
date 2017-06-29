@@ -5,14 +5,33 @@
 //  Created by xingwang.wxw on 04/05/2017.
 //  Copyright (c) 2017 xingwang.wxw. All rights reserved.
 //
-
+#import "AlisServicesManager.h"
 #import "AlisAppDelegate.h"
+#import "AlisHttpServiceItem.h"
+#import <MJExtension/MJExtension.h>
 
 @implementation AlisAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // Override point for customization after application launch.
+    //demo
+    NSString *plistPath = @"/Users/david/Documents/AlisNetworking/AlisNetworking/Classes/RequestConfig.plist";
+    
+    NSDictionary *availableRequestServices = [[NSDictionary alloc]initWithContentsOfFile:plistPath];
+    NSDictionary *candidateRequestServices = [NSDictionary dictionaryWithDictionary:availableRequestServices];
+    
+    NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+    [candidateRequestServices enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
+        NSDictionary *_obj = (NSDictionary *)obj;
+        AlisHttpServiceItem *item = [AlisHttpServiceItem mj_objectWithKeyValues:_obj];
+        if (item) {
+              [dic setObject:item forKey:key];
+        }
+    }];
+    
+    [[AlisServicesManager sharedManager]registerServices:dic];
+
     return YES;
 }
 

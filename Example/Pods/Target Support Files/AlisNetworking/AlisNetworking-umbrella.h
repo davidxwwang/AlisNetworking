@@ -10,6 +10,10 @@
 #endif
 #endif
 
+#import "AlisHttpServiceItem.h"
+#import "AlisService.h"
+#import "AlisServiceProxy.h"
+#import "AlisServicesManager.h"
 #import "AlisRequest.h"
 #import "AlisRequestConfig.h"
 #import "AlisRequestConst.h"
@@ -17,7 +21,6 @@
 #import "AlisRequestManager+AlisRequest.h"
 #import "AlisRequestManager.h"
 #import "AlisRequestProtocol.h"
-#import "AlisServiceProxy.h"
 #import "AFNetworkingPlugin.h"
 #import "AlisPluginManager.h"
 #import "AlisPluginProtocol.h"
@@ -28,7 +31,6 @@
 #import "AlisJsonParsePluginProtocol.h"
 #import "AlisJsonParserProtocol.h"
 #import "EXTensionParse.h"
-#import "Service.h"
 #import "CookieManager.h"
 #import "NSString+help.h"
 #import "UIImageView+AlisRequest.h"

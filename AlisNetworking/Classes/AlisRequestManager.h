@@ -10,6 +10,7 @@
 #import "AlisPluginProtocol.h"
 #import "AlisRequestProtocol.h"
 #import "AlisRequestContext.h"
+#import "AlisService.h"
 #import <Foundation/Foundation.h>
 
 @interface AlisRequestManager : NSObject
@@ -43,7 +44,7 @@
  @param requestModel requestModel AlisServiceProxy
  @param service service 保存发出请求类的信息
  */
-- (void)startRequestModel:(id<AlisRequestProtocol> _Nonnull)requestModel service:(Service * _Nonnull)service;
+- (void)startRequestModel:(id<AlisRequestProtocol> _Nonnull)requestModel service:(AlisService * _Nonnull)service;
 
 - (void)cancelRequest:(AlisRequest * _Nonnull)request;
 
