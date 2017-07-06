@@ -10,7 +10,7 @@
 #define AlisRequestConst_h
 #import <Foundation/Foundation.h>
 
-@class AlisRequest,AlisChainRequest,AlisRequestManager,AlisError,AlisResponse;
+@class AlisRequest,AlisChainRequest,AlisRequestManager,AlisError,AlisResponse,AlisBatchRequest;
 /**
  网络状况
  */
@@ -53,10 +53,15 @@ typedef void(^AlisRequestConfigBlock)( AlisRequest *_Nonnull request);
 typedef void (^AlisChainNextRBlock)(AlisRequest *_Nonnull request, id _Nullable responseObject, AlisError * __nullable error);
 
 typedef void (^AlisChainRConfigBlock)( AlisChainRequest * _Nonnull request);
+typedef void (^AlisBatchRequestConfigBlock)(AlisBatchRequest * _Nonnull batchRequest);
 
 typedef void(^AlisChainRSucessBlock)(NSArray * __nullable responseArray);
 typedef void(^AlisChainRFailBlock)(NSArray * __nullable errorArray);
 typedef void(^AlisChainRFinishedBlock)(NSArray * _Nonnull responseArray ,NSArray * __nullable errorArray);
+
+typedef void(^AlisBatchRSucessBlock)(NSArray * __nullable responseArray);
+typedef void(^AlisBatchRFailBlock)(NSArray * __nullable errorArray);
+typedef void(^AlisBatchRFinishedBlock)(NSArray * _Nonnull responseArray ,NSArray * __nullable errorArray);
 
 
 #endif /* AliRequestConst_h */

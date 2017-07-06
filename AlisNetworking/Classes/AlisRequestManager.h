@@ -69,14 +69,20 @@
 - (void)failureWithError:(AlisError * _Nullable)error withRequest:(AlisRequest *)request;
 - (void)successWithResponse:(AlisResponse * _Nullable)response withRequest:(AlisRequest * _Nullable)request;
 
-- (void)sendChainRequest:
-(AlisChainRConfigBlock)chainRequestConfigBlock
-                 success:(AlisChainRSucessBlock)success
-                 failure:(AlisChainRFailBlock)failure
-                  finish:(AlisChainRFinishedBlock)finish;
+- (void)sendChainRequest:(AlisChainRConfigBlock)chainRequestConfigBlock
+                 success:(nullable AlisChainRSucessBlock)success
+                 failure:(nullable AlisChainRFailBlock)failure
+                  finish:(nullable AlisChainRFinishedBlock)finish;
+
+- (void)sendBatchRequest:(AlisBatchRequestConfigBlock)batchRequestConfigBlock
+               onSuccess:(nullable AlisBatchRSucessBlock)successBlock
+               onFailure:(nullable AlisBatchRFailBlock)failureBlock
+              onFinished:(nullable AlisBatchRFinishedBlock)finishedBlock;
 
 @end
 
+
+#pragma mark - AlisChainRequest
 /**
  V1版 把所有结果都返回，暂时不要管太多
  */
@@ -95,5 +101,26 @@
 - (BOOL)onFinishedOneRequest:(AlisRequest *)request response:(nullable id)responseObject error:(nullable AlisError *)error;
 
 @end
+
+#pragma mark - AlisBatchRequest
+
+///------------------------------------------------------
+/// @name XMBatchRequest Class for sending batch requests
+///------------------------------------------------------
+
+@interface AlisBatchRequest : NSObject
+
+- (instancetype)initWithBlocks:(AlisBatchRSucessBlock)success
+                       failure:(AlisBatchRFailBlock)failure
+                        finish:(AlisBatchRFinishedBlock)finish;
+
+@property (nonatomic, copy, readonly) NSString *identifier;
+@property (nonatomic, strong, readonly) NSMutableArray *requestArray;
+@property (nonatomic, strong, readonly) NSMutableArray *responseArray;
+
+- (BOOL)onFinishedRequest:(AlisRequest *)request response:(nullable id)responseObject error:(nullable NSError *)error;
+
+@end
+
 
 

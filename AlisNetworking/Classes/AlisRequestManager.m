@@ -128,12 +128,12 @@ typedef NSDictionary *(^ PreRequestBlcok) (void);
  */
 - (void)startRequest:(AlisRequest *)request{
     //查找合适的plugin
-    //    NSDictionary *allPlugins = [self.pluginManager allPlugins];
-    //    for (NSString *pluginKey in allPlugins.allKeys) {
-    //        id<AlisPluginProtocol> plugin = [self.pluginManager plugin:pluginKey];
-    //        NSArray *temp = [plugin supportSevervice];
-    //        NSLog(@"！");
-    //    }
+    NSDictionary *allPlugins = [self.pluginManager allPlugins];
+    for (NSString *pluginKey in allPlugins.allKeys) {
+        id<AlisPluginProtocol> plugin = [self.pluginManager plugin:pluginKey];
+        NSArray *temp = [plugin supportSevervice];
+        NSLog(@"！");
+    }
     
     id<AlisPluginProtocol> plugin = [self.pluginManager plugin:@"AFNetwoking"];
     if (plugin == nil) {
@@ -364,6 +364,53 @@ typedef NSDictionary *(^ PreRequestBlcok) (void);
     }
 }
 
+- (void)sendBatchRequest:(AlisBatchRequestConfigBlock)batchRequestConfigBlock
+               onSuccess:(nullable AlisBatchRSucessBlock)successBlock
+               onFailure:(nullable AlisBatchRFailBlock)failureBlock
+              onFinished:(nullable AlisBatchRFinishedBlock)finishedBlock{
+    AlisBatchRequest *batchRequest = [[AlisBatchRequest alloc] init];
+    ALIS_SAFE_BLOCK(batchRequestConfigBlock, batchRequest);
+    
+    if (batchRequest.requestArray.count > 0) {
+        AlisBatchRequest *batchRequest = [[AlisBatchRequest alloc] initWithBlocks:successBlock failure:failureBlock finish:finishedBlock];
+        
+        [batchRequest.responseArray removeAllObjects];
+        for (AlisRequest *request in batchRequest.requestArray) {
+            [batchRequest.responseArray addObject:[NSNull null]];
+            __weak __typeof(self)weakSelf = self;
+            id<AlisPluginProtocol> plugin = [self.pluginManager plugin:@"AFNetwoking"];
+                    //在这里解析两部分，一部分是公共的--AlisRequestConfig，一部分是自己的,
+            [self prepareRequest:request onProgress:^(AlisRequest *request, long long receivedSize, long long expectedSize) {
+            } onSuccess:^(AlisRequest *request, AlisResponse *response, AlisError *error) {
+                [weakSelf handerBatchResponse:batchRequest request:request response:response error:error];
+            }  
+              onFailure:^(AlisRequest *request, AlisResponse *response, AlisError *error) {
+                [weakSelf handerBatchResponse:batchRequest request:request response:response error:error];
+            } onFinished:^(AlisRequest *request, AlisResponse *response, AlisError *error) {
+                [weakSelf handerBatchResponse:batchRequest request:request response:response error:error];
+            }];
+                    
+            [plugin perseRequest:request config:_config];
+        }
+        
+//        NSString *identifier = [self xm_identifierForBatchAndChainRequest];
+//        [batchRequest setValue:identifier forKey:@"_identifier"];
+//        XMLock();
+//        [self.runningBatchAndChainPool setValue:batchRequest forKey:identifier];
+//        XMUnlock();
+        
+        //return identifier;
+    } else {
+       // return nil;
+    }
+}
+
+- (void)handerBatchResponse:(AlisBatchRequest *)batchRequest request:(AlisRequest *)request response:(AlisResponse *)response error:(AlisError *)error{
+    if (batchRequest) {
+        [batchRequest onFinishedRequest:batchRequest response:response error:error];
+    }
+}
+
 @end
 
 #pragma mark -- AlisChainRequest
@@ -495,4 +542,89 @@ typedef NSDictionary *(^ PreRequestBlcok) (void);
 }
 
 @end
+
+#pragma mark - AlisBatchRequest
+
+@interface AlisBatchRequest () {
+    dispatch_semaphore_t _lock;
+    NSUInteger _finishedCount;
+    BOOL _failed;
+}
+@property (nonatomic, copy) AlisBatchRSucessBlock batchSuccessBlock;
+@property (nonatomic, copy) AlisBatchRFailBlock batchFailureBlock;
+@property (nonatomic, copy) AlisBatchRFinishedBlock batchFinishedBlock;
+
+@end
+
+@implementation AlisBatchRequest
+
+- (instancetype)init {
+    self = [super init];
+    if (!self) {
+        return nil;
+    }
+    
+    _failed = NO;
+    _finishedCount = 0;
+    _lock = dispatch_semaphore_create(1);
+    
+    _requestArray = [NSMutableArray array];
+    _responseArray = [NSMutableArray array];
+    return self;
+}
+
+- (instancetype)initWithBlocks:(AlisBatchRSucessBlock)success
+                       failure:(AlisBatchRFailBlock)failure
+                        finish:(AlisBatchRFinishedBlock)finish{
+    self = [super init];
+    if (self) {
+        _failed = NO;
+        _finishedCount = 0;
+        _lock = dispatch_semaphore_create(1);
+        
+        _requestArray = [NSMutableArray array];
+        _responseArray = [NSMutableArray array];
+        
+        _batchSuccessBlock = success? success:nil;
+        _batchFailureBlock = failure? failure:nil;
+        _batchFinishedBlock = finish? finish :nil; 
+    }
+    return self;
+}
+
+- (BOOL)onFinishedRequest:(AlisRequest *)request response:(id)responseObject error:(NSError *)error {
+    BOOL isFinished = NO;
+    NSUInteger index = [_requestArray indexOfObject:request];
+    if (responseObject) {
+        [_responseArray replaceObjectAtIndex:index withObject:responseObject];
+    } else {
+        _failed = YES;
+        if (error) {
+            [_responseArray replaceObjectAtIndex:index withObject:error];
+        }
+    }
+    
+    _finishedCount++;
+    if (_finishedCount == _requestArray.count) {
+        if (!_failed) {
+            ALIS_SAFE_BLOCK(_batchSuccessBlock, _responseArray);
+            ALIS_SAFE_BLOCK(_batchFinishedBlock, _responseArray, nil);
+        } else {
+            ALIS_SAFE_BLOCK(_batchFailureBlock, _responseArray);
+            ALIS_SAFE_BLOCK(_batchFinishedBlock, _responseArray, nil);
+        }
+        [self cleanCallbackBlocks];
+        isFinished = YES;
+    }
+    return YES;
+}
+
+- (void)cleanCallbackBlocks {
+    _batchSuccessBlock = nil;
+    _batchFailureBlock = nil;
+    _batchFinishedBlock = nil;
+}
+
+@end
+
 

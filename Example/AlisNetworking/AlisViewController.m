@@ -28,6 +28,8 @@ static NSString *testApi = @"/1442142801331138639111.mp4";
     [super viewDidLoad];
     [[AlisServiceProxy shareManager] injectService:self];
     [[AlisPluginManager manager]registerALLPlugins];
+    NSDictionary *plugins = @{@"AFNetwoking":@"AFNetworkingPlugin",@"SDWebimage":@"SDWebimagePlugin"};
+    //[[AlisPluginManager manager]re];
     [[AlisRequestManager sharedManager] setupConfig:^(AlisRequestConfig *config) {
         config.generalServer = testServer;
         config.enableSync = NO;
@@ -104,6 +106,32 @@ static NSString *testApi = @"/1442142801331138639111.mp4";
         NSLog(@"链式请求结束了 不容易啊");
     }]; 
 }
+
+- (void)batchRequest{
+    [[AlisRequestManager sharedManager]sendBatchRequest:^(AlisBatchRequest * _Nonnull batchRequest) {
+        AlisRequest *request1 = [AlisRequest request];
+        request1.url = @"https://httpbin.org/get";
+        request1.httpMethod = AlisHTTPMethodGET;
+        request1.parameters = @{@"method": @"get"};
+        
+        AlisRequest *request2 = [AlisRequest request];
+        request2.url = @"https://httpbin.org/post";
+        request2.httpMethod = AlisHTTPMethodPOST;
+        request2.parameters = @{@"method": @"post"};
+        
+        [batchRequest.requestArray addObject:request1];
+        [batchRequest.requestArray addObject:request2];
+        
+    } onSuccess:^(NSArray * _Nullable responseArray) {
+        
+    } onFailure:^(NSArray * _Nullable errorArray) {
+        
+    } onFinished:^(NSArray * _Nonnull responseArray, NSArray * _Nullable errorArray) {
+        
+    }];
+    
+}
+
 
 #pragma mark -- http 
 - (AlisRequestType)requestType:(NSString *)serviceName{
