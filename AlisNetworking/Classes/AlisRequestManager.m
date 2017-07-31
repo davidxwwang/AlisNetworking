@@ -368,12 +368,10 @@ typedef NSDictionary *(^ PreRequestBlcok) (void);
                onSuccess:(nullable AlisBatchRSucessBlock)successBlock
                onFailure:(nullable AlisBatchRFailBlock)failureBlock
               onFinished:(nullable AlisBatchRFinishedBlock)finishedBlock{
-    AlisBatchRequest *batchRequest = [[AlisBatchRequest alloc] init];
+    AlisBatchRequest *batchRequest = [[AlisBatchRequest alloc] initWithBlocks:successBlock failure:failureBlock finish:finishedBlock];
     ALIS_SAFE_BLOCK(batchRequestConfigBlock, batchRequest);
     
     if (batchRequest.requestArray.count > 0) {
-        AlisBatchRequest *batchRequest = [[AlisBatchRequest alloc] initWithBlocks:successBlock failure:failureBlock finish:finishedBlock];
-        
         [batchRequest.responseArray removeAllObjects];
         for (AlisRequest *request in batchRequest.requestArray) {
             [batchRequest.responseArray addObject:[NSNull null]];
@@ -407,7 +405,7 @@ typedef NSDictionary *(^ PreRequestBlcok) (void);
 
 - (void)handerBatchResponse:(AlisBatchRequest *)batchRequest request:(AlisRequest *)request response:(AlisResponse *)response error:(AlisError *)error{
     if (batchRequest) {
-        [batchRequest onFinishedRequest:batchRequest response:response error:error];
+        [batchRequest onFinishedRequest:request response:response error:error];
     }
 }
 

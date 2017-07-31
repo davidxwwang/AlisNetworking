@@ -15,6 +15,8 @@
 #import "AlisJsonParserProtocol.h"
 #import "UIImageView+AlisRequest.h"
 #import "AlisJsonModel.h"
+#import <AEDatakit/AEDatakit.h>
+#import "AFNetworkingPlugin2.h"
 
 static NSString *testServer = @"http://baobab.wdjcdn.com";
 static NSString *testApi = @"/1442142801331138639111.mp4";
@@ -26,21 +28,29 @@ static NSString *testApi = @"/1442142801331138639111.mp4";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [[AlisServiceProxy shareManager] injectService:self];
-    [[AlisPluginManager manager]registerALLPlugins];
-    NSDictionary *plugins = @{@"AFNetwoking":@"AFNetworkingPlugin",@"SDWebimage":@"SDWebimagePlugin"};
-    //[[AlisPluginManager manager]re];
-    [[AlisRequestManager sharedManager] setupConfig:^(AlisRequestConfig *config) {
-        config.generalServer = testServer;
-        config.enableSync = NO;
-        // config.generalHeader = @{@"xx":@"yy"};
-    }];
+    
+    AEDKHttpServiceConfiguration *config = [AEDKHttpServiceConfiguration defaultConfiguration];
+    AEDKService *service = [[AEDKService alloc] initWithName:@"askCityList" protocol:@"http" domain:@"test.alisports.com" path:@"/v4/gym/citieslist" serviceConfiguration:config];
+    [[AEDKServer server] registerService:service];
+    
+    [[AEDKServer server] addDelegate:[[AFNetworkingPlugin2 alloc]init]];
+    
+
+//    [[AlisServiceProxy shareManager] injectService:self];
+//    //[[AlisPluginManager manager]registerALLPlugins];
+//    NSDictionary *plugins = @{@"AFNetwoking":@"AFNetworkingPlugin",@"SDWebimage":@"SDWebimagePlugin"};
+//    [[AlisPluginManager manager]registerPlugins:plugins];
+//    [[AlisRequestManager sharedManager] setupConfig:^(AlisRequestConfig *config) {
+//        config.generalServer = testServer;
+//        config.enableSync = NO;
+//        // config.generalHeader = @{@"xx":@"yy"};
+//    }];
     
     UIButton *button = [[UIButton alloc]initWithFrame:CGRectMake(0, 100, 100, 50)];
     [button setTitle:@"链式请求" forState:UIControlStateNormal];
     button.backgroundColor = [UIColor redColor];
     [self.view addSubview:button];
-    [button addTarget:self action:@selector(chainRequest) forControlEvents:UIControlEventTouchUpInside];
+    [button addTarget:self action:@selector(chainRequest) forControlEvents:UIControlEventTouchUpInside];//batchRequest
     
     UIButton *button2 = [[UIButton alloc]initWithFrame:CGRectMake(100, 200, 100, 50)];
     [button2 setTitle:@"一般请求" forState:UIControlStateNormal];
@@ -58,8 +68,25 @@ static NSString *testApi = @"/1442142801331138639111.mp4";
 
 - (void)normalRequest{
    // resumeService(@"AskDemo");
-    resumeService(@"AskCitieslist");
+    //resumeService(@"AskCitieslist");
     // resumeService(@"uploadData");
+    
+    AEDKProcess *process = [[AEDKServer server] requestServiceWithName:@"askCityList"];
+    process.configuration.BeforeProcess = ^AEDKServiceConfiguration * _Nonnull(AEDKServiceConfiguration * _Nonnull currentconfiguration) {
+        NSLog(@"Before Process Callback.");
+        return currentconfiguration;
+    };
+    process.configuration.Processing = ^(int64_t totalAmount, int64_t currentAmount, NSURLRequest * _Nonnull currentRequest) {
+        NSLog(@"Processing Callback.");
+    };
+    process.configuration.AfterProcess = ^id _Nonnull(id  _Nullable responseData) {
+        NSLog(@"After Process Callback.");
+        return responseData;
+    };
+    process.configuration.ProcessCompleted = ^(AEDKProcess * _Nonnull currentProcess, NSError * _Nonnull error, id  _Nullable responseModel) {
+        NSLog(@"Process Completed Callback.");
+    };
+    [process start];
 }
 
 - (void)cancelNormalRequest{
@@ -125,8 +152,10 @@ static NSString *testApi = @"/1442142801331138639111.mp4";
     } onSuccess:^(NSArray * _Nullable responseArray) {
         
     } onFailure:^(NSArray * _Nullable errorArray) {
+        NSLog(@"batch请求 failure");
         
     } onFinished:^(NSArray * _Nonnull responseArray, NSArray * _Nullable errorArray) {
+        NSLog(@"batch请求结束了 不容易啊");
         
     }];
     

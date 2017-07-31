@@ -13,14 +13,15 @@
 
 @implementation SDWebimagePlugin
 
-- (void)perseRequest:(AlisRequest *)request config:(AlisRequestConfig *)config
-{
-    [self startRequest:request config:config];
-    
+- (NSArray *)supportSevervice{
+    return @[@"Image"];
 }
 
-- (void)startRequest:(AlisRequest *)request config:(AlisRequestConfig *)config
-{
+- (void)perseRequest:(AlisRequest *)request config:(AlisRequestConfig *)config{
+    [self startRequest:request config:config];
+}
+
+- (void)startRequest:(AlisRequest *)request config:(AlisRequestConfig *)config{
     //第三方的请求发起
     NSURL *requestURL = [NSURL URLWithString:request.url];    
     request.bindRequest = [[SDWebImageManager sharedManager] loadImageWithURL:requestURL options:SDWebImageContinueInBackground progress:^(NSInteger receivedSize, NSInteger expectedSize, NSURL * _Nullable targetURL) {
@@ -37,8 +38,7 @@
     }];    
 }
 
-- (AlisResponse *)perseResponse:(id)rawResponse request:(AlisRequest *)request
-{
+- (AlisResponse *)perseResponse:(id)rawResponse request:(AlisRequest *)request{
     if ( !rawResponse || ![rawResponse isKindOfClass:[UIImage class]]) {
         return nil;
     }
@@ -47,8 +47,7 @@
     return response;
 }
 
-- (AlisError *)perseError:(id)rawError
-{
+- (AlisError *)perseError:(id)rawError{
     if (!rawError || ![rawError isKindOfClass:[NSError class]]) {
         return nil;
     }

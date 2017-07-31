@@ -18,6 +18,12 @@
 + (AlisRequest *)request;
 
 /**
+ 将dataRequrest转化为AlisRequest
+*/
++ (AlisRequest *)convertFromDataRequrest:(NSURLRequest *)dataRequrest;
+
+
+/**
  解析接口返回JSON数据的类
  */
 @property(copy,nonatomic)NSString *parseClass;

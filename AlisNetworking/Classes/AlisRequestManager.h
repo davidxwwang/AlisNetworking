@@ -110,13 +110,13 @@
 
 @interface AlisBatchRequest : NSObject
 
-- (instancetype)initWithBlocks:(AlisBatchRSucessBlock)success
-                       failure:(AlisBatchRFailBlock)failure
-                        finish:(AlisBatchRFinishedBlock)finish;
-
 @property (nonatomic, copy, readonly) NSString *identifier;
 @property (nonatomic, strong, readonly) NSMutableArray *requestArray;
 @property (nonatomic, strong, readonly) NSMutableArray *responseArray;
+
+- (instancetype)initWithBlocks:(AlisBatchRSucessBlock)success
+                       failure:(AlisBatchRFailBlock)failure
+                        finish:(AlisBatchRFinishedBlock)finish;
 
 - (BOOL)onFinishedRequest:(AlisRequest *)request response:(nullable id)responseObject error:(nullable NSError *)error;
 

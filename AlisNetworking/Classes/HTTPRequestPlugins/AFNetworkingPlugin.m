@@ -4,7 +4,7 @@
 //
 //  Created by alisports on 2017/2/24.
 //  Copyright © 2017年 alisports. All rights reserved.
-//
+//  任务完成或者任务取消 NSMutableURLRequest类型request需要设置为nil
 
 #import "AFNetworkingPlugin.h"
 #import "AFNetworking.h"
@@ -19,6 +19,10 @@
 @end
 
 @implementation AFNetworkingPlugin
+
+- (NSArray *)supportSevervice{
+    return @[@"HTTP",@"Image"];
+}
 
 - (void)perseRequest:(AlisRequest *)request config:(AlisRequestConfig *)config{
     [self startRequest:request config:config];
@@ -42,12 +46,12 @@
         }];
     } error:&serializationError];
 
-    NSURLSessionTask *task2 = [_sessionManager dataTaskWithRequest:urlRequest uploadProgress:^(NSProgress * _Nonnull uploadProgress) {
+    NSURLSessionTask *uploadTask = [_sessionManager dataTaskWithRequest:urlRequest uploadProgress:^(NSProgress * _Nonnull uploadProgress) {
+        if (request.progressBlock) {
+            request.progressBlock(request,uploadProgress.completedUnitCount,uploadProgress.totalUnitCount);
+        }
     
     } downloadProgress:^(NSProgress * _Nonnull downloadProgress) {
-        if (request.progressBlock) {
-            request.progressBlock(request,downloadProgress.completedUnitCount,downloadProgress.totalUnitCount);
-        }
     } completionHandler:^(NSURLResponse * _Nonnull response, id  _Nullable responseObject, NSError * _Nullable error) {
         NSLog(@"finished"  );
         if (request.finishBlock) {
@@ -56,15 +60,20 @@
             request.finishBlock(request,response,_error);
     }}];
 
-    request.bindRequest = task2;
-    [task2 resume];
+    request.bindRequest = uploadTask;
+    [uploadTask resume];
 
 }
 
 - (void)download:(AlisRequest *)request config:(AlisRequestConfig *)config{
+    if(request.bindRequest){
+        [request.bindRequest resume];
+        return;
+    }
+
     NSString *httpMethod = [self httpMethodConverter:request.httpMethod];
     NSAssert(httpMethod, @"httpMethod can not be nil");
-        
+    
     NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
     AFURLSessionManager *manager = [[AFURLSessionManager alloc] initWithSessionConfiguration:configuration];
     
@@ -76,7 +85,7 @@
             request.progressBlock(request,downloadProgress.completedUnitCount,downloadProgress.totalUnitCount);
         }
     } destination:^NSURL * _Nonnull(NSURL * _Nonnull targetPath, NSURLResponse * _Nonnull response) {
-        NSString *__path = [NSString stringWithFormat:@"%@%@",@"file://localhost/",request.downloadPath];
+       // NSString *__path = [NSString stringWithFormat:@"%@%@",@"file://localhost/",request.downloadPath];
         return [NSURL URLWithString:request.downloadPath];
         
     } completionHandler:^(NSURLResponse * _Nonnull response, NSURL * _Nullable filePath, NSError * _Nullable error) {
@@ -116,10 +125,9 @@
         NSLog(@"finished"  );
         if (request.finishBlock) {
             AlisResponse *response = [self perseResponse:responseObject request:request];
-            AlisError *_error = [self perseError:error];
+            AlisError *_error = [self parseError:error response:response];
             request.finishBlock(request,response,_error);
         }
-        
     }];
     
     request.bindRequest = task;
@@ -172,25 +180,25 @@
     NSDictionary *data = (NSDictionary *)rawResponse;
     AlisResponse *response = [[AlisResponse alloc]initWithInfo:data];
     return response;
-
-//    if ( !rawResponse || ![rawResponse isKindOfClass:[UIImage class]]) {
-//        return nil;
-//    }
-//    NSDictionary *data = @{@"image":rawResponse};
-//    AlisResponse *response = [[AlisResponse alloc]initWithInfo:data];
-//    return response;
 }
 
-- (AlisError *)perseError:(id)rawError
-{
-    if (!rawError || ![rawError isKindOfClass:[NSError class]]) {
-        return nil;
+- (AlisError *)parseError:(id)rawError response:(AlisResponse *)response{
+    AlisError *_error = nil;
+    if (rawError) {
+        _error = [[AlisError alloc]init];
+        _error.code = ((NSError *)rawError).code;
+        _error.name = ((NSError *)rawError).domain;
+        _error.userInfo = ((NSError *)rawError).userInfo;
     }
-    
-    AlisError *_error = [[AlisError alloc]init];
-    _error.code = ((NSError *)rawError).code;
-    _error.name = ((NSError *)rawError).domain;
-    _error.userInfo = ((NSError *)rawError).userInfo;
+    else if (response){
+        //todo: 扩展性
+        if (response.responseCode != 0 ) {
+            _error = [[AlisError alloc]init];
+            _error.code = ((AlisResponse *)rawError).responseCode;
+            _error.userInfo = @{@"message":((AlisResponse *)rawError).responseMSG};
+
+        }
+    }
     return _error;
 }
 

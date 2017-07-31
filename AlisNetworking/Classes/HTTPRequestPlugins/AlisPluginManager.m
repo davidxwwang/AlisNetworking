@@ -41,10 +41,10 @@ NSArray* MSArrayFromMainBundle(NSString *filename){
 
 @interface AlisPluginManager ()
 
-//提供服务的plugin
+//提供服务的plugin  <value = NSString>
 @property(strong,nonatomic)NSMutableDictionary *pluginsServiceDictionary;
 
-//real plugin
+//real plugin <value = class>
 @property(strong,nonatomic)NSMutableDictionary *pluginsDictionary;
 
 @end
@@ -71,17 +71,30 @@ NSArray* MSArrayFromMainBundle(NSString *filename){
 
 
 #pragma mark -- plugin
-- (void)registerPlugin:(id<AlisPluginProtocol>)plugin key:(NSString *)key
-{
+- (void)registerPlugin:(id<AlisPluginProtocol>)plugin key:(NSString *)key{
+    NSAssert(key, @"key should not nil");
+    NSAssert(self.pluginsDictionary  || self.pluginsDictionary.count > 0, @"pluginsDictionary has problems");
+    
+    if (plugin == nil) return;
+    //这里应该判断是否有重复的key
+    self.pluginsServiceDictionary[key] = plugin;
 }
 
-- (void)registerPlugin:(NSString *)key
-{
+- (void)registerPlugins:(NSDictionary *)pluginsDic{
+    if (pluginsDic == nil) return;
+    [self.pluginsServiceDictionary addEntriesFromDictionary:pluginsDic];
+}
+
+- (void)registerPlugin:(NSString *)key{
 }
 
 - (void)removePlugin:(NSString *)key{
     NSParameterAssert(key);
     //[self.pluginsDictionary removeObjectForKey:pluginList];
+}
+
+- (NSArray *)allPlugins{
+    return [self.pluginsServiceDictionary copy];
 }
 
 - (void)registerALLPlugins{

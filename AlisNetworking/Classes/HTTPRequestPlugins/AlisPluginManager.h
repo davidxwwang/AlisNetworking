@@ -14,6 +14,8 @@
 
 - (void)registerPlugin:(id<AlisPluginProtocol>)plugin key:(NSString *)key;
 
+- (void)registerPlugins:(NSDictionary *)pluginsDic;
+
 
 //在plist文件中
 - (void)registerPlugin:(NSString *)key;
@@ -21,6 +23,8 @@
 - (void)removePlugin:(NSString *)key;
 
 - (void)registerALLPlugins;
+
+- (NSArray *)allPlugins;
 
 //获取key对应的插件
 - (id<AlisPluginProtocol>)plugin:(NSString *)key;

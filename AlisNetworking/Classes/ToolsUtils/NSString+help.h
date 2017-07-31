@@ -22,4 +22,6 @@
  */
 - (NSString *)resourceAction;
 
+- (NSString *)md5WithString;
+
 @end

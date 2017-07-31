@@ -29,7 +29,7 @@
 @property(copy,nonatomic)NSString *api;
 
 /**
- 服务器配置，注意全局的设置
+ 服务器配置
  */
 @property(copy,nonatomic)NSString *server;
 

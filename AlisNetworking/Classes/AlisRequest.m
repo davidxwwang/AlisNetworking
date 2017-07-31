@@ -10,10 +10,16 @@
 
 @implementation AlisRequest
 
-
 + (AlisRequest *)request{
     return [[[self class]alloc] init];
+}
+
++ (AlisRequest *)convertFromDataRequrest:(NSURLRequest *)dataRequrest{
+    AlisRequest *httpRequest = [[[self class]alloc] init];
     
+    
+    return httpRequest;
+
 }
 
 - (instancetype)init
