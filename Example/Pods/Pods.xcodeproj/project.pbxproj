@@ -252,7 +252,6 @@
 		CF287829627F26B2EB4382B897D06A0E /* AFNetworking-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = DE6EC2A8BC007FFB7AB8FFF73C3FAD58 /* AFNetworking-dummy.m */; };
 		D1768C977F0CD5B420D1A1D2375CDBD4 /* Expecta-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 01BEE3A8929BF98B87DB10CC278902D1 /* Expecta-dummy.m */; };
 		D180489445C2C507332A6EE964ADA1E5 /* UIImage+Snapshot.h in Headers */ = {isa = PBXBuildFile; fileRef = B09FFD748D0014A99D6F9CDEDFAE1549 /* UIImage+Snapshot.h */; settings = {ATTRIBUTES = (Private, ); }; };
-		D2B5FD78CEF9D95C6FCEA648FE1A5078 /* README in Sources */ = {isa = PBXBuildFile; fileRef = 9AF64FB31FBA336D81D6F77B1C3734E2 /* README */; };
 		D2C5E2BEFE6EC6E5003B7BC8C799AC88 /* NSObject+MJCoding.m in Sources */ = {isa = PBXBuildFile; fileRef = CBE2BBC99570B7EB8958BB7132C46DFF /* NSObject+MJCoding.m */; };
 		D2E9B94A335092FF8505743B9818A43B /* MJFoundation.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DB2A11371066AD95DCA99764129929E /* MJFoundation.m */; };
 		D33F1DD87639EE7E631DD24FBCE3228A /* UIImageView+AlisRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = 21B82B52BAEB226C465B8CF76E31DEF7 /* UIImageView+AlisRequest.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -630,7 +629,6 @@
 		95567EE705C6F2AA6E2C3AD0A54C7C95 /* Pods-AlisNetworking_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-AlisNetworking_Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		97A737EEDDBAB95AE7151F4CAF33D9DE /* ExpectaObject+FBSnapshotTest.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "ExpectaObject+FBSnapshotTest.m"; sourceTree = "<group>"; };
 		98A5BEFE993A5E030BC8F2CA344B765A /* SDWebImagePrefetcher.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SDWebImagePrefetcher.h; path = SDWebImage/SDWebImagePrefetcher.h; sourceTree = "<group>"; };
-		9AF64FB31FBA336D81D6F77B1C3734E2 /* README */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = README; sourceTree = "<group>"; };
 		9B47F85D07A4AF9F0981A7FB348FBA61 /* NSObject+MJKeyValue.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "NSObject+MJKeyValue.m"; path = "MJExtension/NSObject+MJKeyValue.m"; sourceTree = "<group>"; };
 		9CD9EF231669A4BF220144D4CDF5D285 /* AlisJsonModel.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = AlisJsonModel.h; sourceTree = "<group>"; };
 		9D0A798400E1BC27D81A12845AA3B563 /* SDWebImageDownloaderOperation.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = SDWebImageDownloaderOperation.m; path = SDWebImage/SDWebImageDownloaderOperation.m; sourceTree = "<group>"; };
@@ -1098,7 +1096,6 @@
 				6AC264653047C03D9B7E64141CCFF8A3 /* AlisRequestManager+AlisRequest.m */,
 				DE5B1398ACDDB9B4CB4AEA408E76D44C /* AlisRequestProtocol.h */,
 				81DC25478E198ACEB9A9760903F8CA33 /* plugins.plist */,
-				9AF64FB31FBA336D81D6F77B1C3734E2 /* README */,
 				850DA351BCEBA8442E6C7CF5CDD45BC1 /* RequestConfig.plist */,
 				21B82B52BAEB226C465B8CF76E31DEF7 /* UIImageView+AlisRequest.h */,
 				B07B2CBE69CC9566304D65A4D82F3DEE /* UIImageView+AlisRequest.m */,
@@ -2181,7 +2178,6 @@
 				3A0FB14C3B9FCC2662D4DC89EF2DE967 /* EXTensionParse.m in Sources */,
 				09D3ED91952172F0A0FDA0B1DDF8918B /* NSString+help.m in Sources */,
 				A3F94948A72CF1A6A2F1045338046C6A /* plugins.plist in Sources */,
-				D2B5FD78CEF9D95C6FCEA648FE1A5078 /* README in Sources */,
 				C29F135F3ED8E58B2BEE666786E24BDE /* RequestConfig.plist in Sources */,
 				60271C9A4834DC151A2A0257B4BBBC89 /* SDWebimagePlugin.m in Sources */,
 				79685EA700309D6DE679DBBA58D5B4D5 /* UIImageView+AlisRequest.m in Sources */,
