@@ -7,7 +7,7 @@
 //
 #import "AlisJsonParsePluginProtocol.h"
 #import <Foundation/Foundation.h>
-#import "MJExtension.h"
+#import <MJExtension/MJExtension.h>
 
 @interface EXTensionParse:NSObject <AlisJsonParsePluginProtocol>
 
