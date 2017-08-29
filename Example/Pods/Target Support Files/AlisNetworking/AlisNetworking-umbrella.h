@@ -22,7 +22,6 @@
 #import "AlisRequestManager.h"
 #import "AlisRequestProtocol.h"
 #import "AFNetworkingPlugin.h"
-#import "AFNetworkingPlugin2.h"
 #import "AlisPluginManager.h"
 #import "AlisPluginProtocol.h"
 #import "SDWebimagePlugin.h"

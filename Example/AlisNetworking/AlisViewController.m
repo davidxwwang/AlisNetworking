@@ -17,6 +17,7 @@
 #import "AlisJsonModel.h"
 #import <AEDatakit/AEDatakit.h>
 #import "AFNetworkingPlugin2.h"
+#import "PostCodeModel.h"
 
 static NSString *testServer = @"http://baobab.wdjcdn.com";
 static NSString *testApi = @"/1442142801331138639111.mp4";
@@ -32,10 +33,8 @@ static NSString *testApi = @"/1442142801331138639111.mp4";
     AEDKHttpServiceConfiguration *config = [AEDKHttpServiceConfiguration defaultConfiguration];
     AEDKService *service = [[AEDKService alloc] initWithName:@"askCityList" protocol:@"http" domain:@"test.alisports.com" path:@"/v4/gym/citieslist" serviceConfiguration:config];
     [[AEDKServer server] registerService:service];
-    
     [[AEDKServer server] addDelegate:[[AFNetworkingPlugin2 alloc]init]];
     
-
 //    [[AlisServiceProxy shareManager] injectService:self];
 //    //[[AlisPluginManager manager]registerALLPlugins];
 //    NSDictionary *plugins = @{@"AFNetwoking":@"AFNetworkingPlugin",@"SDWebimage":@"SDWebimagePlugin"};
@@ -67,24 +66,25 @@ static NSString *testApi = @"/1442142801331138639111.mp4";
 }
 
 - (void)normalRequest{
-   // resumeService(@"AskDemo");
-    //resumeService(@"AskCitieslist");
-    // resumeService(@"uploadData");
+//    resumeService(@"AskDemo");
+//    resumeService(@"AskCitieslist");
+//    resumeService(@"uploadData");
     
-    AEDKProcess *process = [[AEDKServer server] requestServiceWithName:@"askCityList"];
-    process.configuration.BeforeProcess = ^AEDKServiceConfiguration * _Nonnull(AEDKServiceConfiguration * _Nonnull currentconfiguration) {
-        NSLog(@"Before Process Callback.");
-        return currentconfiguration;
+    AEDKProcess *process = [[AEDKServer server] requestServiceWithName:@"AskPostCodes"];
+    process.configuration.BeforeProcess = ^(AEDKProcess * _Nonnull process) {
+//        if ([process.configuration isKindOfClass:[AEDKHttpServiceConfiguration class]]) {
+//            AEDKHttpServiceConfiguration *config = (AEDKHttpServiceConfiguration *)(process.configuration);
+//            config.requestParameter = @{@"f":@"f"};
+//        }
     };
     process.configuration.Processing = ^(int64_t totalAmount, int64_t currentAmount, NSURLRequest * _Nonnull currentRequest) {
-        NSLog(@"Processing Callback.");
     };
     process.configuration.AfterProcess = ^id _Nonnull(id  _Nullable responseData) {
-        NSLog(@"After Process Callback.");
-        return responseData;
+        NSArray *modelArray = [PostCodeModel allPostcode:(NSDictionary *)responseData];
+        return modelArray;
     };
     process.configuration.ProcessCompleted = ^(AEDKProcess * _Nonnull currentProcess, NSError * _Nonnull error, id  _Nullable responseModel) {
-        NSLog(@"Process Completed Callback.");
+       // final result
     };
     [process start];
 }
