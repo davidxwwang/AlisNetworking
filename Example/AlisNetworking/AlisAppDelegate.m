@@ -12,6 +12,7 @@
 #import <MJExtension/MJExtension.h>
 #import <AEDatakit/AEDatakit.h>
 #import "AFNetworkingPlugin2.h"
+#import "SDWebImagePlugin2.h"
 
 @implementation AlisAppDelegate
 
@@ -45,6 +46,8 @@
     
     
     [[AEDKServer server] addDelegate:[[AFNetworkingPlugin2 alloc]init]];
+    [[AEDKServer server] addDelegate:[[SDWebImagePlugin2 alloc]init]];
+    
 
     return YES;
 }

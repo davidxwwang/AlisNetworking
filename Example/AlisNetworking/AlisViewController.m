@@ -65,7 +65,26 @@ static NSString *testApi = @"/1442142801331138639111.mp4";
 
 }
 
+- (void)testImageView{
+    AEDKWebImageLoader *loader = [[AEDKWebImageLoader alloc]init]; 
+    UIImageView *imageView = [[UIImageView alloc] init];
+    [loader setImageForImageView:imageView withURL:[NSURL URLWithString:@"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1504157071740&di=1af7a45f13e9bed3c5ddf1de04734b28&imgtype=0&src=http%3A%2F%2Fimg2.yqdown.com%2Fimg2017%2F7%2F12%2F2017071241068389.jpg"] placeholderImage:nil progress:^(int64_t totalAmount, int64_t currentAmount) {
+        
+    } completed:^(NSURL * _Nullable imageUrl, UIImage * _Nullable image, NSError * _Nullable error) {
+        
+    }];
+    
+//    __block UIImage *_image = nil;
+//    [AEDKWebImageLoader imageWithUrl:[NSURL URLWithString:@"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1504157071740&di=1af7a45f13e9bed3c5ddf1de04734b28&imgtype=0&src=http%3A%2F%2Fimg2.yqdown.com%2Fimg2017%2F7%2F12%2F2017071241068389.jpg"] progress:^(int64_t totalAmount, int64_t currentAmount) {
+//        
+//    } completed:^(NSURL * _Nullable imageUrl, UIImage * _Nullable image, NSError * _Nullable error) {
+//        _image = image;
+//    }];
+
+}
+
 - (void)normalRequest{
+    [self testImageView];return;
 //    resumeService(@"AskDemo");
 //    resumeService(@"AskCitieslist");
 //    resumeService(@"uploadData");

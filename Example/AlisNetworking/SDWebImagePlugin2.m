@@ -11,31 +11,47 @@
 @implementation SDWebImagePlugin2
 
 - (BOOL)canHandleProcess:(AEDKProcess *)process{
-    return YES;
+//    AEDKHttpServiceConfiguration *config = (AEDKHttpServiceConfiguration *)(process.configuration);
+//    if (config.mimeType == AEDKHttpServiceMimeTypeImage) {
+//        return YES;
+//    }
+    
+    return NO;
 }
 
 - (void)handleProcess:(AEDKProcess *)process{
-    
-    if (process.configuration == nil) return;
-    if (![process.configuration isKindOfClass:[AEDKHttpServiceConfiguration class]])
-        return;
-    
-    AEDKHttpServiceConfiguration *config = (AEDKHttpServiceConfiguration *)(process.configuration);
-    
-    if (process.configuration.BeforeProcess) {
-        process.configuration.BeforeProcess(process);
+}
+
+- (void)imageWithUrl:(NSURL * __nullable)url
+            progress:(void(^ __nullable)(int64_t totalAmount, int64_t currentAmount))progress
+           completed:(void(^ __nullable)(NSURL *__nullable imageUrl, UIImage *__nullable image, NSError *__nullable error))completedBlock{
+        [[SDWebImageManager sharedManager] loadImageWithURL:url options:SDWebImageContinueInBackground progress:^(NSInteger receivedSize, NSInteger expectedSize, NSURL * _Nullable targetURL) {
+            if (progress) {
+                progress(expectedSize ,receivedSize);
+            }
+        } completed:^(UIImage * _Nullable image, NSData * _Nullable data, NSError * _Nullable error, SDImageCacheType cacheType, BOOL finished, NSURL * _Nullable imageURL) {
+            if (completedBlock) {
+                completedBlock(imageURL ,image ,error);
+            }
+        }];    
+}
+
+- (void)setImageForImageView:(UIImageView *)imageView
+                     withURL:(NSURL * __nullable)url
+            placeholderImage:(UIImage * __nullable)placeholder
+                    progress:(void(^ __nullable)(int64_t totalAmount, int64_t currentAmount))progress
+                   completed:(void(^ __nullable)(NSURL *__nullable imageUrl, UIImage *__nullable image, NSError *__nullable error))completedBlock{
+    if (imageView) {
+        imageView.image = placeholder;
     }
-    
-    NSURL *requestURL = process.request.URL;    
-    [[SDWebImageManager sharedManager] loadImageWithURL:requestURL options:SDWebImageContinueInBackground progress:^(NSInteger receivedSize, NSInteger expectedSize, NSURL * _Nullable targetURL) {
-        if (config.Processing) {
-            config.Processing(expectedSize, receivedSize, nil);
+    [[SDWebImageManager sharedManager] loadImageWithURL:url options:SDWebImageContinueInBackground progress:^(NSInteger receivedSize, NSInteger expectedSize, NSURL * _Nullable targetURL) {
+        if (progress) {
+            progress(expectedSize ,receivedSize);
         }
     } completed:^(UIImage * _Nullable image, NSData * _Nullable data, NSError * _Nullable error, SDImageCacheType cacheType, BOOL finished, NSURL * _Nullable imageURL) {
-//        if (request.finishBlock) {
-//            AlisResponse *response = [self perseResponse:image request:request];
-//            AlisError *_error = [self perseError:error];
-//            request.finishBlock(request,response,_error);
+        if (completedBlock) {
+            imageView.image = image;
+        }
     }];    
 }
 

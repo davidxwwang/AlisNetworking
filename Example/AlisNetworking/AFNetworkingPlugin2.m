@@ -28,8 +28,11 @@
 }
 
 - (BOOL)canHandleProcess:(AEDKProcess *)process{
-    //todo
-    return YES;
+    AEDKHttpServiceConfiguration *config = (AEDKHttpServiceConfiguration *)(process.configuration);
+    if (! (config.mimeType == AEDKHttpServiceMimeTypeImage)) {
+        return YES;
+    }
+    return NO;
 }
 
 - (void)handleProcess:(AEDKProcess *)process{

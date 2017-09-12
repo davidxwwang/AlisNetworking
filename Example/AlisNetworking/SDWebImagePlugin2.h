@@ -8,6 +8,6 @@
 #import <AEDatakit/AEDatakit.h>
 #import <Foundation/Foundation.h>
 
-@interface SDWebImagePlugin2 : NSObject<AEDKPlugProtocol>
+@interface SDWebImagePlugin2 : NSObject<AEDKWebImageLoaderPlugProtocol>
 
 @end

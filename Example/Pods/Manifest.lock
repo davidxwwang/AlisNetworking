@@ -1,5 +1,5 @@
 PODS:
-  - AEDataKit (0.0.6):
+  - AEDataKit (0.0.8):
     - AELocalDataKit
   - AELocalDataKit (0.0.2)
   - AFNetworking (3.1.0):
@@ -53,7 +53,7 @@ EXTERNAL SOURCES:
     :path: ../
 
 SPEC CHECKSUMS:
-  AEDataKit: 062a33b4962dbf50d507d58537e7372b92d8defb
+  AEDataKit: 8c5e8d3ef4caa8aa6c0bf77deb8e59b76038e7a2
   AELocalDataKit: 809f617b4e6f27712f4942bece77879c597d6275
   AFNetworking: 5e0e199f73d8626b11e79750991f5d173d1f8b67
   AlisNetworking: 92284b2a14d11e0694a7d014e58fbf3834885508
