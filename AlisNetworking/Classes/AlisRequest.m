@@ -8,6 +8,7 @@
 #import <CommonCrypto/CommonDigest.h>
 #import "AlisRequest.h"
 
+
 @implementation AlisRequest
 
 + (AlisRequest *)request{
@@ -16,10 +17,7 @@
 
 + (AlisRequest *)convertFromDataRequrest:(NSURLRequest *)dataRequrest{
     AlisRequest *httpRequest = [[[self class]alloc] init];
-    
-    
     return httpRequest;
-
 }
 
 - (instancetype)init

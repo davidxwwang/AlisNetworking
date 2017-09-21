@@ -98,6 +98,8 @@ NSArray* MSArrayFromMainBundle(NSString *filename){
 }
 
 - (void)registerALLPlugins{
+    self.pluginsServiceDictionary = @{@"AFNetwoking":@"AFNetworkingPlugin",@"SDWebimage":@"SDWebimagePlugin"};
+    return;
     NSArray *array = MSArrayFromMainBundle(@"plugins.plist");
 
     NSString *plistPath =  @"/Users/david/Documents/AlisNetworking/AlisNetworking/Classes/plugins.plist";
