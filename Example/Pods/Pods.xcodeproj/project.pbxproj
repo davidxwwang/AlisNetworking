@@ -69,7 +69,7 @@
 		3E7ECB3FA8473B666FE5386439EF5851 /* Pods-AlisNetworking_Example-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = FA2F98566304E214CE79E4617BE6953C /* Pods-AlisNetworking_Example-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3EF0CEAF8AF927AA536887C85C744F2F /* MJPropertyKey.h in Headers */ = {isa = PBXBuildFile; fileRef = 02AE373B54408C5ED84444B4C665051E /* MJPropertyKey.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		41CC214541946B82A25CE427BB81ABEA /* EXPMatchers+beKindOf.h in Headers */ = {isa = PBXBuildFile; fileRef = C6485C4638C7E20041E9FF61645F6EF9 /* EXPMatchers+beKindOf.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		4232BAAD3BC763C393B1921121801479 /* AlisRequestManager+AlisRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = EA9B2DF738994E6C8ADED752D634C5CC /* AlisRequestManager+AlisRequest.h */; settings = {ATTRIBUTES = (Project, Public, ); }; };
+		4232BAAD3BC763C393B1921121801479 /* AlisRequestManager+AlisRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = EA9B2DF738994E6C8ADED752D634C5CC /* AlisRequestManager+AlisRequest.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		425C4DFD1FAB011D70F825631144BC4C /* EXPMatchers+equal.h in Headers */ = {isa = PBXBuildFile; fileRef = 2CCD9ADD4AF6C540D93D2E7FFB2077F3 /* EXPMatchers+equal.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		42AF1BB1ED090CC9E588A463441D09E3 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2396AB2A1159C4310031502AC04429A8 /* SystemConfiguration.framework */; };
 		44174DC000AB9FA1A9BE83A1F2C3693B /* SDImageCacheConfig.h in Headers */ = {isa = PBXBuildFile; fileRef = 53572D1969B18645D551BD3BF3471263 /* SDImageCacheConfig.h */; settings = {ATTRIBUTES = (Public, ); }; };
