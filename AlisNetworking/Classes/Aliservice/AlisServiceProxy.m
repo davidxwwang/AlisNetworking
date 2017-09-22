@@ -14,6 +14,8 @@
 #import "AlisHttpServiceItem.h"
 #import "AlisServicesManager.h"
 #import "AlisJsonParseManager.h"
+#import "AlisRequestConfig.h"
+#import "AlisRequestContext.h"
 
 #define ResumeResource @"resume"
 #define CancelResource @"cancel"

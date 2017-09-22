@@ -5,13 +5,14 @@
 //  Created by alisports on 2017/2/22.
 //  Copyright © 2017年 alisports. All rights reserved.
 //  把网络请求的每一个接口都看为一个资源
-#import "AlisRequestConfig.h"
+
 #import "AlisRequest.h"
 #import "AlisPluginProtocol.h"
 #import "AlisRequestProtocol.h"
-#import "AlisRequestContext.h"
-#import "AlisService.h"
+
 #import <Foundation/Foundation.h>
+
+@class AlisRequestConfig,AlisRequestContext,AlisService;
 
 @interface AlisRequestManager : NSObject
 

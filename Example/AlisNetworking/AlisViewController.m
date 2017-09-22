@@ -5,25 +5,30 @@
 //  Created by xingwang.wxw on 04/05/2017.
 //  Copyright (c) 2017 xingwang.wxw. All rights reserved.
 //
-#import "AlisJsonParsePluginProtocol.h"
-#import "AlisJsonParseManager.h"
+//#import "AlisJsonParsePluginProtocol.h"
+/*#import "AlisJsonParseManager.h"
 #import "CityInfo.h"
 #import "AlisPluginManager.h"
 #import "AlisRequestManager.h"
 #import "AlisServiceProxy.h"
-#import "AlisViewController.h"
+
 #import "AlisJsonParserProtocol.h"
 #import "UIImageView+AlisRequest.h"
 #import "AlisJsonModel.h"
 //#import <AEDataKit/AEDataKit.h>
 //#import "AEDatakit.h"
 #import "PostCodeModel.h"
+*/
 
+#import <AlisNetworking/AlisNetworking.h>
+
+
+#import "AlisViewController.h"
 
 static NSString *testServer = @"http://baobab.wdjcdn.com";
 static NSString *testApi = @"/1442142801331138639111.mp4";
 
-@interface AlisViewController ()<AlisRequestProtocol,AlisJsonParserProtocol>
+@interface AlisViewController ()//<AlisRequestProtocol,AlisJsonParserProtocol>
 @end
 
 @implementation AlisViewController
@@ -102,7 +107,7 @@ static NSString *testApi = @"/1442142801331138639111.mp4";
     };
     [process start];*/
 }
-
+/*
 - (void)cancelNormalRequest{
     [self testImageView];return;
     suspendService(@"uploadData");
@@ -259,6 +264,6 @@ static NSString *testApi = @"/1442142801331138639111.mp4";
 //    return jsonModel;
 //}
 
-
+*/
 @end
 

@@ -5,7 +5,7 @@
 //  Created by alisports on 2017/3/4.
 //  Copyright © 2017年 alisports. All rights reserved.
 //
-#import "AlisHttpServiceItem.h"
+
 #import "AlisRequestProtocol.h"
 #import "AlisServiceProxy.h"
 #import <Foundation/Foundation.h>
@@ -25,6 +25,7 @@ typedef NS_ENUM(NSInteger, ServiceType) {
  定义了一种服务，在
  表示此时此刻 需要服务的名称，一个类中很可能有好几个不同值。使用“类名／服务名” 区别不同类中有相同的服务
  */
+@class AlisHttpServiceItem;
 
 @interface AlisService : NSObject<NSCopying>
 

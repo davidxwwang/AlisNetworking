@@ -9,9 +9,9 @@
 #import <Foundation/Foundation.h>
 #import "AlisRequestProtocol.h"
 #import "AlisRequestConst.h"
-#import "AlisRequestContext.h"
 
-@class AlisRequest,AlisResponse,AlisError,AlisUpLoadFormData;
+
+@class AlisRequest,AlisResponse,AlisError,AlisUpLoadFormData,AlisRequestContext;
 
 typedef enum {
     AlisHttpRequestMimeTypeUndefine,

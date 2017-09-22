@@ -5,7 +5,7 @@
 //  Created by alisports on 2017/3/4.
 //  Copyright © 2017年 alisports. All rights reserved.
 //
-
+#import "AlisHttpServiceItem.h"
 #import "AlisService.h"
 
 @implementation AlisService

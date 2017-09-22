@@ -13,6 +13,10 @@
 #import "AlisRequestConst.h"
 #import "AlisService.h"
 #import "AlisRequestManager+AlisRequest.h"
+#import "AlisRequestConfig.h"
+#import "AlisRequestContext.h"
+#import "AlisService.h"
+
 typedef NSDictionary *(^ PreRequestBlcok) (void);
 
 #define ALIS_SAFE_BLOCK(BlockName, ...) ({ !BlockName ? nil : BlockName(__VA_ARGS__); })

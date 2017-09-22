@@ -14,7 +14,7 @@ PODS:
   - AFNetworking/Serialization (3.1.0)
   - AFNetworking/UIKit (3.1.0):
     - AFNetworking/NSURLSession
-  - AlisNetworking (0.1.5):
+  - AlisNetworking (0.1.6):
     - AFNetworking
     - MJExtension
     - SDWebImage
@@ -47,7 +47,7 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   AFNetworking: 5e0e199f73d8626b11e79750991f5d173d1f8b67
-  AlisNetworking: 56ea3f13ec9867a088a1484e011dfded7d7a27d2
+  AlisNetworking: d71daa3e6f245c2b5d975cf5e1bbacffc79723f1
   Expecta: 3b6bd90a64b9a1dcb0b70aa0e10a7f8f631667d5
   Expecta+Snapshots: dcff217eef506dabd6dfdc7864ea2da321fafbb8
   FBSnapshotTestCase: 094f9f314decbabe373b87cc339bea235a63e07a

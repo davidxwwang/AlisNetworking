@@ -16,6 +16,9 @@
 #import "AlisService.h"
 #import "AlisRequestManager+AlisRequest.h"
 #import "NSString+help.h"
+#import "AlisHttpServiceItem.h"
+#import "AlisRequestConfig.h"
+#import "AlisRequestContext.h"
 
 @implementation AlisRequestManager (AlisRequest)
 

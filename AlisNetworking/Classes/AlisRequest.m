@@ -7,7 +7,7 @@
 //
 #import <CommonCrypto/CommonDigest.h>
 #import "AlisRequest.h"
-
+#import "AlisRequestContext.h"
 
 @implementation AlisRequest
 
