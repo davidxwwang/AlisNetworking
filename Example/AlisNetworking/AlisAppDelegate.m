@@ -10,7 +10,7 @@
 #import "AlisAppDelegate.h"
 //#import "AlisHttpServiceItem.h"
 #import <MJExtension/MJExtension.h>
-#import <AEDataKit/AEDataKit.h>
+//#import <AEDataKit/AEDataKit.h>
 
 @implementation AlisAppDelegate
 
@@ -33,7 +33,7 @@
     
     [[AlisServicesManager sharedManager]registerServices:dic];
     */
-    
+    /*
     AEDKHttpServiceConfiguration *httpConfiguration = [[AEDKHttpServiceConfiguration alloc]init];
     httpConfiguration.mimeType = AEDKHttpServiceMimeTypeText;
     AEDKHttpUploadDownloadConfiguration *uploadDownloadConfig = [[AEDKHttpUploadDownloadConfiguration alloc]initWithType:AEDKHttpFileUpload accociatedFilePath:@"/temp/xyz"];
@@ -43,7 +43,7 @@
     AEDKService *service = [[AEDKService alloc]initWithName:@"AskPostCodes" protocol:kAEDKServiceProtocolHttp domain:@"olympic-public.oss-cn-shanghai.aliyuncs.com" path:@"/api/address/addr_4_1111_1_amap.json" serviceConfiguration:httpConfiguration];//[AEDKServiceConfiguration defaultConfiguration]]
     [[AEDKServer server] registerService:service];
     
-
+*/
     return YES;
 }
 

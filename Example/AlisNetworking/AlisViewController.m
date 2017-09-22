@@ -15,7 +15,7 @@
 #import "AlisJsonParserProtocol.h"
 #import "UIImageView+AlisRequest.h"
 #import "AlisJsonModel.h"
-#import <AEDataKit/AEDataKit.h>
+//#import <AEDataKit/AEDataKit.h>
 //#import "AEDatakit.h"
 #import "PostCodeModel.h"
 
@@ -30,11 +30,11 @@ static NSString *testApi = @"/1442142801331138639111.mp4";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+    /*
     AEDKHttpServiceConfiguration *config = [AEDKHttpServiceConfiguration defaultConfiguration];
     AEDKService *service = [[AEDKService alloc] initWithName:@"askCityList" protocol:@"http" domain:@"test.alisports.com" path:@"/v4/gym/citieslist" serviceConfiguration:config];
     [[AEDKServer server] registerService:service];
-    
+    */
 //    [[AlisServiceProxy shareManager] injectService:self];
 //    //[[AlisPluginManager manager]registerALLPlugins];
 //    NSDictionary *plugins = @{@"AFNetwoking":@"AFNetworkingPlugin",@"SDWebimage":@"SDWebimagePlugin"};
@@ -66,7 +66,7 @@ static NSString *testApi = @"/1442142801331138639111.mp4";
 }
 
 - (void)testImageView{
-    AEDKWebImageLoader *loader = [[AEDKWebImageLoader alloc]init]; 
+  /*  AEDKWebImageLoader *loader = [[AEDKWebImageLoader alloc]init]; 
     UIImageView *imageView = [[UIImageView alloc] init];
     [loader setImageForImageView:imageView withURL:[NSURL URLWithString:@"http://img3.redocn.com/tupian/20150312/haixinghezhenzhubeikeshiliangbeijing_3937174.jpg"] placeholderImage:nil progress:^(int64_t totalAmount, int64_t currentAmount) {
         
@@ -74,7 +74,7 @@ static NSString *testApi = @"/1442142801331138639111.mp4";
          NSLog(@"请求完全结束");
         
     }];
-
+*/
 }
 
 - (void)normalRequest{
@@ -82,7 +82,7 @@ static NSString *testApi = @"/1442142801331138639111.mp4";
    // resumeService(@"AskDemo");
 //    resumeService(@"AskCitieslist");
 //    resumeService(@"uploadData");
-    
+    /*
     AEDKProcess *process = [[AEDKServer server] requestServiceWithName:@"AskPostCodes"];
     process.configuration.BeforeProcess = ^(AEDKProcess * _Nonnull process) {
 //        if ([process.configuration isKindOfClass:[AEDKHttpServiceConfiguration class]]) {
@@ -100,7 +100,7 @@ static NSString *testApi = @"/1442142801331138639111.mp4";
        // final result
         NSLog(@"请求完全结束");
     };
-    [process start];
+    [process start];*/
 }
 
 - (void)cancelNormalRequest{

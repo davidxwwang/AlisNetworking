@@ -21,7 +21,6 @@
 		6003F5BA195388D20070C39A /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6003F5B8195388D20070C39A /* InfoPlist.strings */; };
 		6003F5BC195388D20070C39A /* Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 6003F5BB195388D20070C39A /* Tests.m */; };
 		6346BF481E97400700CDB2FE /* CityInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 6346BF471E97400700CDB2FE /* CityInfo.m */; };
-		636F1BB31F739953009CA4AD /* AELocalDataKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 636F1BB11F739953009CA4AD /* AELocalDataKit.framework */; };
 		638D877B1F4D2224001D79A1 /* PostCodeModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 638D877A1F4D2224001D79A1 /* PostCodeModel.m */; };
 		638D877F1F4D2DF4001D79A1 /* AFNetworking.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 638D877E1F4D2DF4001D79A1 /* AFNetworking.framework */; };
 		638D87811F4D2E01001D79A1 /* AlisNetworking.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 638D87801F4D2E01001D79A1 /* AlisNetworking.framework */; };
@@ -85,7 +84,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				636F1BB31F739953009CA4AD /* AELocalDataKit.framework in Frameworks */,
 				638D87811F4D2E01001D79A1 /* AlisNetworking.framework in Frameworks */,
 				638D877F1F4D2DF4001D79A1 /* AFNetworking.framework in Frameworks */,
 				6003F590195388D20070C39A /* CoreGraphics.framework in Frameworks */,

@@ -2,7 +2,7 @@ use_frameworks!
 
 target 'AlisNetworking_Example' do
   pod 'AlisNetworking', :path => '../'
-  pod 'AEDataKit'
+  #pod 'AEDataKit'
 
   target 'AlisNetworking_Tests' do
     inherit! :search_paths

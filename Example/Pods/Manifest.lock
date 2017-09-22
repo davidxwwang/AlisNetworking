@@ -1,7 +1,4 @@
 PODS:
-  - AEDataKit (0.0.13):
-    - AELocalDataKit
-  - AELocalDataKit (0.0.4)
   - AFNetworking (3.1.0):
     - AFNetworking/NSURLSession (= 3.1.0)
     - AFNetworking/Reachability (= 3.1.0)
@@ -17,7 +14,7 @@ PODS:
   - AFNetworking/Serialization (3.1.0)
   - AFNetworking/UIKit (3.1.0):
     - AFNetworking/NSURLSession
-  - AlisNetworking (0.1.4):
+  - AlisNetworking (0.1.5):
     - AFNetworking
     - MJExtension
     - SDWebImage
@@ -38,7 +35,6 @@ PODS:
   - Specta (1.0.6)
 
 DEPENDENCIES:
-  - AEDataKit
   - AlisNetworking (from `../`)
   - Expecta
   - Expecta+Snapshots
@@ -50,10 +46,8 @@ EXTERNAL SOURCES:
     :path: ../
 
 SPEC CHECKSUMS:
-  AEDataKit: 7fcc223ace77e4e0c9f35ff87caea8f7f379b064
-  AELocalDataKit: 8033cd9bb55322be5e9bb2a14b8c931afe191d52
   AFNetworking: 5e0e199f73d8626b11e79750991f5d173d1f8b67
-  AlisNetworking: ab7850c3ab4ec03e7ac889b78a89c2475873a001
+  AlisNetworking: 56ea3f13ec9867a088a1484e011dfded7d7a27d2
   Expecta: 3b6bd90a64b9a1dcb0b70aa0e10a7f8f631667d5
   Expecta+Snapshots: dcff217eef506dabd6dfdc7864ea2da321fafbb8
   FBSnapshotTestCase: 094f9f314decbabe373b87cc339bea235a63e07a
@@ -61,6 +55,6 @@ SPEC CHECKSUMS:
   SDWebImage: 0e435c14e402a6730315a0fb79f95e68654d55a4
   Specta: f506f3a8361de16bc0dcf3b17b75e269072ba465
 
-PODFILE CHECKSUM: ae5b9fc96c97b9da57f7e71b9ec8562aa70137a2
+PODFILE CHECKSUM: a479cd13e817523a4a2b1b23e4bc1f0633be5036
 
 COCOAPODS: 1.2.1.beta.1
