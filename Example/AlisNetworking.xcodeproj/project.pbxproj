@@ -7,8 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		4138A90D4C04739E230B15AC /* Pods_AlisNetworking_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 894E10E788DDEEBD842E1B0A /* Pods_AlisNetworking_Tests.framework */; };
-		4258247A806B11BB8A17F8FA /* Pods_AlisNetworking_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1B6025F4D74053BDFB798B93 /* Pods_AlisNetworking_Example.framework */; };
+		3C6F90DC3EEF981CF02F581D /* Pods_AlisNetworking_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CB44029327DFDC2F8C40200B /* Pods_AlisNetworking_Tests.framework */; };
 		6003F58E195388D20070C39A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F58D195388D20070C39A /* Foundation.framework */; };
 		6003F590195388D20070C39A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F58F195388D20070C39A /* CoreGraphics.framework */; };
 		6003F592195388D20070C39A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F591195388D20070C39A /* UIKit.framework */; };
@@ -21,14 +20,14 @@
 		6003F5B2195388D20070C39A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F591195388D20070C39A /* UIKit.framework */; };
 		6003F5BA195388D20070C39A /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6003F5B8195388D20070C39A /* InfoPlist.strings */; };
 		6003F5BC195388D20070C39A /* Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 6003F5BB195388D20070C39A /* Tests.m */; };
-		6341F36D1F176F9100155D05 /* AFNetworkingPlugin2.m in Sources */ = {isa = PBXBuildFile; fileRef = 6341F36C1F176F9100155D05 /* AFNetworkingPlugin2.m */; };
 		6346BF481E97400700CDB2FE /* CityInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 6346BF471E97400700CDB2FE /* CityInfo.m */; };
+		636F1BB31F739953009CA4AD /* AELocalDataKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 636F1BB11F739953009CA4AD /* AELocalDataKit.framework */; };
 		638D877B1F4D2224001D79A1 /* PostCodeModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 638D877A1F4D2224001D79A1 /* PostCodeModel.m */; };
 		638D877F1F4D2DF4001D79A1 /* AFNetworking.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 638D877E1F4D2DF4001D79A1 /* AFNetworking.framework */; };
 		638D87811F4D2E01001D79A1 /* AlisNetworking.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 638D87801F4D2E01001D79A1 /* AlisNetworking.framework */; };
-		63A5FF481F540A5F00EA0942 /* SDWebImagePlugin2.m in Sources */ = {isa = PBXBuildFile; fileRef = 63A5FF471F540A5F00EA0942 /* SDWebImagePlugin2.m */; };
 		71719F9F1E33DC2100824A3D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 71719F9D1E33DC2100824A3D /* LaunchScreen.storyboard */; };
 		873B8AEB1B1F5CCA007FD442 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 873B8AEA1B1F5CCA007FD442 /* Main.storyboard */; };
+		E1776B8A2B2FA8F81F99A5F8 /* Pods_AlisNetworking_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A6745AD7DF88EB0D3C729622 /* Pods_AlisNetworking_Example.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -43,7 +42,6 @@
 
 /* Begin PBXFileReference section */
 		16CD29575F81535EB640A84D /* Pods-AlisNetworking_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AlisNetworking_Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AlisNetworking_Tests/Pods-AlisNetworking_Tests.debug.xcconfig"; sourceTree = "<group>"; };
-		1B6025F4D74053BDFB798B93 /* Pods_AlisNetworking_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AlisNetworking_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6003F58A195388D20070C39A /* AlisNetworking_Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AlisNetworking_Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6003F58D195388D20070C39A /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		6003F58F195388D20070C39A /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -62,23 +60,22 @@
 		6003F5B9195388D20070C39A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		6003F5BB195388D20070C39A /* Tests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Tests.m; sourceTree = "<group>"; };
 		606FC2411953D9B200FFA9A0 /* Tests-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Tests-Prefix.pch"; sourceTree = "<group>"; };
-		6341F36B1F176F9100155D05 /* AFNetworkingPlugin2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFNetworkingPlugin2.h; sourceTree = "<group>"; };
-		6341F36C1F176F9100155D05 /* AFNetworkingPlugin2.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFNetworkingPlugin2.m; sourceTree = "<group>"; };
 		6346BF461E97400700CDB2FE /* CityInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CityInfo.h; sourceTree = "<group>"; };
 		6346BF471E97400700CDB2FE /* CityInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CityInfo.m; sourceTree = "<group>"; };
+		636F1BB01F739953009CA4AD /* AEDataKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AEDataKit.framework; path = "Pods/../build/Debug-iphoneos/AEDataKit/AEDataKit.framework"; sourceTree = "<group>"; };
+		636F1BB11F739953009CA4AD /* AELocalDataKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AELocalDataKit.framework; path = "../../../Library/Developer/Xcode/DerivedData/AlisNetworking-azbpnhczqzmicqdetvzzoqudfpzq/Build/Products/Debug-iphonesimulator/AELocalDataKit/AELocalDataKit.framework"; sourceTree = "<group>"; };
 		638D87791F4D2224001D79A1 /* PostCodeModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PostCodeModel.h; sourceTree = "<group>"; };
 		638D877A1F4D2224001D79A1 /* PostCodeModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PostCodeModel.m; sourceTree = "<group>"; };
 		638D877E1F4D2DF4001D79A1 /* AFNetworking.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AFNetworking.framework; path = "../../../Library/Developer/Xcode/DerivedData/AlisNetworking-azbpnhczqzmicqdetvzzoqudfpzq/Build/Products/Debug-iphonesimulator/AFNetworking/AFNetworking.framework"; sourceTree = "<group>"; };
 		638D87801F4D2E01001D79A1 /* AlisNetworking.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AlisNetworking.framework; path = "../../../Library/Developer/Xcode/DerivedData/AlisNetworking-azbpnhczqzmicqdetvzzoqudfpzq/Build/Products/Debug-iphonesimulator/AlisNetworking/AlisNetworking.framework"; sourceTree = "<group>"; };
-		63A5FF461F540A5F00EA0942 /* SDWebImagePlugin2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDWebImagePlugin2.h; sourceTree = "<group>"; };
-		63A5FF471F540A5F00EA0942 /* SDWebImagePlugin2.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDWebImagePlugin2.m; sourceTree = "<group>"; };
 		6D910EC23740F49F4C3992D5 /* Pods-AlisNetworking_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AlisNetworking_Example.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AlisNetworking_Example/Pods-AlisNetworking_Example.debug.xcconfig"; sourceTree = "<group>"; };
 		71719F9E1E33DC2100824A3D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		873B8AEA1B1F5CCA007FD442 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Main.storyboard; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		894E10E788DDEEBD842E1B0A /* Pods_AlisNetworking_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AlisNetworking_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8BBADF24540747FE87605ACC /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
 		92EE325FD3B508223DB6EBDA /* Pods-AlisNetworking_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AlisNetworking_Example.release.xcconfig"; path = "Pods/Target Support Files/Pods-AlisNetworking_Example/Pods-AlisNetworking_Example.release.xcconfig"; sourceTree = "<group>"; };
+		A6745AD7DF88EB0D3C729622 /* Pods_AlisNetworking_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AlisNetworking_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A6F78954D46747709632C455 /* AlisNetworking.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = AlisNetworking.podspec; path = ../AlisNetworking.podspec; sourceTree = "<group>"; };
+		CB44029327DFDC2F8C40200B /* Pods_AlisNetworking_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AlisNetworking_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D6420C92B381742B65BFA68E /* Pods-AlisNetworking_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AlisNetworking_Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-AlisNetworking_Tests/Pods-AlisNetworking_Tests.release.xcconfig"; sourceTree = "<group>"; };
 		F920202A7224C55D67D9C8D7 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -88,12 +85,13 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				636F1BB31F739953009CA4AD /* AELocalDataKit.framework in Frameworks */,
 				638D87811F4D2E01001D79A1 /* AlisNetworking.framework in Frameworks */,
 				638D877F1F4D2DF4001D79A1 /* AFNetworking.framework in Frameworks */,
 				6003F590195388D20070C39A /* CoreGraphics.framework in Frameworks */,
 				6003F592195388D20070C39A /* UIKit.framework in Frameworks */,
 				6003F58E195388D20070C39A /* Foundation.framework in Frameworks */,
-				4258247A806B11BB8A17F8FA /* Pods_AlisNetworking_Example.framework in Frameworks */,
+				E1776B8A2B2FA8F81F99A5F8 /* Pods_AlisNetworking_Example.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -103,7 +101,7 @@
 			files = (
 				6003F5B2195388D20070C39A /* UIKit.framework in Frameworks */,
 				6003F5B1195388D20070C39A /* Foundation.framework in Frameworks */,
-				4138A90D4C04739E230B15AC /* Pods_AlisNetworking_Tests.framework in Frameworks */,
+				3C6F90DC3EEF981CF02F581D /* Pods_AlisNetworking_Tests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -134,13 +132,15 @@
 		6003F58C195388D20070C39A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				636F1BB01F739953009CA4AD /* AEDataKit.framework */,
+				636F1BB11F739953009CA4AD /* AELocalDataKit.framework */,
 				638D87801F4D2E01001D79A1 /* AlisNetworking.framework */,
 				638D877E1F4D2DF4001D79A1 /* AFNetworking.framework */,
 				6003F58D195388D20070C39A /* Foundation.framework */,
 				6003F58F195388D20070C39A /* CoreGraphics.framework */,
 				6003F591195388D20070C39A /* UIKit.framework */,
-				1B6025F4D74053BDFB798B93 /* Pods_AlisNetworking_Example.framework */,
-				894E10E788DDEEBD842E1B0A /* Pods_AlisNetworking_Tests.framework */,
+				A6745AD7DF88EB0D3C729622 /* Pods_AlisNetworking_Example.framework */,
+				CB44029327DFDC2F8C40200B /* Pods_AlisNetworking_Tests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -158,12 +158,8 @@
 				6003F594195388D20070C39A /* Supporting Files */,
 				6346BF461E97400700CDB2FE /* CityInfo.h */,
 				6346BF471E97400700CDB2FE /* CityInfo.m */,
-				6341F36B1F176F9100155D05 /* AFNetworkingPlugin2.h */,
-				6341F36C1F176F9100155D05 /* AFNetworkingPlugin2.m */,
 				638D87791F4D2224001D79A1 /* PostCodeModel.h */,
 				638D877A1F4D2224001D79A1 /* PostCodeModel.m */,
-				63A5FF461F540A5F00EA0942 /* SDWebImagePlugin2.h */,
-				63A5FF471F540A5F00EA0942 /* SDWebImagePlugin2.m */,
 			);
 			name = "Example for AlisNetworking";
 			path = AlisNetworking;
@@ -422,11 +418,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				638D877B1F4D2224001D79A1 /* PostCodeModel.m in Sources */,
-				6341F36D1F176F9100155D05 /* AFNetworkingPlugin2.m in Sources */,
 				6003F59E195388D20070C39A /* AlisAppDelegate.m in Sources */,
 				6003F5A7195388D20070C39A /* AlisViewController.m in Sources */,
 				6346BF481E97400700CDB2FE /* CityInfo.m in Sources */,
-				63A5FF481F540A5F00EA0942 /* SDWebImagePlugin2.m in Sources */,
 				6003F59A195388D20070C39A /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -556,6 +550,11 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = BQ6CWVB72G;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/build/Debug-iphoneos/AEDataKit",
+					"$(PROJECT_DIR)/build/Debug-iphoneos/AELocalDataKit",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "AlisNetworking/AlisNetworking-Prefix.pch";
 				HEADER_SEARCH_PATHS = "${PODS_ROOT}/AEDataKit";
@@ -573,6 +572,11 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = BQ6CWVB72G;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/build/Debug-iphoneos/AEDataKit",
+					"$(PROJECT_DIR)/build/Debug-iphoneos/AELocalDataKit",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "AlisNetworking/AlisNetworking-Prefix.pch";
 				HEADER_SEARCH_PATHS = "${PODS_ROOT}/AEDataKit";

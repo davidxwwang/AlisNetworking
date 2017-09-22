@@ -48,7 +48,7 @@
  *  @return 响应 AlisResponse。
  */
 
-- (AlisError *)perseError:(id)remoteError;
+- (AlisError *)perseError:(NSError *)remoteError;
 
 @required
 /**

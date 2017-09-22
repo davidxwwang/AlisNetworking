@@ -60,6 +60,7 @@ typedef enum {
 @property(assign,nonatomic)NSInteger responseCode;
 @property(copy  ,nonatomic)NSString  * _Nullable responseMSG;
 @property(strong,nonatomic)NSDictionary * _Nullable responseInfo;
+@property(strong,nonatomic)id  _Nullable originalData;
 
 - (instancetype)initWithInfo:(NSDictionary *_Nullable)info;
 
@@ -69,10 +70,11 @@ typedef enum {
 
 @interface AlisError : NSObject
 
-@property(copy,nonatomic)NSString *name;
-@property(copy,nonatomic)NSDictionary *userInfo;
+@property(strong,nonatomic)NSError * _Nullable originalError;
+@property(copy,nonatomic)NSString * name;
+@property(copy,nonatomic)NSDictionary * userInfo;
 @property(assign,nonatomic)NSInteger code;
-@property(copy,nonatomic)NSString *detailInfo;
+@property(copy,nonatomic)NSString * detailInfo;
 
 @end
 

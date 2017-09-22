@@ -15,7 +15,6 @@
 #import "AlisServiceProxy.h"
 #import "AlisServicesManager.h"
 #import "AlisNetworking.h"
-#import "AlisRequest+AEDKProcess.h"
 #import "AlisRequest.h"
 #import "AlisRequestConfig.h"
 #import "AlisRequestConst.h"

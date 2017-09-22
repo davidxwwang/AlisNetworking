@@ -178,14 +178,17 @@
         return nil;
     }
     NSDictionary *data = (NSDictionary *)rawResponse;
-    AlisResponse *response = [[AlisResponse alloc]initWithInfo:data];
+  //  AlisResponse *response = [[AlisResponse alloc]initWithInfo:data];
+    AlisResponse *response = [[AlisResponse alloc]init];
+    response.originalData = rawResponse;
     return response;
 }
 
-- (AlisError *)parseError:(id)rawError response:(AlisResponse *)response{
+- (AlisError *)parseError:(NSError *)rawError response:(AlisResponse *)response{
     AlisError *_error = nil;
     if (rawError) {
         _error = [[AlisError alloc]init];
+        _error.originalError = rawError;
         _error.code = ((NSError *)rawError).code;
         _error.name = ((NSError *)rawError).domain;
         _error.userInfo = ((NSError *)rawError).userInfo;
@@ -259,6 +262,19 @@
     }
     return _securitySessionManager;
 }
+
+- (AlisError *)perseError:(id)rawError{
+    if (!rawError || ![rawError isKindOfClass:[NSError class]]) {
+        return nil;
+    }
+    
+    AlisError *_error = [[AlisError alloc]init];
+    _error.code = ((NSError *)rawError).code;
+    _error.name = ((NSError *)rawError).domain;
+    _error.userInfo = ((NSError *)rawError).userInfo;
+    return _error;
+}
+
 
 
 @end

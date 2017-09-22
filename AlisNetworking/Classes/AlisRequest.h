@@ -13,6 +13,14 @@
 
 @class AlisRequest,AlisResponse,AlisError,AlisUpLoadFormData;
 
+typedef enum {
+    AlisHttpRequestMimeTypeUndefine,
+    AlisHttpRequestMimeTypeText,
+    AlisHttpRequestMimeTypeImage,
+    AlisHttpRequestMimeTypeOther
+}AlisHttpRequestMimeType;
+
+
 @interface AlisRequest : NSObject
 
 + (AlisRequest *)request;
@@ -22,6 +30,10 @@
 */
 + (AlisRequest *)convertFromDataRequrest:(NSURLRequest *)dataRequrest;
 
+/**
+ 请求类型，默认AEDKHttpServiceMimeTypeUndefine
+ */
+@property (nonatomic, assign) AlisHttpRequestMimeType mimeType;
 
 /**
  解析接口返回JSON数据的类

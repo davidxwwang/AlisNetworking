@@ -15,9 +15,10 @@
 #import "AlisJsonParserProtocol.h"
 #import "UIImageView+AlisRequest.h"
 #import "AlisJsonModel.h"
-#import <AEDatakit/AEDatakit.h>
-#import "AFNetworkingPlugin2.h"
+#import <AEDataKit/AEDataKit.h>
+//#import "AEDatakit.h"
 #import "PostCodeModel.h"
+
 
 static NSString *testServer = @"http://baobab.wdjcdn.com";
 static NSString *testApi = @"/1442142801331138639111.mp4";
@@ -33,7 +34,6 @@ static NSString *testApi = @"/1442142801331138639111.mp4";
     AEDKHttpServiceConfiguration *config = [AEDKHttpServiceConfiguration defaultConfiguration];
     AEDKService *service = [[AEDKService alloc] initWithName:@"askCityList" protocol:@"http" domain:@"test.alisports.com" path:@"/v4/gym/citieslist" serviceConfiguration:config];
     [[AEDKServer server] registerService:service];
-    [[AEDKServer server] addDelegate:[[AFNetworkingPlugin2 alloc]init]];
     
 //    [[AlisServiceProxy shareManager] injectService:self];
 //    //[[AlisPluginManager manager]registerALLPlugins];
@@ -68,24 +68,18 @@ static NSString *testApi = @"/1442142801331138639111.mp4";
 - (void)testImageView{
     AEDKWebImageLoader *loader = [[AEDKWebImageLoader alloc]init]; 
     UIImageView *imageView = [[UIImageView alloc] init];
-    [loader setImageForImageView:imageView withURL:[NSURL URLWithString:@"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1504157071740&di=1af7a45f13e9bed3c5ddf1de04734b28&imgtype=0&src=http%3A%2F%2Fimg2.yqdown.com%2Fimg2017%2F7%2F12%2F2017071241068389.jpg"] placeholderImage:nil progress:^(int64_t totalAmount, int64_t currentAmount) {
+    [loader setImageForImageView:imageView withURL:[NSURL URLWithString:@"http://img3.redocn.com/tupian/20150312/haixinghezhenzhubeikeshiliangbeijing_3937174.jpg"] placeholderImage:nil progress:^(int64_t totalAmount, int64_t currentAmount) {
         
     } completed:^(NSURL * _Nullable imageUrl, UIImage * _Nullable image, NSError * _Nullable error) {
+         NSLog(@"请求完全结束");
         
     }];
-    
-//    __block UIImage *_image = nil;
-//    [AEDKWebImageLoader imageWithUrl:[NSURL URLWithString:@"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1504157071740&di=1af7a45f13e9bed3c5ddf1de04734b28&imgtype=0&src=http%3A%2F%2Fimg2.yqdown.com%2Fimg2017%2F7%2F12%2F2017071241068389.jpg"] progress:^(int64_t totalAmount, int64_t currentAmount) {
-//        
-//    } completed:^(NSURL * _Nullable imageUrl, UIImage * _Nullable image, NSError * _Nullable error) {
-//        _image = image;
-//    }];
 
 }
 
 - (void)normalRequest{
-    [self testImageView];return;
-//    resumeService(@"AskDemo");
+   // [self testImageView];return;
+   // resumeService(@"AskDemo");
 //    resumeService(@"AskCitieslist");
 //    resumeService(@"uploadData");
     
@@ -104,11 +98,13 @@ static NSString *testApi = @"/1442142801331138639111.mp4";
     };
     process.configuration.ProcessCompleted = ^(AEDKProcess * _Nonnull currentProcess, NSError * _Nonnull error, id  _Nullable responseModel) {
        // final result
+        NSLog(@"请求完全结束");
     };
     [process start];
 }
 
 - (void)cancelNormalRequest{
+    [self testImageView];return;
     suspendService(@"uploadData");
     UIImageView *image = [[UIImageView alloc]init];
     [image alis_setImageWithURL:@"https://oneimg.oss-cn-hangzhou.aliyuncs.com/xu01_test/20161207/1481090430466.jpg" whichPlugin:^NSString *(NSArray *plugins) {

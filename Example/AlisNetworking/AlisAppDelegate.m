@@ -6,20 +6,18 @@
 //  Copyright (c) 2017 xingwang.wxw. All rights reserved.
 //
 
-#import "AlisServicesManager.h"
+//#import "AlisServicesManager.h"
 #import "AlisAppDelegate.h"
-#import "AlisHttpServiceItem.h"
+//#import "AlisHttpServiceItem.h"
 #import <MJExtension/MJExtension.h>
-#import <AEDatakit/AEDatakit.h>
-#import "AFNetworkingPlugin2.h"
-#import "SDWebImagePlugin2.h"
+#import <AEDataKit/AEDataKit.h>
 
 @implementation AlisAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // Override point for customization after application launch.
-    NSString *plistPath = @"/Users/david/Documents/AlisNetworking/AlisNetworking/Classes/RequestConfig.plist";
+   /* NSString *plistPath = @"/Users/david/Documents/AlisNetworking/AlisNetworking/Classes/RequestConfig.plist";
     
     NSDictionary *availableRequestServices = [[NSDictionary alloc]initWithContentsOfFile:plistPath];
     NSDictionary *candidateRequestServices = [NSDictionary dictionaryWithDictionary:availableRequestServices];
@@ -34,19 +32,16 @@
     }];
     
     [[AlisServicesManager sharedManager]registerServices:dic];
-    
+    */
     
     AEDKHttpServiceConfiguration *httpConfiguration = [[AEDKHttpServiceConfiguration alloc]init];
+    httpConfiguration.mimeType = AEDKHttpServiceMimeTypeText;
     AEDKHttpUploadDownloadConfiguration *uploadDownloadConfig = [[AEDKHttpUploadDownloadConfiguration alloc]initWithType:AEDKHttpFileUpload accociatedFilePath:@"/temp/xyz"];
     httpConfiguration.uploadDownloadConfig = uploadDownloadConfig;
     
     
     AEDKService *service = [[AEDKService alloc]initWithName:@"AskPostCodes" protocol:kAEDKServiceProtocolHttp domain:@"olympic-public.oss-cn-shanghai.aliyuncs.com" path:@"/api/address/addr_4_1111_1_amap.json" serviceConfiguration:httpConfiguration];//[AEDKServiceConfiguration defaultConfiguration]]
     [[AEDKServer server] registerService:service];
-    
-    
-    [[AEDKServer server] addDelegate:[[AFNetworkingPlugin2 alloc]init]];
-    [[AEDKServer server] addDelegate:[[SDWebImagePlugin2 alloc]init]];
     
 
     return YES;

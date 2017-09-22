@@ -11,7 +11,7 @@
 @implementation PostCodeModel
 
 + (NSArray *)allPostcode:(NSDictionary *)postcodesDic{
-    if (postcodesDic == nil) return NULL;
+    if (postcodesDic == nil || ![postcodesDic isKindOfClass:[NSDictionary class]]) return NULL;
     NSMutableArray *array = [NSMutableArray array];
     for (NSString *key in postcodesDic.allKeys) {
         PostCodeModel *model = [[PostCodeModel alloc]init];

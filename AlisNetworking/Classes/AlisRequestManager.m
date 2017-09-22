@@ -135,12 +135,18 @@ typedef NSDictionary *(^ PreRequestBlcok) (void);
         NSLog(@"！");
     }
     
-    id<AlisPluginProtocol> plugin = [self.pluginManager plugin:@"AFNetwoking"];
-    if (plugin == nil) {
-        NSLog(@"对应的插件不存在！");
-        return;
+    id<AlisPluginProtocol> plugin = nil;
+    if (request.mimeType == AlisHttpRequestMimeTypeText) {
+        plugin = [self.pluginManager plugin:@"AFNetwoking"];
+    }
+    else if (request.mimeType == AlisHttpRequestMimeTypeImage) {
+        plugin = [self.pluginManager plugin:@"SDWebimage"];
     }
     
+    if (plugin == nil) {
+        NSLog(@"对应的插件不存在！"); return;
+    }
+
     //设置请求的MD5值。注：可以有其他方式
     request.identifier = [request.url md5WithString];
     NSString *requestIdentifer = request.context.serviceName; 
@@ -148,7 +154,7 @@ typedef NSDictionary *(^ PreRequestBlcok) (void);
         (self.requestSet)[requestIdentifer] = request;
     }
     else{
-        NSLog(@"warning: 请求资源的名称不能为空");
+        NSLog(@"warning: 请求资源的名称为空");
     }
     
     //plugin发出请求，在这里解析两部分，一部分是公共的--AlisRequestConfig，一部分是自己的,

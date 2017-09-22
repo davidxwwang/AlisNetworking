@@ -65,6 +65,7 @@ NSArray* MSArrayFromMainBundle(NSString *filename){
     if (self = [super init]) {
         self.pluginsServiceDictionary = [NSMutableDictionary dictionary];
         self.pluginsDictionary = [NSMutableDictionary dictionary];
+        [self registerALLPlugins];
     }
     return self;
 }

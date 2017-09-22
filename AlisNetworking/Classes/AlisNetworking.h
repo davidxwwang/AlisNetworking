@@ -12,5 +12,6 @@
 #import "AlisServiceProxy.h"
 #import "AlisRequestManager.h"
 #import "AlisRequest.h"
+#import "UIImageView+AlisRequest.h"
 
 #endif /* AlisNetworking_h */

@@ -2,6 +2,7 @@ use_frameworks!
 
 target 'AlisNetworking_Example' do
   pod 'AlisNetworking', :path => '../'
+  pod 'AEDataKit'
 
   target 'AlisNetworking_Tests' do
     inherit! :search_paths
@@ -10,9 +11,5 @@ target 'AlisNetworking_Example' do
   pod 'Expecta'
   pod 'FBSnapshotTestCase'
   pod 'Expecta+Snapshots'
-  pod 'AFNetworking'
-  pod 'SDWebImage'
-  pod 'MJExtension'
-  pod 'AEDataKit'
   end
 end
