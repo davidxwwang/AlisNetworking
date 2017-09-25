@@ -1,6 +1,6 @@
 {
   "name": "AlisNetworking",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "summary": "阿里体育网络请求库",
   "description": "TODO: Add long description of the pod here.",
   "homepage": "https://github.com/davidxwwang/AlisNetworking",
@@ -13,12 +13,11 @@
   },
   "source": {
     "git": "https://github.com/davidxwwang/AlisNetworking.git",
-    "tag": "0.1.6"
+    "tag": "0.1.7"
   },
   "platforms": {
     "ios": "8.0"
   },
-  "public_header_files": "AlisNetworking/Classes/AlisNetworking.h",
   "source_files": "AlisNetworking/Classes/**/*",
   "dependencies": {
     "AFNetworking": [
