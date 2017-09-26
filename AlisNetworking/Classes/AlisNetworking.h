@@ -13,6 +13,7 @@
 #import "AlisRequestManager.h"
 #import "AlisRequest.h"
 #import "UIImageView+AlisRequest.h"
+#import "AlisRequestConfig.h"
 
 #endif 
 
