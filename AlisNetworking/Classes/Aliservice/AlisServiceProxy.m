@@ -52,7 +52,6 @@ void requestContainer(id self, SEL _cmd) {
 
 
 @interface AlisServiceProxy ()
-
 @end
 
 @implementation AlisServiceProxy
@@ -128,6 +127,14 @@ void requestContainer(id self, SEL _cmd) {
     
     NSString *classString = NSStringFromClass([object class]);
     _serviceAgents[classString] = object;
+}
+
+- (id)beforeRequest:(id)data{
+    return nil;
+}
+
+- (id)afterRequest:(id)data{
+    return nil;
 }
 
 - (void)handlerServiceResponse:(AlisRequest *)request serviceName:(NSString *)serviceName response:(id)response{
@@ -229,7 +236,6 @@ void requestContainer(id self, SEL _cmd) {
 - (NSString *)getParam:(NSString *)resourceSubkey serviceName:(NSString *)globalServiceName{
     NSParameterAssert(resourceSubkey && globalServiceName);
     
-    Service *service = self.currentServeContainer[globalServiceName];
     NSArray *sep = [globalServiceName componentsSeparatedByString:@"_"];
     
     if (sep.count < 2 || sep == nil) {

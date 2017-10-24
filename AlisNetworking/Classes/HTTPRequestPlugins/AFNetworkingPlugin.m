@@ -71,8 +71,7 @@
         return;
     }
 
-    NSString *httpMethod = [self httpMethodConverter:request.httpMethod];
-    NSAssert(httpMethod, @"httpMethod can not be nil");
+    NSAssert([self httpMethodConverter:request.httpMethod], @"httpMethod can not be nil");
     
     NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
     AFURLSessionManager *manager = [[AFURLSessionManager alloc] initWithSessionConfiguration:configuration];
@@ -92,7 +91,7 @@
         if (request.finishBlock) {
             AlisResponse *response = [self perseResponse:filePath request:request];
             AlisError *_error = [self perseError:error];
-            request.finishBlock(request,nil,_error);
+            request.finishBlock(request,response,_error);
         }
     }];
     
@@ -159,8 +158,7 @@
    self.sessionManager = sessionManager;
 }
 
-- (void)startRequest:(AlisRequest *)request config:(AlisRequestConfig *)config
-{
+- (void)startRequest:(AlisRequest *)request config:(AlisRequestConfig *)config{
     [self initSessionManager:request];
     //上传任务 下载任务 一般任务
     if (request.requestType == AlisRequestUpload) {
@@ -172,13 +170,9 @@
     }
 }
 
-- (AlisResponse *)perseResponse:(id)rawResponse request:(AlisRequest *)request
-{
-    if (!rawResponse ) {
-        return nil;
-    }
-    NSDictionary *data = (NSDictionary *)rawResponse;
-  //  AlisResponse *response = [[AlisResponse alloc]initWithInfo:data];
+- (AlisResponse *)perseResponse:(id)rawResponse request:(AlisRequest *)request{
+    if (!rawResponse ) return nil;
+ 
     AlisResponse *response = [[AlisResponse alloc]init];
     response.originalData = rawResponse;
     return response;

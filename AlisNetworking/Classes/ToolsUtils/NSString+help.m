@@ -12,9 +12,6 @@
 
 /**
  计算MD5
- 
- @param string string description
- @return return value description
  */
 - (NSString *)md5WithString{
     NSAssert(self, @"string should not nil");

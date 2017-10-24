@@ -61,11 +61,14 @@
     return Resume;
 }
 
-
-//- (instancetype)copyWithZone:(NSZone *)zone{
-//    AlisService *copy = [[[self class] allocWithZone:zone] init:_serviceType serviceName:_serviceName serviceAction:_serviceAction serviceAgent:_serviceAgent] ;
-//    return copy;
-//}
+- (instancetype)copyWithZone:(NSZone *)zone{
+    AlisService *copy = [[[self class] allocWithZone:zone] init];
+    copy.serviceName = self.serviceName;
+    copy.serviceType = self.serviceType;
+    copy.serviceAction = self.serviceAction;
+    copy.serviceAgent = self.serviceAgent;
+    return copy;
+}
 
 
 @end

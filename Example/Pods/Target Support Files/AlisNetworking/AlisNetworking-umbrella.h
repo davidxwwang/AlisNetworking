@@ -32,7 +32,6 @@
 #import "AlisJsonParsePluginProtocol.h"
 #import "AlisJsonParserProtocol.h"
 #import "EXTensionParse.h"
-#import "CookieManager.h"
 #import "NSString+help.h"
 #import "UIImageView+AlisRequest.h"
 

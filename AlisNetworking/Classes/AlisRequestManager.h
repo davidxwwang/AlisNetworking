@@ -22,12 +22,12 @@
 /**
  HTTPS 网站集合
  */
-@property(strong,nonatomic)NSMutableArray *sslPinningHosts;
+@property(strong,nonatomic,nullable)NSMutableArray *sslPinningHosts;
 
 /**
  HTTPS 证书集合
  */
-@property(strong,nonatomic)NSMutableArray *certSet;
+@property(strong,nonatomic,nullable)NSMutableArray *certSet;
 
 //所有请求的数组，元素为Alirequest，请求发出，加入数组；请求结束，取消从数组中删掉；请求暂停不删除
 @property(strong,nonatomic,nullable)NSMutableDictionary *requestSet;
@@ -37,7 +37,6 @@
 @property(strong,nonatomic)dispatch_semaphore_t _Nonnull semaphore;
 
 - (void)startRequest:(AlisRequest * _Nonnull)request;
-- (void)startRequestModel:(id<AlisRequestProtocol> _Nonnull)requestModel;
 
 /**
  发出请求
@@ -50,13 +49,13 @@
 - (void)cancelRequest:(AlisRequest * _Nonnull)request;
 
 //注意：
-- (void)cancel_Request:( id<AlisRequestProtocol> _Nonnull)request;
 - (void)cancelRequestByIdentifier:(NSString * _Nonnull)requestIdentifier;
 - (void)cancelRequestwithServiceName:(NSString * _Nonnull)requestIdentifier;
 
 //设置请求的公有属性，server，head等
 @property(strong,nonatomic,nullable)AlisRequestConfig *config;
-- (void)setupConfig:(void(^)(AlisRequestConfig * _Nullable config)) block;
+- (void)setupConfig:(void(^_Nonnull
+                          )(AlisRequestConfig * _Nullable config)) block;
 
 /*
  在这里提供了两个请求的方法，建议用第二个，因为这样使得用户层和网络协议层隔离了，用户层完全感觉不到
@@ -67,15 +66,15 @@
  所有AlisRequest的回调（成功）都在AlisRequestManager中，再在AlisRequestManager中向用户层发回调。
  */
 
-- (void)failureWithError:(AlisError * _Nullable)error withRequest:(AlisRequest *)request;
-- (void)successWithResponse:(AlisResponse * _Nullable)response withRequest:(AlisRequest * _Nullable)request;
+- (void)failureWithError:(AlisError * _Nullable)error withRequest:(AlisRequest *_Nonnull)request;
+- (void)successWithResponse:(AlisResponse * _Nullable)response withRequest:(AlisRequest * _Nonnull)request;
 
-- (void)sendChainRequest:(AlisChainRConfigBlock)chainRequestConfigBlock
+- (void)sendChainRequest:(AlisChainRConfigBlock _Nullable)chainRequestConfigBlock
                  success:(nullable AlisChainRSucessBlock)success
                  failure:(nullable AlisChainRFailBlock)failure
                   finish:(nullable AlisChainRFinishedBlock)finish;
 
-- (void)sendBatchRequest:(AlisBatchRequestConfigBlock)batchRequestConfigBlock
+- (void)sendBatchRequest:(AlisBatchRequestConfigBlock _Nullable)batchRequestConfigBlock
                onSuccess:(nullable AlisBatchRSucessBlock)successBlock
                onFailure:(nullable AlisBatchRFailBlock)failureBlock
               onFinished:(nullable AlisBatchRFinishedBlock)finishedBlock;
@@ -89,37 +88,34 @@
  */
 @interface AlisChainRequest : NSObject
 
-@property (nonatomic, copy, readonly) NSString *identifier;
-@property (nonatomic, strong, readonly) AlisRequest *runningRequest;
 
-- (instancetype)initWithBlocks:(AlisChainRSucessBlock)success
-               failure:(AlisChainRFailBlock)failure
-                finish:(AlisChainRFinishedBlock)finish;
+@property (nonatomic, copy, readonly) NSString  *_Nullable identifier;
+@property (nonatomic, strong, readonly) AlisRequest *_Nullable runningRequest;
 
-- (AlisChainRequest *)onFirst:(AlisRequestConfigBlock)firstBlock;
-- (AlisChainRequest *)onNext:(AlisChainNextRBlock)nextBlock;
+- (instancetype _Nullable )initWithBlocks:(AlisChainRSucessBlock _Nullable)success
+               failure:(AlisChainRFailBlock _Nullable)failure
+                finish:(AlisChainRFinishedBlock _Nullable)finish;
 
-- (BOOL)onFinishedOneRequest:(AlisRequest *)request response:(nullable id)responseObject error:(nullable AlisError *)error;
+- (AlisChainRequest *_Nullable)onFirst:(AlisRequestConfigBlock _Nullable)firstBlock;
+- (AlisChainRequest *_Nullable)onNext:(AlisChainNextRBlock _Nullable)nextBlock;
+
+- (BOOL)onFinishedOneRequest:(AlisRequest *_Nullable)request response:(nullable id)responseObject error:(nullable AlisError *)error;
 
 @end
 
 #pragma mark - AlisBatchRequest
 
-///------------------------------------------------------
-/// @name XMBatchRequest Class for sending batch requests
-///------------------------------------------------------
-
 @interface AlisBatchRequest : NSObject
 
-@property (nonatomic, copy, readonly) NSString *identifier;
-@property (nonatomic, strong, readonly) NSMutableArray *requestArray;
-@property (nonatomic, strong, readonly) NSMutableArray *responseArray;
+@property (nonatomic, copy, readonly) NSString *_Nullable identifier;
+@property (nonatomic, strong, readonly) NSMutableArray *_Nullable requestArray;
+@property (nonatomic, strong, readonly) NSMutableArray *_Nullable responseArray;
 
-- (instancetype)initWithBlocks:(AlisBatchRSucessBlock)success
-                       failure:(AlisBatchRFailBlock)failure
-                        finish:(AlisBatchRFinishedBlock)finish;
+- (instancetype _Nullable)initWithBlocks:(AlisBatchRSucessBlock _Nullable)success
+                       failure:(AlisBatchRFailBlock _Nullable)failure
+                        finish:(AlisBatchRFinishedBlock _Nullable)finish;
 
-- (BOOL)onFinishedRequest:(AlisRequest *)request response:(nullable id)responseObject error:(nullable NSError *)error;
+- (BOOL)onFinishedRequest:(AlisRequest *_Nullable)request response:(nullable id)responseObject error:(nullable NSError *)error;
 
 @end
 

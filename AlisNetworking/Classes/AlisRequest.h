@@ -23,12 +23,12 @@ typedef enum {
 
 @interface AlisRequest : NSObject
 
-+ (AlisRequest *)request;
++ (AlisRequest *_Nullable)request;
 
 /**
  将dataRequrest转化为AlisRequest
 */
-+ (AlisRequest *)convertFromDataRequrest:(NSURLRequest *)dataRequrest;
++ (AlisRequest *_Nullable)convertFromDataRequrest:(NSURLRequest * _Nullable)dataRequrest;
 
 /**
  请求类型，默认AEDKHttpServiceMimeTypeUndefine
@@ -38,11 +38,11 @@ typedef enum {
 /**
  解析接口返回JSON数据的类
  */
-@property(copy,nonatomic)NSString *parseClass;
+@property(copy,nonatomic)NSString * _Nullable parseClass;
 
 //请求所处的上下文，先假定为发出请求的类，也可以新增属性：例如->网络环境，电量，内存状况等。
 //方便后期的回调
-@property(strong,nonatomic) AlisRequestContext *context;
+@property(strong,nonatomic) AlisRequestContext * _Nullable context;
 
 //在业务层绑定的requestModel
 @property(strong,nonatomic,nullable) id<AlisRequestProtocol> bindRequestModel;
@@ -66,7 +66,7 @@ typedef enum {
 //请求参数
 @property(strong,nonatomic,nullable) NSDictionary<NSString *,id> *parameters;
 //请求前强加的参数，eg：时间戳
-@property(strong,nonatomic) NSDictionary<NSString *,id> *preParameters;
+@property(strong,nonatomic) NSDictionary<NSString *,id> * _Nullable preParameters;
 
 //请求头
 @property(strong,nonatomic,nullable) NSDictionary<NSString *,NSString *> *header;
@@ -100,10 +100,10 @@ typedef enum {
 @property(copy,nonatomic,nullable) AlisRequestProgressBlock progressBlock;
 
 
-- (void)addFormDataWithName:(NSString *)name fileData:(NSData *)fileData;
-- (void)addFormDataWithName:(NSString *)name fileURL:(NSString *)fileURL;
+- (void)addFormDataWithName:(NSString * _Nonnull)name fileData:(NSData * _Nonnull)fileData;
+- (void)addFormDataWithName:(NSString * _Nonnull)name fileURL:(NSString * _Nonnull)fileURL;
 
-@property(strong,nonatomic)NSMutableArray<AlisUpLoadFormData *> *uploadFormDatas;
+@property(strong,nonatomic)NSMutableArray<AlisUpLoadFormData *> * _Nullable uploadFormDatas;
 
 /**
  下载路径
@@ -125,7 +125,7 @@ typedef enum {
 
 @property(copy,nonatomic,nullable)NSString *mimeType;
 
-+ (instancetype)formUploadDataWithName:(NSString * _Nonnull)name fileData:(NSData *)fileData;
-+ (instancetype)formUploadDataWithName:(NSString * _Nonnull)name fileURL:(NSURL * _Nonnull)fileURL;
++ (instancetype _Nullable )formUploadDataWithName:(NSString * _Nonnull)name fileData:(NSData * _Nonnull)fileData;
++ (instancetype _Nullable )formUploadDataWithName:(NSString * _Nonnull)name fileURL:(NSURL * _Nonnull)fileURL;
 
 @end

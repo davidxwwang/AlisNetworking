@@ -131,14 +131,7 @@ typedef NSDictionary *(^ PreRequestBlcok) (void);
  @param request 封装的请求
  */
 - (void)startRequest:(AlisRequest *)request{
-    //查找合适的plugin
-    NSDictionary *allPlugins = [self.pluginManager allPlugins];
-    for (NSString *pluginKey in allPlugins.allKeys) {
-        id<AlisPluginProtocol> plugin = [self.pluginManager plugin:pluginKey];
-        NSArray *temp = [plugin supportSevervice];
-        NSLog(@"！");
-    }
-    
+        
     id<AlisPluginProtocol> plugin = nil;
     if (request.mimeType == AlisHttpRequestMimeTypeText) {
         plugin = [self.pluginManager plugin:@"AFNetwoking"];
@@ -175,6 +168,10 @@ typedef NSDictionary *(^ PreRequestBlcok) (void);
             [request.bindRequestModel.currentServeContainer removeObjectForKey:serviceName];
         }
     }    
+}
+
+- (void)cancelRequestwithServiceName:(NSString *)requestIdentifier{
+    [self cancelRequestByIdentifier:requestIdentifier];
 }
 
 - (void)cancelRequestByIdentifier:(NSString *)requestIdentifier{
@@ -323,7 +320,7 @@ typedef NSDictionary *(^ PreRequestBlcok) (void);
         [plugin perseRequest:chainRequest.runningRequest config:_config];
         //设置请求的MD5值。注：可以有其他方式
         chainRequest.runningRequest.identifier = [chainRequest.runningRequest.url md5WithString];
-        NSString *requestIdentifer = chainRequest.runningRequest.context.serviceName;
+//        NSString *requestIdentifer = chainRequest.runningRequest.context.serviceName;
 //        if (requestIdentifer) {
 //            (self.requestSet)[requestIdentifer] = request;
 //        }
@@ -415,7 +412,7 @@ typedef NSDictionary *(^ PreRequestBlcok) (void);
 
 - (void)handerBatchResponse:(AlisBatchRequest *)batchRequest request:(AlisRequest *)request response:(AlisResponse *)response error:(AlisError *)error{
     if (batchRequest) {
-        [batchRequest onFinishedRequest:request response:response error:error];
+        [batchRequest onFinishedRequest:request response:response error:error.originalError];
     }
 }
 

@@ -107,7 +107,7 @@ static NSString *testApi = @"/1442142801331138639111.mp4";
     };
     [process start];*/
 }
-/*
+
 - (void)cancelNormalRequest{
     [self testImageView];return;
     suspendService(@"uploadData");
@@ -181,7 +181,7 @@ static NSString *testApi = @"/1442142801331138639111.mp4";
     
 }
 
-
+/*
 #pragma mark -- http 
 - (AlisRequestType)requestType:(NSString *)serviceName{
     if (ServiceEqual(serviceName, @"AskDemo")) {

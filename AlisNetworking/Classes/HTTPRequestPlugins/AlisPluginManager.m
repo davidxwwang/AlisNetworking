@@ -99,20 +99,20 @@ NSArray* MSArrayFromMainBundle(NSString *filename){
 }
 
 - (void)registerALLPlugins{
-    self.pluginsServiceDictionary = @{@"AFNetwoking":@"AFNetworkingPlugin",@"SDWebimage":@"SDWebimagePlugin"};
+    self.pluginsServiceDictionary = [NSMutableDictionary dictionaryWithDictionary:@{@"AFNetwoking":@"AFNetworkingPlugin",@"SDWebimage":@"SDWebimagePlugin"}];
     return;
-    NSArray *array = MSArrayFromMainBundle(@"plugins.plist");
-
-    NSString *plistPath =  @"/Users/david/Documents/AlisNetworking/AlisNetworking/Classes/plugins.plist";
-    
-    //NSString *plistPath =  @"../../AlisNetworking/Classes/plugins.plist";
-    NSString *plistPath2 = [[NSBundle mainBundle] pathForResource:@"plugins" ofType:@"plist"];
-    if (![[NSFileManager defaultManager] fileExistsAtPath:plistPath]) {
-        return;
-    }
-    
-    NSDictionary *pluginList = [[NSDictionary alloc] initWithContentsOfFile:plistPath];
-    [self.pluginsServiceDictionary addEntriesFromDictionary:pluginList];
+//    NSArray *array = MSArrayFromMainBundle(@"plugins.plist");
+//
+//    NSString *plistPath =  @"/Users/david/Documents/AlisNetworking/AlisNetworking/Classes/plugins.plist";
+//    
+//    //NSString *plistPath =  @"../../AlisNetworking/Classes/plugins.plist";
+//    NSString *plistPath2 = [[NSBundle mainBundle] pathForResource:@"plugins" ofType:@"plist"];
+//    if (![[NSFileManager defaultManager] fileExistsAtPath:plistPath]) {
+//        return;
+//    }
+//    
+//    NSDictionary *pluginList = [[NSDictionary alloc] initWithContentsOfFile:plistPath];
+//    [self.pluginsServiceDictionary addEntriesFromDictionary:pluginList];
     
 }
 

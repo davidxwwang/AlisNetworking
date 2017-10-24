@@ -45,8 +45,8 @@ typedef NS_ENUM(NSInteger, AlisHTTPMethodType) {
 
 typedef void(^AlisRequestStartBlock) (void);
 typedef void(^AlisRequestCancelBlock) (void);
-typedef void(^AlisRequestFinishBlock) (AlisRequest *request ,AlisResponse *response ,AlisError *error);
-typedef void(^AlisRequestProgressBlock)(AlisRequest *request ,long long receivedSize, long long expectedSize);
+typedef void(^AlisRequestFinishBlock) (AlisRequest * _Nonnull request ,AlisResponse * _Nullable response ,AlisError * _Nullable error);
+typedef void(^AlisRequestProgressBlock)(AlisRequest * _Nonnull request ,long long receivedSize, long long expectedSize);
 
 typedef void(^AlisRequestConfigBlock)( AlisRequest *_Nonnull request);
 

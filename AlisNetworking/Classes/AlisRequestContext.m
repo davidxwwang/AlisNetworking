@@ -41,7 +41,7 @@
     
     NSNumber *status = userinfo[AFNetworkingReachabilityNotificationStatusItem];
     
-    self.networkReachabilityStatus = status;
+    self.networkReachabilityStatus = [status integerValue];
     
     
     //    AFNetworkReachabilityStatus reachStatus = userinfo[AFNetworkingReachabilityNotificationStatusItem];

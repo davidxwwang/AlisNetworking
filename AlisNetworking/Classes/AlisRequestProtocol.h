@@ -74,9 +74,8 @@ typedef void(^AlisRequestProgressRequest)(AlisRequest *request ,long long receiv
 
 /**
  访问资源的程度，一般是http 上传下载
- 
  @param request 网络请求
- @param progress 程度，百分比
+ @serviceName 
  */
 - (void)handlerServiceResponse:(AlisRequest *)request  serviceName:(NSString *)serviceName error:(AlisError *)error;
 

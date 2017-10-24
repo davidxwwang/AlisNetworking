@@ -14,7 +14,7 @@ PODS:
   - AFNetworking/Serialization (3.1.0)
   - AFNetworking/UIKit (3.1.0):
     - AFNetworking/NSURLSession
-  - AlisNetworking (0.1.7):
+  - AlisNetworking (0.1.9):
     - AFNetworking
     - MJExtension
     - SDWebImage
@@ -29,10 +29,10 @@ PODS:
   - FBSnapshotTestCase/SwiftSupport (2.1.4):
     - FBSnapshotTestCase/Core
   - MJExtension (3.0.13)
-  - SDWebImage (4.1.0):
-    - SDWebImage/Core (= 4.1.0)
-  - SDWebImage/Core (4.1.0)
-  - Specta (1.0.6)
+  - SDWebImage (4.1.2):
+    - SDWebImage/Core (= 4.1.2)
+  - SDWebImage/Core (4.1.2)
+  - Specta (1.0.7)
 
 DEPENDENCIES:
   - AlisNetworking (from `../`)
@@ -47,13 +47,13 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   AFNetworking: 5e0e199f73d8626b11e79750991f5d173d1f8b67
-  AlisNetworking: 56cf2ea77ca2df849c16dea326b5831030b43494
+  AlisNetworking: f990a098a574847c00cbdb5a38c271bd95d4f29d
   Expecta: 3b6bd90a64b9a1dcb0b70aa0e10a7f8f631667d5
   Expecta+Snapshots: dcff217eef506dabd6dfdc7864ea2da321fafbb8
   FBSnapshotTestCase: 094f9f314decbabe373b87cc339bea235a63e07a
   MJExtension: 5932755f451458eefa24239358817f8d291240c7
-  SDWebImage: 0e435c14e402a6730315a0fb79f95e68654d55a4
-  Specta: f506f3a8361de16bc0dcf3b17b75e269072ba465
+  SDWebImage: cb6f9f266a9977741efcbc21e618e8be3734c774
+  Specta: 3e1bd89c3517421982dc4d1c992503e48bd5fe66
 
 PODFILE CHECKSUM: a479cd13e817523a4a2b1b23e4bc1f0633be5036
 

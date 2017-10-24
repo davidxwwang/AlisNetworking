@@ -10,6 +10,8 @@
 @class AlisJsonModel;
 @protocol AlisJsonParserProtocol <NSObject>
 
+@optional
+
 - (NSString *)code;
 - (NSString *)message;
 - (id)parsedData;

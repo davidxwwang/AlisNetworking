@@ -15,21 +15,14 @@
 @protocol AlisPluginProtocol <NSObject>
 
 /**
- *  配置公共的请求config，eg：server等。
- *
- *  @param requestConfig  公共配置项。
- *
- */
-- (void)perseConfig:(AlisRequestConfig *)requestConfig;
-/**
  *  将我们自定义的reqeust转换为可以真正发出网络请求的reqeust。
  *
  *  @param request     请求（可能需要请求的一些参数来生成响应，如responseClass等）。
+ *  @param config  公共配置项,配置公共的请求config，eg：server等。
  *
  */
 - (void)perseRequest:(AlisRequest *)request config:(AlisRequestConfig *)config;
 
-- (id)start_Request:(AlisRequest *)request config:(AlisRequestConfig *)config;
 /**
  *  解析接口返回的remoteResponse，得到我们想要的数据。
  *
