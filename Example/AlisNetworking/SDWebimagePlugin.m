@@ -43,6 +43,7 @@
     if ( !rawResponse || ![rawResponse isKindOfClass:[UIImage class]]) {
         return nil;
     }
+    NSDictionary *data = @{@"image":rawResponse};
    // AlisResponse *response = [[AlisResponse alloc]initWithInfo:data];
     AlisResponse *response = [[AlisResponse alloc]init];
     response.originalData = rawResponse;

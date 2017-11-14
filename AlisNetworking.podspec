@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'AlisNetworking'
-  s.version          = '0.1.9'
+  s.version          = '0.2.0'
   s.summary          = '阿里体育网络请求库'
 
 # This description is used to generate tags and improve search results.
@@ -37,8 +37,7 @@ TODO: Add long description of the pod here.
   # }
 
   # s.frameworks = 'UIKit', 'MapKit'
-  s.dependency 'AFNetworking'
-  #s.dependency 'AEDataKit'
-  s.dependency 'SDWebImage'
-  s.dependency 'MJExtension'
+#s.dependency 'AFNetworking'
+#s.dependency 'SDWebImage'
+#  s.dependency 'MJExtension'
 end

@@ -52,6 +52,7 @@ dispatch_sync(dispatch_get_main_queue(), block);\
     };
     
     AlisRequest *request = [[AlisRequest alloc]init];
+    request.mimeType = AlisHttpRequestMimeTypeImage;
     request.url = url;
     request.finishBlock = imageCompletedBlock;
     request.progressBlock = imageProcessBlock;

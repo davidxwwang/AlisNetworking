@@ -20,9 +20,11 @@
 		6003F5B2195388D20070C39A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F591195388D20070C39A /* UIKit.framework */; };
 		6003F5BA195388D20070C39A /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6003F5B8195388D20070C39A /* InfoPlist.strings */; };
 		6003F5BC195388D20070C39A /* Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 6003F5BB195388D20070C39A /* Tests.m */; };
+		6310AE591FBA9104004992A5 /* AFNetworkingPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = 6310AE541FBA9104004992A5 /* AFNetworkingPlugin.m */; };
+		6310AE5A1FBA9104004992A5 /* EXTensionParse.m in Sources */ = {isa = PBXBuildFile; fileRef = 6310AE561FBA9104004992A5 /* EXTensionParse.m */; };
+		6310AE5B1FBA9104004992A5 /* SDWebimagePlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = 6310AE581FBA9104004992A5 /* SDWebimagePlugin.m */; };
 		6346BF481E97400700CDB2FE /* CityInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 6346BF471E97400700CDB2FE /* CityInfo.m */; };
 		638D877B1F4D2224001D79A1 /* PostCodeModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 638D877A1F4D2224001D79A1 /* PostCodeModel.m */; };
-		638D877F1F4D2DF4001D79A1 /* AFNetworking.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 638D877E1F4D2DF4001D79A1 /* AFNetworking.framework */; };
 		638D87811F4D2E01001D79A1 /* AlisNetworking.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 638D87801F4D2E01001D79A1 /* AlisNetworking.framework */; };
 		71719F9F1E33DC2100824A3D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 71719F9D1E33DC2100824A3D /* LaunchScreen.storyboard */; };
 		873B8AEB1B1F5CCA007FD442 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 873B8AEA1B1F5CCA007FD442 /* Main.storyboard */; };
@@ -59,13 +61,19 @@
 		6003F5B9195388D20070C39A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		6003F5BB195388D20070C39A /* Tests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Tests.m; sourceTree = "<group>"; };
 		606FC2411953D9B200FFA9A0 /* Tests-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Tests-Prefix.pch"; sourceTree = "<group>"; };
+		6310AE511FBA8CE4004992A5 /* SDWebImage.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SDWebImage.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		6310AE531FBA9104004992A5 /* AFNetworkingPlugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFNetworkingPlugin.h; sourceTree = "<group>"; };
+		6310AE541FBA9104004992A5 /* AFNetworkingPlugin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFNetworkingPlugin.m; sourceTree = "<group>"; };
+		6310AE551FBA9104004992A5 /* EXTensionParse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EXTensionParse.h; sourceTree = "<group>"; };
+		6310AE561FBA9104004992A5 /* EXTensionParse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EXTensionParse.m; sourceTree = "<group>"; };
+		6310AE571FBA9104004992A5 /* SDWebimagePlugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDWebimagePlugin.h; sourceTree = "<group>"; };
+		6310AE581FBA9104004992A5 /* SDWebimagePlugin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDWebimagePlugin.m; sourceTree = "<group>"; };
 		6346BF461E97400700CDB2FE /* CityInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CityInfo.h; sourceTree = "<group>"; };
 		6346BF471E97400700CDB2FE /* CityInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CityInfo.m; sourceTree = "<group>"; };
 		636F1BB01F739953009CA4AD /* AEDataKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AEDataKit.framework; path = "Pods/../build/Debug-iphoneos/AEDataKit/AEDataKit.framework"; sourceTree = "<group>"; };
 		636F1BB11F739953009CA4AD /* AELocalDataKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AELocalDataKit.framework; path = "../../../Library/Developer/Xcode/DerivedData/AlisNetworking-azbpnhczqzmicqdetvzzoqudfpzq/Build/Products/Debug-iphonesimulator/AELocalDataKit/AELocalDataKit.framework"; sourceTree = "<group>"; };
 		638D87791F4D2224001D79A1 /* PostCodeModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PostCodeModel.h; sourceTree = "<group>"; };
 		638D877A1F4D2224001D79A1 /* PostCodeModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PostCodeModel.m; sourceTree = "<group>"; };
-		638D877E1F4D2DF4001D79A1 /* AFNetworking.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AFNetworking.framework; path = "../../../Library/Developer/Xcode/DerivedData/AlisNetworking-azbpnhczqzmicqdetvzzoqudfpzq/Build/Products/Debug-iphonesimulator/AFNetworking/AFNetworking.framework"; sourceTree = "<group>"; };
 		638D87801F4D2E01001D79A1 /* AlisNetworking.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AlisNetworking.framework; path = "../../../Library/Developer/Xcode/DerivedData/AlisNetworking-azbpnhczqzmicqdetvzzoqudfpzq/Build/Products/Debug-iphonesimulator/AlisNetworking/AlisNetworking.framework"; sourceTree = "<group>"; };
 		6D910EC23740F49F4C3992D5 /* Pods-AlisNetworking_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AlisNetworking_Example.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AlisNetworking_Example/Pods-AlisNetworking_Example.debug.xcconfig"; sourceTree = "<group>"; };
 		71719F9E1E33DC2100824A3D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -85,7 +93,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				638D87811F4D2E01001D79A1 /* AlisNetworking.framework in Frameworks */,
-				638D877F1F4D2DF4001D79A1 /* AFNetworking.framework in Frameworks */,
 				6003F590195388D20070C39A /* CoreGraphics.framework in Frameworks */,
 				6003F592195388D20070C39A /* UIKit.framework in Frameworks */,
 				6003F58E195388D20070C39A /* Foundation.framework in Frameworks */,
@@ -130,10 +137,10 @@
 		6003F58C195388D20070C39A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				6310AE511FBA8CE4004992A5 /* SDWebImage.framework */,
 				636F1BB01F739953009CA4AD /* AEDataKit.framework */,
 				636F1BB11F739953009CA4AD /* AELocalDataKit.framework */,
 				638D87801F4D2E01001D79A1 /* AlisNetworking.framework */,
-				638D877E1F4D2DF4001D79A1 /* AFNetworking.framework */,
 				6003F58D195388D20070C39A /* Foundation.framework */,
 				6003F58F195388D20070C39A /* CoreGraphics.framework */,
 				6003F591195388D20070C39A /* UIKit.framework */,
@@ -146,6 +153,7 @@
 		6003F593195388D20070C39A /* Example for AlisNetworking */ = {
 			isa = PBXGroup;
 			children = (
+				6310AE521FBA9104004992A5 /* Plugins */,
 				6003F59C195388D20070C39A /* AlisAppDelegate.h */,
 				6003F59D195388D20070C39A /* AlisAppDelegate.m */,
 				873B8AEA1B1F5CCA007FD442 /* Main.storyboard */,
@@ -201,6 +209,19 @@
 				8BBADF24540747FE87605ACC /* LICENSE */,
 			);
 			name = "Podspec Metadata";
+			sourceTree = "<group>";
+		};
+		6310AE521FBA9104004992A5 /* Plugins */ = {
+			isa = PBXGroup;
+			children = (
+				6310AE531FBA9104004992A5 /* AFNetworkingPlugin.h */,
+				6310AE541FBA9104004992A5 /* AFNetworkingPlugin.m */,
+				6310AE551FBA9104004992A5 /* EXTensionParse.h */,
+				6310AE561FBA9104004992A5 /* EXTensionParse.m */,
+				6310AE571FBA9104004992A5 /* SDWebimagePlugin.h */,
+				6310AE581FBA9104004992A5 /* SDWebimagePlugin.m */,
+			);
+			path = Plugins;
 			sourceTree = "<group>";
 		};
 		AE01327D281D9868D661F6DF /* Pods */ = {
@@ -440,9 +461,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				638D877B1F4D2224001D79A1 /* PostCodeModel.m in Sources */,
+				6310AE591FBA9104004992A5 /* AFNetworkingPlugin.m in Sources */,
 				6003F59E195388D20070C39A /* AlisAppDelegate.m in Sources */,
 				6003F5A7195388D20070C39A /* AlisViewController.m in Sources */,
+				6310AE5B1FBA9104004992A5 /* SDWebimagePlugin.m in Sources */,
 				6346BF481E97400700CDB2FE /* CityInfo.m in Sources */,
+				6310AE5A1FBA9104004992A5 /* EXTensionParse.m in Sources */,
 				6003F59A195388D20070C39A /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

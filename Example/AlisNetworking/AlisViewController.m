@@ -22,13 +22,15 @@
 
 #import <AlisNetworking/AlisNetworking.h>
 
-
 #import "AlisViewController.h"
 
 static NSString *testServer = @"http://baobab.wdjcdn.com";
 static NSString *testApi = @"/1442142801331138639111.mp4";
 
 @interface AlisViewController ()//<AlisRequestProtocol,AlisJsonParserProtocol>
+
+@property(strong , nonatomic)UIImageView *image;
+
 @end
 
 @implementation AlisViewController
@@ -71,15 +73,14 @@ static NSString *testApi = @"/1442142801331138639111.mp4";
 }
 
 - (void)testImageView{
-  /*  AEDKWebImageLoader *loader = [[AEDKWebImageLoader alloc]init]; 
-    UIImageView *imageView = [[UIImageView alloc] init];
-    [loader setImageForImageView:imageView withURL:[NSURL URLWithString:@"http://img3.redocn.com/tupian/20150312/haixinghezhenzhubeikeshiliangbeijing_3937174.jpg"] placeholderImage:nil progress:^(int64_t totalAmount, int64_t currentAmount) {
-        
-    } completed:^(NSURL * _Nullable imageUrl, UIImage * _Nullable image, NSError * _Nullable error) {
-         NSLog(@"请求完全结束");
-        
-    }];
-*/
+//    AEDKWebImageLoader *loader = [[AEDKWebImageLoader alloc]init]; 
+//    UIImageView *imageView = [[UIImageView alloc] init];
+//    [loader setImageForImageView:imageView withURL:[NSURL URLWithString:@"http:img3.redocn.com/tupian/20150312/haixinghezhenzhubeikeshiliangbeijing_3937174.jpg"] placeholderImage:nil progress:^(int64_t totalAmount, int64_t currentAmount) {
+//        
+//    } completed:^(NSURL * _Nullable imageUrl, UIImage * _Nullable image, NSError * _Nullable error) {
+//         NSLog(@"请求完全结束");
+//        
+//    }];
 }
 
 - (void)normalRequest{
@@ -109,10 +110,10 @@ static NSString *testApi = @"/1442142801331138639111.mp4";
 }
 
 - (void)cancelNormalRequest{
-    [self testImageView];return;
-    suspendService(@"uploadData");
-    UIImageView *image = [[UIImageView alloc]init];
-    [image alis_setImageWithURL:@"https://oneimg.oss-cn-hangzhou.aliyuncs.com/xu01_test/20161207/1481090430466.jpg" whichPlugin:^NSString *(NSArray *plugins) {
+//    [self testImageView];return;
+//    suspendService(@"uploadData");
+    self.image = [[UIImageView alloc]init];
+    [_image alis_setImageWithURL:@"https://oneimg.oss-cn-hangzhou.aliyuncs.com/xu01_test/20161207/1481090430466.jpg" whichPlugin:^NSString *(NSArray *plugins) {
         return @"SDWebimage";
         
     } placeholderImage:nil options:0 progress:^(AlisRequest *request, long long receivedSize, long long expectedSize) {

@@ -9,7 +9,7 @@
 //#import "AlisServicesManager.h"
 #import "AlisAppDelegate.h"
 //#import "AlisHttpServiceItem.h"
-#import <MJExtension/MJExtension.h>
+//#import <MJExtension/MJExtension.h>
 //#import <AEDataKit/AEDataKit.h>
 
 @implementation AlisAppDelegate

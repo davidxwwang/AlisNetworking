@@ -7,7 +7,7 @@
 //
 
 #import "AlisRequestContext.h"
-#import "AFNetworkReachabilityManager.h"
+#import "Alis_AFNetworkReachabilityManager.h"
 
 @implementation AlisRequestContext
 
@@ -24,8 +24,8 @@
 
 - (instancetype)init{
     if (self = [super init]) {
-        [[AFNetworkReachabilityManager  manager] startMonitoring];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(networkingReachabilityDidChange:) name:AFNetworkingReachabilityDidChangeNotification object:nil];
+       [[Alis_AFNetworkReachabilityManager  manager] startMonitoring];
+       [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(networkingReachabilityDidChange:) name:Alis_AFNetworkingReachabilityDidChangeNotification object:nil];
         
     }
     return self;
@@ -37,10 +37,9 @@
 
 - (void)networkingReachabilityDidChange:(NSNotification *)notification{
     NSDictionary *userinfo = notification.userInfo;
-    if (!userinfo || !userinfo[AFNetworkingReachabilityNotificationStatusItem]) return;
+    if (!userinfo || !userinfo[Alis_AFNetworkingReachabilityNotificationStatusItem]) return;
     
-    NSNumber *status = userinfo[AFNetworkingReachabilityNotificationStatusItem];
-    
+    NSNumber *status = userinfo[Alis_AFNetworkingReachabilityNotificationStatusItem];
     self.networkReachabilityStatus = [status integerValue];
     
     
