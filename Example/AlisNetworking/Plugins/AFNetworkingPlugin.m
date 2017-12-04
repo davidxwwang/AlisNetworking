@@ -20,8 +20,14 @@
 
 @implementation AFNetworkingPlugin
 
+NETWORKINGPLUGIN_EXPORT_MODULE();
+
 - (NSArray *)supportSevervice{
     return @[@"HTTP",@"Image"];
+}
+
+- (AlisHttpRequestMimeType)supportHttpRequestMimeType{
+    return AlisHttpRequestMimeTypeText;
 }
 
 - (void)perseRequest:(AlisRequest *)request config:(AlisRequestConfig *)config{

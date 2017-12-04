@@ -84,29 +84,37 @@ static NSString *testApi = @"/1442142801331138639111.mp4";
 }
 
 - (void)normalRequest{
+    AlisRequest *request = [[AlisRequest alloc]init];
+    request.url = @"https://httpbin.org/get";
+    request.httpMethod = AlisHTTPMethodGET;
+    request.parameters = @{@"method": @"get"}; 
+    request.timeoutInterval = 10;
+    request.mimeType = AlisHttpRequestMimeTypeText;
+    [[AlisRequestManager sharedManager]startRequest:request];
+            //上一次的请求结果
    // [self testImageView];return;
    // resumeService(@"AskDemo");
 //    resumeService(@"AskCitieslist");
 //    resumeService(@"uploadData");
-    /*
-    AEDKProcess *process = [[AEDKServer server] requestServiceWithName:@"AskPostCodes"];
-    process.configuration.BeforeProcess = ^(AEDKProcess * _Nonnull process) {
-//        if ([process.configuration isKindOfClass:[AEDKHttpServiceConfiguration class]]) {
-//            AEDKHttpServiceConfiguration *config = (AEDKHttpServiceConfiguration *)(process.configuration);
-//            config.requestParameter = @{@"f":@"f"};
-//        }
-    };
-    process.configuration.Processing = ^(int64_t totalAmount, int64_t currentAmount, NSURLRequest * _Nonnull currentRequest) {
-    };
-    process.configuration.AfterProcess = ^id _Nonnull(id  _Nullable responseData) {
-        NSArray *modelArray = [PostCodeModel allPostcode:(NSDictionary *)responseData];
-        return modelArray;
-    };
-    process.configuration.ProcessCompleted = ^(AEDKProcess * _Nonnull currentProcess, NSError * _Nonnull error, id  _Nullable responseModel) {
-       // final result
-        NSLog(@"请求完全结束");
-    };
-    [process start];*/
+    
+//    AEDKProcess *process = [[AEDKServer server] requestServiceWithName:@"AskPostCodes"];
+//    process.configuration.BeforeProcess = ^(AEDKProcess * _Nonnull process) {
+////        if ([process.configuration isKindOfClass:[AEDKHttpServiceConfiguration class]]) {
+////            AEDKHttpServiceConfiguration *config = (AEDKHttpServiceConfiguration *)(process.configuration);
+////            config.requestParameter = @{@"f":@"f"};
+////        }
+//    };
+//    process.configuration.Processing = ^(int64_t totalAmount, int64_t currentAmount, NSURLRequest * _Nonnull currentRequest) {
+//    };
+//    process.configuration.AfterProcess = ^id _Nonnull(id  _Nullable responseData) {
+//        NSArray *modelArray = [PostCodeModel allPostcode:(NSDictionary *)responseData];
+//        return modelArray;
+//    };
+//    process.configuration.ProcessCompleted = ^(AEDKProcess * _Nonnull currentProcess, NSError * _Nonnull error, id  _Nullable responseModel) {
+//       // final result
+//        NSLog(@"请求完全结束");
+//    };
+//    [process start];
 }
 
 - (void)cancelNormalRequest{

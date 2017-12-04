@@ -13,8 +13,14 @@
 
 @implementation SDWebimagePlugin
 
+NETWORKINGPLUGIN_EXPORT_MODULE();
+
 - (NSArray *)supportSevervice{
     return @[@"Image"];
+}
+
+- (AlisHttpRequestMimeType)supportHttpRequestMimeType{
+    return AlisHttpRequestMimeTypeImage;
 }
 
 - (void)perseRequest:(AlisRequest *)request config:(AlisRequestConfig *)config{

@@ -8,7 +8,6 @@
 
 #import "AlisPluginManager.h"
 
-
 BOOL MSIsFileExistAtPath(NSString *filePath){
     NSFileManager *fileManager = [NSFileManager defaultManager];
     const bool isExist = [fileManager fileExistsAtPath:filePath];
@@ -37,6 +36,26 @@ NSArray* MSArrayFromMainBundle(NSString *filename){
         arrayForReturn = [NSArray arrayWithContentsOfFile:path];
     }
     return arrayForReturn;
+}
+
+//网络请求三方库plugin加载
+static NSMutableArray<Class> *NetworkingPluginClassArray;
+
+void NetworkingPluginRegisterModule(Class PluginClass){
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        NetworkingPluginClassArray = [NSMutableArray array];
+    });
+    
+    if (![PluginClass conformsToProtocol:@protocol(AlisPluginProtocol)]) {
+        NSLog(@"%@ is not conform to \"AlisPluginProtocol\" protocol",PluginClass);
+        return;
+    }
+    [NetworkingPluginClassArray addObject:PluginClass];
+}
+
+NSArray* GetNetworkingRegisteredPlugins(void){
+    return [NetworkingPluginClassArray copy];
 }
 
 @interface AlisPluginManager ()
@@ -101,27 +120,22 @@ NSArray* MSArrayFromMainBundle(NSString *filename){
 - (void)registerALLPlugins{
     self.pluginsServiceDictionary = [NSMutableDictionary dictionaryWithDictionary:@{@"AFNetwoking":@"AFNetworkingPlugin",@"SDWebimage":@"SDWebimagePlugin"}];
     return;
-//    NSArray *array = MSArrayFromMainBundle(@"plugins.plist");
-//
-//    NSString *plistPath =  @"/Users/david/Documents/AlisNetworking/AlisNetworking/Classes/plugins.plist";
-//    
-//    //NSString *plistPath =  @"../../AlisNetworking/Classes/plugins.plist";
-//    NSString *plistPath2 = [[NSBundle mainBundle] pathForResource:@"plugins" ofType:@"plist"];
-//    if (![[NSFileManager defaultManager] fileExistsAtPath:plistPath]) {
-//        return;
-//    }
-//    
-//    NSDictionary *pluginList = [[NSDictionary alloc] initWithContentsOfFile:plistPath];
-//    [self.pluginsServiceDictionary addEntriesFromDictionary:pluginList];
     
+//    self.pluginsServiceDictionary = [NSMutableDictionary dictionaryWithDictionary:@{@"AFNetwoking":@"AFNetworkingPlugin",@"SDWebimage":@"SDWebimagePlugin"}];
+//    for (Class className in GetNetworkingRegisteredPlugins()) {
+//        
+//    }
 }
 
 - (id<AlisPluginProtocol>)plugin:(NSString *)key{
     NSAssert(key, @"key should not nil");
     NSAssert(self.pluginsDictionary  || self.pluginsDictionary.count > 0, @"pluginsDictionary has problems");
     //这里应该判断是否有重复的key
-    NSArray *keys = self.pluginsDictionary.allKeys;
+    if (![key isKindOfClass:[NSString class]]) {
+        return nil;
+    }
     
+    NSArray *keys = self.pluginsDictionary.allKeys;
     if ([keys containsObject:key]) {
         if (self.pluginsDictionary[key]) {
             return self.pluginsDictionary[key];
@@ -134,13 +148,16 @@ NSArray* MSArrayFromMainBundle(NSString *filename){
         NSString *pluginString = self.pluginsServiceDictionary[key];
         Class class = NSClassFromString(pluginString);
         id _object = [[class alloc] init];
-        
-        NSAssert([_object conformsToProtocol:@protocol(AlisPluginProtocol)], @"the plugin do not conform 'AlisPluginProtocol'");
-        [self.pluginsDictionary setObject:_object forKey:key];
-
-        return _object;
+        if (![_object conformsToProtocol:@protocol(AlisPluginProtocol)]) {
+            NSLog(@"the plugin do not conform 'AlisPluginProtocol'");
+            return nil;
+        }
+       
+        if (_object && key) {
+             [self.pluginsDictionary setObject:_object forKey:key];
+            return _object;
+        }
     }
-   
     return nil;
 }
 
