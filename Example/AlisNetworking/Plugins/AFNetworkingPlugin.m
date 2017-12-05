@@ -30,7 +30,7 @@ NETWORKINGPLUGIN_EXPORT_MODULE();
     return AlisHttpRequestMimeTypeText;
 }
 
-- (void)perseRequest:(AlisRequest *)request config:(AlisRequestConfig *)config{
+- (void)parseRequest:(AlisRequest *)request config:(AlisRequestConfig *)config{
     [self startRequest:request config:config];
 }
 

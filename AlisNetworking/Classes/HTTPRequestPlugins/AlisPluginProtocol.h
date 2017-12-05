@@ -8,11 +8,11 @@
 #import "AlisRequest.h"
 #import <Foundation/Foundation.h>
 
-#if defined(__cplusplus)
-#define JS_EXTERN extern "C" __attribute__((visibility("default")))
-#else
-#define JS_EXTERN extern __attribute__((visibility("default")))
-#endif
+//#if defined(__cplusplus)
+//#define JS_EXTERN extern "C" __attribute__((visibility("default")))
+//#else
+//#define JS_EXTERN extern __attribute__((visibility("default")))
+//#endif
 
 //AlisRequest 自定义的request
 //AlisResponse 自定义的response
@@ -21,12 +21,12 @@
 @protocol AlisPluginProtocol <NSObject>
 
 #define NETWORKINGPLUGIN_EXPORT_MODULE(js_name) \
-JS_EXTERN void NetworkingPluginRegisterModule(Class); \
+extern __attribute__((visibility("default"))) void NetworkingPluginRegisterModule(Class); \
 + (NSString *)moduleName { return @#js_name; } \
 + (void)load { NetworkingPluginRegisterModule(self); }
 
 /**
- 支持的网络请求类型， todo 目前定为每个plugin仅限一种
+ 支持的网络请求类型， todo 目前定为每个plugin仅限一种,后期可以考虑通过优先级的方式支持多种的类型请求
  */
 - (AlisHttpRequestMimeType)supportHttpRequestMimeType;
 /**
@@ -36,7 +36,7 @@ JS_EXTERN void NetworkingPluginRegisterModule(Class); \
  *  @param config  公共配置项,配置公共的请求config，eg：server等。
  *
  */
-- (void)perseRequest:(AlisRequest *)request config:(AlisRequestConfig *)config;
+- (void)parseRequest:(AlisRequest *)request config:(AlisRequestConfig *)config;
 
 /**
  *  解析接口返回的remoteResponse，得到我们想要的数据。

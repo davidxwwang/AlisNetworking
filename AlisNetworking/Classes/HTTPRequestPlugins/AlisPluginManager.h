@@ -16,10 +16,6 @@
 
 - (void)registerPlugins:(NSDictionary *)pluginsDic;
 
-
-//在plist文件中
-- (void)registerPlugin:(NSString *)key;
-
 - (void)removePlugin:(NSString *)key;
 
 - (void)registerALLPlugins;
@@ -28,5 +24,11 @@
 
 //获取key对应的插件
 - (id<AlisPluginProtocol>)plugin:(NSString *)key;
+
+/**
+ 根据请求的资源类型，返回合适的plugin
+ @param mimeType 资源类型，包括图片，字符等类型
+ */
+- (id<AlisPluginProtocol>)pluginWithMimeType:(AlisHttpRequestMimeType)mimeType;
 
 @end

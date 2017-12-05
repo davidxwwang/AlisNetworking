@@ -133,13 +133,14 @@ typedef NSDictionary *(^ PreRequestBlcok) (void);
 - (void)startRequest:(AlisRequest *)request{
         
     id<AlisPluginProtocol> plugin = nil;
-    if (request.mimeType == AlisHttpRequestMimeTypeText) {
-        plugin = [self.pluginManager plugin:@"AFNetwoking"];
-    }
-    else if (request.mimeType == AlisHttpRequestMimeTypeImage) {
-        plugin = [self.pluginManager plugin:@"SDWebimage"];
-    }
+//    if (request.mimeType == AlisHttpRequestMimeTypeText) {
+//        plugin = [self.pluginManager plugin:@"AFNetwoking"];
+//    }
+//    else if (request.mimeType == AlisHttpRequestMimeTypeImage) {
+//        plugin = [self.pluginManager plugin:@"SDWebimage"];
+//    }
     
+    plugin = [self.pluginManager pluginWithMimeType:request.mimeType];
     if (plugin == nil) {
         NSLog(@"对应的插件不存在！"); return;
     }
@@ -155,7 +156,7 @@ typedef NSDictionary *(^ PreRequestBlcok) (void);
     }
     
     //plugin发出请求，在这里解析两部分，一部分是公共的--AlisRequestConfig，一部分是自己的,
-    [plugin perseRequest:request config:_config];
+    [plugin parseRequest:request config:_config];
 }
 
 - (void)cancelRequest:(AlisRequest *)request{
@@ -305,7 +306,7 @@ typedef NSDictionary *(^ PreRequestBlcok) (void);
  */
 - (void)sendChainRequest:(AlisChainRequest *)chainRequest{
     if (chainRequest.runningRequest) {
-        id<AlisPluginProtocol> plugin = [self.pluginManager plugin:@"AFNetwoking"];
+        id<AlisPluginProtocol> plugin = [self.pluginManager pluginWithMimeType:chainRequest.runningRequest.mimeType];
         //在这里解析两部分，一部分是公共的--AlisRequestConfig，一部分是自己的,
         __weak AlisRequestManager *weakSelf = self;
         [self prepareRequest:chainRequest.runningRequest onProgress:^(AlisRequest *request, long long receivedSize, long long expectedSize) {
@@ -317,7 +318,7 @@ typedef NSDictionary *(^ PreRequestBlcok) (void);
         }];
         
         //在这里解析两部分，一部分是公共的--AlisRequestConfig，一部分是自己的,
-        [plugin perseRequest:chainRequest.runningRequest config:_config];
+        [plugin parseRequest:chainRequest.runningRequest config:_config];
         //设置请求的MD5值。注：可以有其他方式
         chainRequest.runningRequest.identifier = [chainRequest.runningRequest.url md5WithString];
 //        NSString *requestIdentifer = chainRequest.runningRequest.context.serviceName;
@@ -383,7 +384,7 @@ typedef NSDictionary *(^ PreRequestBlcok) (void);
         for (AlisRequest *request in batchRequest.requestArray) {
             [batchRequest.responseArray addObject:[NSNull null]];
             __weak __typeof(self)weakSelf = self;
-            id<AlisPluginProtocol> plugin = [self.pluginManager plugin:@"AFNetwoking"];
+            id<AlisPluginProtocol> plugin = [self.pluginManager pluginWithMimeType:request.mimeType];
                     //在这里解析两部分，一部分是公共的--AlisRequestConfig，一部分是自己的,
             [self prepareRequest:request onProgress:^(AlisRequest *request, long long receivedSize, long long expectedSize) {
             } onSuccess:^(AlisRequest *request, AlisResponse *response, AlisError *error) {
@@ -395,7 +396,7 @@ typedef NSDictionary *(^ PreRequestBlcok) (void);
                 [weakSelf handerBatchResponse:batchRequest request:request response:response error:error];
             }];
                     
-            [plugin perseRequest:request config:_config];
+            [plugin parseRequest:request config:_config];
         }
         
 //        NSString *identifier = [self xm_identifierForBatchAndChainRequest];
