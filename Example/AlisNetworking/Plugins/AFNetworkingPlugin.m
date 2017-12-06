@@ -30,7 +30,7 @@ NETWORKINGPLUGIN_EXPORT_MODULE();
     return AlisHttpRequestMimeTypeText;
 }
 
-- (void)perseRequest:(AlisRequest *)request config:(AlisRequestConfig *)config{
+- (void)parseRequest:(AlisRequest *)request config:(AlisRequestConfig *)config{
     [self startRequest:request config:config];
 }
 
@@ -61,8 +61,8 @@ NETWORKINGPLUGIN_EXPORT_MODULE();
     } completionHandler:^(NSURLResponse * _Nonnull response, id  _Nullable responseObject, NSError * _Nullable error) {
         NSLog(@"finished"  );
         if (request.finishBlock) {
-            AlisResponse *response = [self perseResponse:responseObject request:request];
-            AlisError *_error = [self perseError:error];
+            AlisResponse *response = [self parseResponse:responseObject request:request];
+            AlisError *_error = [self parseError:error];
             request.finishBlock(request,response,_error);
     }}];
 
@@ -96,8 +96,8 @@ NETWORKINGPLUGIN_EXPORT_MODULE();
         
     } completionHandler:^(NSURLResponse * _Nonnull response, NSURL * _Nullable filePath, NSError * _Nullable error) {
         if (request.finishBlock) {
-            AlisResponse *response = [self perseResponse:filePath request:request];
-            AlisError *_error = [self perseError:error];
+            AlisResponse *response = [self parseResponse:filePath request:request];
+            AlisError *_error = [self parseError:error];
             request.finishBlock(request,nil,_error);
         }
     }];
@@ -117,7 +117,7 @@ NETWORKINGPLUGIN_EXPORT_MODULE();
     __request.allHTTPHeaderFields = request.header;
       
     if (error && request.finishBlock) {
-        AlisError *_error = [self perseError:error];
+        AlisError *_error = [self parseError:error];
         request.finishBlock(request,nil,_error);
     }
     
@@ -130,14 +130,14 @@ NETWORKINGPLUGIN_EXPORT_MODULE();
     } completionHandler:^(NSURLResponse * _Nonnull response, id  _Nullable responseObject, NSError * _Nullable error) {
         NSLog(@"finished"  );
         if (request.finishBlock) {
-            AlisResponse *response = [self perseResponse:responseObject request:request];
+            AlisResponse *response = [self parseResponse:responseObject request:request];
             AlisError *_error = [self parseError:error response:response];
             request.finishBlock(request,response,_error);
         }
     }];
     
     request.bindRequest = task;
-    [task resume];
+    [task resume]; 
 
 }
 
@@ -178,7 +178,7 @@ NETWORKINGPLUGIN_EXPORT_MODULE();
     }
 }
 
-- (AlisResponse *)perseResponse:(id)rawResponse request:(AlisRequest *)request
+- (AlisResponse *)parseResponse:(id)rawResponse request:(AlisRequest *)request
 {
     if (!rawResponse ) {
         return nil;
@@ -269,7 +269,7 @@ NETWORKINGPLUGIN_EXPORT_MODULE();
     return _securitySessionManager;
 }
 
-- (AlisError *)perseError:(id)rawError{
+- (AlisError *)parseError:(id)rawError{
     if (!rawError || ![rawError isKindOfClass:[NSError class]]) {
         return nil;
     }

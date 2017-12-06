@@ -59,10 +59,10 @@ NSArray* GetNetworkingRegisteredPlugins(void){
 }
 
 @interface AlisPluginManager ()
-//提供服务的plugin  <value = NSString>
-@property(strong,nonatomic)NSMutableDictionary *pluginsServiceDictionary;
 //real plugin <value = class>
 @property(strong,nonatomic)NSMutableDictionary *pluginsDictionary;
+
+@property(strong,nonatomic)NSMutableDictionary *pluginsServiceDictionary;
 
 @end
 
@@ -105,25 +105,22 @@ NSArray* GetNetworkingRegisteredPlugins(void){
     [self.pluginsServiceDictionary addEntriesFromDictionary:pluginsDic];
 }
 
-- (void)registerPlugin:(NSString *)key{
-}
-
 - (void)removePlugin:(NSString *)key{
     NSParameterAssert(key);
-    //[self.pluginsDictionary removeObjectForKey:pluginList];
+    [self.pluginsDictionary removeObjectForKey:key];
 }
 
 - (NSArray *)allPlugins{
-    return [self.pluginsServiceDictionary copy];
+    return [self.pluginsDictionary copy];
 }
 
 - (void)registerALLPlugins{
     self.pluginsServiceDictionary = [NSMutableDictionary dictionaryWithDictionary:@{@"AFNetwoking":@"AFNetworkingPlugin",@"SDWebimage":@"SDWebimagePlugin"}];
     return;
-    
-//    self.pluginsServiceDictionary = [NSMutableDictionary dictionaryWithDictionary:@{@"AFNetwoking":@"AFNetworkingPlugin",@"SDWebimage":@"SDWebimagePlugin"}];
+ //   [self.pluginsServiceDictionary removeAllObjects];
 //    for (Class className in GetNetworkingRegisteredPlugins()) {
-//        
+//        NSString *classString = NSStringFromClass(className);
+//        [self.pluginsServiceDictionary addEntriesFromDictionary:@{classString:classString}];
 //    }
 }
 
@@ -159,6 +156,32 @@ NSArray* GetNetworkingRegisteredPlugins(void){
     }
 }
 
+- (id<AlisPluginProtocol>)pluginWithMimeType:(AlisHttpRequestMimeType)mimeType{
+    NSAssert(self.pluginsDictionary  || self.pluginsDictionary.count > 0, @"pluginsDictionary has problems");
+    
+    for (id<AlisPluginProtocol> plugin in self.pluginsDictionary.allValues) {
+        if ([plugin respondsToSelector:@selector(supportHttpRequestMimeType)]) {
+            return plugin;
+        }
+    }
+    
+    for (Class className in GetNetworkingRegisteredPlugins()) {
+        id _object = [[className alloc] init];
+        if (![_object conformsToProtocol:@protocol(AlisPluginProtocol)]) {
+            NSLog(@"the plugin do not conform 'AlisPluginProtocol'");
+            return nil;
+        }
+        
+        if ([_object respondsToSelector:@selector(supportHttpRequestMimeType)]) {
+            AlisHttpRequestMimeType requestType = [(id<AlisPluginProtocol>)_object supportHttpRequestMimeType];
+            if (requestType == mimeType && _object) {
+                [self.pluginsDictionary setObject:_object forKey:NSStringFromClass(className)];
+                return _object;
+            }
+        }
+    }
+    return nil;
+}
 @end
 
 

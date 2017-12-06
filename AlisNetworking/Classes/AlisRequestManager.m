@@ -155,7 +155,7 @@ typedef NSDictionary *(^ PreRequestBlcok) (void);
     }
     
     //plugin发出请求，在这里解析两部分，一部分是公共的--AlisRequestConfig，一部分是自己的,
-    [plugin perseRequest:request config:_config];
+    [plugin parseRequest:request config:_config];
 }
 
 - (void)cancelRequest:(AlisRequest *)request{
@@ -317,7 +317,7 @@ typedef NSDictionary *(^ PreRequestBlcok) (void);
         }];
         
         //在这里解析两部分，一部分是公共的--AlisRequestConfig，一部分是自己的,
-        [plugin perseRequest:chainRequest.runningRequest config:_config];
+        [plugin parseRequest:chainRequest.runningRequest config:_config];
         //设置请求的MD5值。注：可以有其他方式
         chainRequest.runningRequest.identifier = [chainRequest.runningRequest.url md5WithString];
 //        NSString *requestIdentifer = chainRequest.runningRequest.context.serviceName;
@@ -395,7 +395,7 @@ typedef NSDictionary *(^ PreRequestBlcok) (void);
                 [weakSelf handerBatchResponse:batchRequest request:request response:response error:error];
             }];
                     
-            [plugin perseRequest:request config:_config];
+            [plugin parseRequest:request config:_config];
         }
         
 //        NSString *identifier = [self xm_identifierForBatchAndChainRequest];

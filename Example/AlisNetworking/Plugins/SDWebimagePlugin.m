@@ -23,7 +23,7 @@ NETWORKINGPLUGIN_EXPORT_MODULE();
     return AlisHttpRequestMimeTypeImage;
 }
 
-- (void)perseRequest:(AlisRequest *)request config:(AlisRequestConfig *)config{
+- (void)parseRequest:(AlisRequest *)request config:(AlisRequestConfig *)config{
     [self startRequest:request config:config];
 }
 
@@ -38,14 +38,14 @@ NETWORKINGPLUGIN_EXPORT_MODULE();
         
     } completed:^(UIImage * _Nullable image, NSData * _Nullable data, NSError * _Nullable error, SDImageCacheType cacheType, BOOL finished, NSURL * _Nullable imageURL) {
             if (request.finishBlock) {
-                AlisResponse *response = [self perseResponse:image request:request];
-                AlisError *_error = [self perseError:error];
+                AlisResponse *response = [self parseResponse:image request:request];
+                AlisError *_error = [self parseError:error];
                 request.finishBlock(request ,response ,_error);
             }
     }];    
 }
 
-- (AlisResponse *)perseResponse:(id)rawResponse request:(AlisRequest *)request{
+- (AlisResponse *)parseResponse:(id)rawResponse request:(AlisRequest *)request{
     if ( !rawResponse || ![rawResponse isKindOfClass:[UIImage class]]) {
         return nil;
     }
@@ -56,7 +56,7 @@ NETWORKINGPLUGIN_EXPORT_MODULE();
     return response;
 }
 
-- (AlisError *)perseError:(NSError *)rawError{
+- (AlisError *)parseError:(NSError *)rawError{
     if (!rawError || ![rawError isKindOfClass:[NSError class]]) {
         return nil;
     }

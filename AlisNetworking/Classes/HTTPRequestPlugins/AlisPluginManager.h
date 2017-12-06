@@ -16,10 +16,6 @@
 
 - (void)registerPlugins:(NSDictionary *)pluginsDic;
 
-
-//在plist文件中
-- (void)registerPlugin:(NSString *)key;
-
 - (void)removePlugin:(NSString *)key;
 
 - (void)registerALLPlugins;

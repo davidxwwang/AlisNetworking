@@ -36,7 +36,7 @@ JS_EXTERN void NetworkingPluginRegisterModule(Class); \
  *  @param config  公共配置项,配置公共的请求config，eg：server等。
  *
  */
-- (void)perseRequest:(AlisRequest *)request config:(AlisRequestConfig *)config;
+- (void)parseRequest:(AlisRequest *)request config:(AlisRequestConfig *)config;
 
 /**
  *  解析接口返回的remoteResponse，得到我们想要的数据。
@@ -46,7 +46,7 @@ JS_EXTERN void NetworkingPluginRegisterModule(Class); \
  *
  *  @return 响应 AlisResponse。
  */
-- (AlisResponse *)perseResponse:(id)remoteResponse request:(AlisRequest *)request;
+- (AlisResponse *)parseResponse:(id)remoteResponse request:(AlisRequest *)request;
 
 /**
  *  解析接口返回的错误信息。
@@ -56,7 +56,7 @@ JS_EXTERN void NetworkingPluginRegisterModule(Class); \
  *  @return 响应 AlisResponse。
  */
 
-- (AlisError *)perseError:(NSError *)remoteError;
+- (AlisError *)parseError:(NSError *)remoteError;
 
 @required
 /**
