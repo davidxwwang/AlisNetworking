@@ -59,10 +59,8 @@ NSArray* GetNetworkingRegisteredPlugins(void){
 }
 
 @interface AlisPluginManager ()
-
 //提供服务的plugin  <value = NSString>
 @property(strong,nonatomic)NSMutableDictionary *pluginsServiceDictionary;
-
 //real plugin <value = class>
 @property(strong,nonatomic)NSMutableDictionary *pluginsDictionary;
 
@@ -82,9 +80,11 @@ NSArray* GetNetworkingRegisteredPlugins(void){
 
 - (instancetype)init{
     if (self = [super init]) {
-        self.pluginsServiceDictionary = [NSMutableDictionary dictionary];
-        self.pluginsDictionary = [NSMutableDictionary dictionary];
-        [self registerALLPlugins];
+        @synchronized(self){
+             self.pluginsServiceDictionary = [NSMutableDictionary dictionary];
+             self.pluginsDictionary = [NSMutableDictionary dictionary];
+             [self registerALLPlugins];
+        }
     }
     return self;
 }
@@ -129,36 +129,34 @@ NSArray* GetNetworkingRegisteredPlugins(void){
 
 - (id<AlisPluginProtocol>)plugin:(NSString *)key{
     NSAssert(key, @"key should not nil");
-    NSAssert(self.pluginsDictionary  || self.pluginsDictionary.count > 0, @"pluginsDictionary has problems");
     //这里应该判断是否有重复的key
     if (![key isKindOfClass:[NSString class]]) {
         return nil;
     }
-    
-    NSArray *keys = self.pluginsDictionary.allKeys;
-    if ([keys containsObject:key]) {
-        if (self.pluginsDictionary[key]) {
-            return self.pluginsDictionary[key];
-        }
-    }
-    else{
-        NSArray *keys = self.pluginsServiceDictionary.allKeys;
-        if (![keys containsObject:key]) return nil;
+    @synchronized(self){
+         NSArray *keys = self.pluginsDictionary.allKeys;
+         if ([keys containsObject:key] && self.pluginsDictionary[key]) {
+             return self.pluginsDictionary[key];
+         }
+         else{
+             NSArray *keys = self.pluginsServiceDictionary.allKeys;
+             if (![keys containsObject:key]) return nil;
         
-        NSString *pluginString = self.pluginsServiceDictionary[key];
-        Class class = NSClassFromString(pluginString);
-        id _object = [[class alloc] init];
-        if (![_object conformsToProtocol:@protocol(AlisPluginProtocol)]) {
-            NSLog(@"the plugin do not conform 'AlisPluginProtocol'");
-            return nil;
-        }
+             NSString *pluginString = self.pluginsServiceDictionary[key];
+             id _object = [[NSClassFromString(pluginString) alloc] init];
+             NSLog(@"生成的对象 %@ ",_object);
+             if (![_object conformsToProtocol:@protocol(AlisPluginProtocol)]) {
+                 NSLog(@"the plugin do not conform 'AlisPluginProtocol'");
+                 return nil;
+             }
        
-        if (_object && key) {
-             [self.pluginsDictionary setObject:_object forKey:key];
-            return _object;
-        }
+             if (_object && key) {
+                 [self.pluginsDictionary setObject:_object forKey:key];
+                 return _object;
+             }
+         }
+         return nil;
     }
-    return nil;
 }
 
 @end
