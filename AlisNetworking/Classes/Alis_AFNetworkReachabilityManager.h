@@ -200,7 +200,7 @@ FOUNDATION_EXPORT NSString * const Alis_AFNetworkingReachabilityNotificationStat
 /**
  Returns a localized string representation of an `AFNetworkReachabilityStatus` value.
  */
-FOUNDATION_EXPORT NSString * AFStringFromNetworkReachabilityStatus(Alis_AFNetworkReachabilityStatus status);
+FOUNDATION_EXPORT NSString * Alis_AFStringFromNetworkReachabilityStatus(Alis_AFNetworkReachabilityStatus status);
 
 NS_ASSUME_NONNULL_END
 #endif
