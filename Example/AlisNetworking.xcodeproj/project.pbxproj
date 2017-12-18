@@ -20,9 +20,7 @@
 		6003F5B2195388D20070C39A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F591195388D20070C39A /* UIKit.framework */; };
 		6003F5BA195388D20070C39A /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6003F5B8195388D20070C39A /* InfoPlist.strings */; };
 		6003F5BC195388D20070C39A /* Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 6003F5BB195388D20070C39A /* Tests.m */; };
-		6310AE591FBA9104004992A5 /* AFNetworkingPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = 6310AE541FBA9104004992A5 /* AFNetworkingPlugin.m */; };
 		6310AE5A1FBA9104004992A5 /* EXTensionParse.m in Sources */ = {isa = PBXBuildFile; fileRef = 6310AE561FBA9104004992A5 /* EXTensionParse.m */; };
-		6310AE5B1FBA9104004992A5 /* SDWebimagePlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = 6310AE581FBA9104004992A5 /* SDWebimagePlugin.m */; };
 		6346BF481E97400700CDB2FE /* CityInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 6346BF471E97400700CDB2FE /* CityInfo.m */; };
 		638D877B1F4D2224001D79A1 /* PostCodeModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 638D877A1F4D2224001D79A1 /* PostCodeModel.m */; };
 		638D87811F4D2E01001D79A1 /* AlisNetworking.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 638D87801F4D2E01001D79A1 /* AlisNetworking.framework */; };
@@ -62,12 +60,8 @@
 		6003F5BB195388D20070C39A /* Tests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Tests.m; sourceTree = "<group>"; };
 		606FC2411953D9B200FFA9A0 /* Tests-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Tests-Prefix.pch"; sourceTree = "<group>"; };
 		6310AE511FBA8CE4004992A5 /* SDWebImage.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SDWebImage.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		6310AE531FBA9104004992A5 /* AFNetworkingPlugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFNetworkingPlugin.h; sourceTree = "<group>"; };
-		6310AE541FBA9104004992A5 /* AFNetworkingPlugin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFNetworkingPlugin.m; sourceTree = "<group>"; };
 		6310AE551FBA9104004992A5 /* EXTensionParse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EXTensionParse.h; sourceTree = "<group>"; };
 		6310AE561FBA9104004992A5 /* EXTensionParse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EXTensionParse.m; sourceTree = "<group>"; };
-		6310AE571FBA9104004992A5 /* SDWebimagePlugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDWebimagePlugin.h; sourceTree = "<group>"; };
-		6310AE581FBA9104004992A5 /* SDWebimagePlugin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDWebimagePlugin.m; sourceTree = "<group>"; };
 		6346BF461E97400700CDB2FE /* CityInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CityInfo.h; sourceTree = "<group>"; };
 		6346BF471E97400700CDB2FE /* CityInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CityInfo.m; sourceTree = "<group>"; };
 		636F1BB01F739953009CA4AD /* AEDataKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AEDataKit.framework; path = "Pods/../build/Debug-iphoneos/AEDataKit/AEDataKit.framework"; sourceTree = "<group>"; };
@@ -214,12 +208,8 @@
 		6310AE521FBA9104004992A5 /* Plugins */ = {
 			isa = PBXGroup;
 			children = (
-				6310AE531FBA9104004992A5 /* AFNetworkingPlugin.h */,
-				6310AE541FBA9104004992A5 /* AFNetworkingPlugin.m */,
 				6310AE551FBA9104004992A5 /* EXTensionParse.h */,
 				6310AE561FBA9104004992A5 /* EXTensionParse.m */,
-				6310AE571FBA9104004992A5 /* SDWebimagePlugin.h */,
-				6310AE581FBA9104004992A5 /* SDWebimagePlugin.m */,
 			);
 			path = Plugins;
 			sourceTree = "<group>";
@@ -461,10 +451,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				638D877B1F4D2224001D79A1 /* PostCodeModel.m in Sources */,
-				6310AE591FBA9104004992A5 /* AFNetworkingPlugin.m in Sources */,
 				6003F59E195388D20070C39A /* AlisAppDelegate.m in Sources */,
 				6003F5A7195388D20070C39A /* AlisViewController.m in Sources */,
-				6310AE5B1FBA9104004992A5 /* SDWebimagePlugin.m in Sources */,
 				6346BF481E97400700CDB2FE /* CityInfo.m in Sources */,
 				6310AE5A1FBA9104004992A5 /* EXTensionParse.m in Sources */,
 				6003F59A195388D20070C39A /* main.m in Sources */,
@@ -601,6 +589,7 @@
 				GCC_PREFIX_HEADER = "AlisNetworking/AlisNetworking-Prefix.pch";
 				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = "AlisNetworking/AlisNetworking-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MODULE_NAME = ExampleApp;
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.demo.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -620,6 +609,7 @@
 				GCC_PREFIX_HEADER = "AlisNetworking/AlisNetworking-Prefix.pch";
 				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = "AlisNetworking/AlisNetworking-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MODULE_NAME = ExampleApp;
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.demo.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";

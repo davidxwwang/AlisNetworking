@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'AlisNetworking'
-  s.version          = '0.2.3'
+  s.version          = '0.3.0'
   s.summary          = '阿里体育网络请求库'
 
 # This description is used to generate tags and improve search results.
@@ -28,16 +28,24 @@ TODO: Add long description of the pod here.
   s.source           = { :git => 'https://github.com/davidxwwang/AlisNetworking.git', :tag => s.version.to_s }
   # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
 
-  s.ios.deployment_target = '8.0'
-#s.public_header_files = 'AlisNetworking/Classes/PublicHeader/AlisNetworking.h'
-  s.source_files = 'AlisNetworking/Classes/**/*'
+    s.ios.deployment_target = '8.0'
 
-  # s.resource_bundles = {
-  #   'AlisNetworking' => ['AlisNetworking/Assets/*.png']
-  # }
+    s.subspec 'AlisNetworkingBase' do |cs|
+        cs.source_files = 'AlisNetworking/Classes/AlisNetworkingBase/**/*'
+    end
 
-  # s.frameworks = 'UIKit', 'MapKit'
-#s.dependency 'AFNetworking'
-#s.dependency 'SDWebImage'
-#  s.dependency 'MJExtension'
+    s.subspec 'AlisNetWorkingPlugins' do |cs|
+        cs.source_files  = 'AlisNetworking/Classes/AlisNetWorkingPlugins/**/*'
+        cs.dependency 'AlisNetworking/AlisNetworkingBase'
+        cs.dependency 'AFNetworking'
+        cs.dependency 'SDWebImage'
+        #cs.dependency 'ALSCommonKit/EXtensions'
+        #cs.ios.framework  = 'libz.1.1.3.tbd'
+    end
+
+    s.subspec 'AlisNetwork' do |cs|
+        cs.source_files  = 'AlisNetworking/Classes/AlisNetwork/**/*'
+        cs.dependency 'AlisNetworking/AlisNetworkingBase'
+    end
+
 end

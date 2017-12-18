@@ -148,7 +148,7 @@ static NSString *testApi = @"/1442142801331138639111.mp4";
             request.mimeType = AlisHttpRequestMimeTypeText;
         }]onNext:^(AlisRequest *request, id  _Nullable responseObject, AlisError *error) {
             //上一次的请求结果，在responseObject中
-            NSLog(@"此时第一个请求返回结果了，可以依据它，设置第二个请求");
+            NSLog(@"此时第二个请求返回结果了，可以依据它，设置第三个请求");
             request.url = @"https://httpbin.org/put";
             request.httpMethod = AlisHTTPMethodPUT;
             request.parameters = @{@"method": @"put"};

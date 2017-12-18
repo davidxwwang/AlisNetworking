@@ -1,6 +1,12 @@
 use_frameworks!
 
 target 'AlisNetworking_Example' do
+  pre_install do |installer|
+    # workaround for https://github.com/CocoaPods/CocoaPods/issues/3289
+    def installer.verify_no_static_framework_transitive_dependencies; end 
+  end
+
+
   pod 'AlisNetworking', :path => '../'
   #pod 'AEDataKit'
   pod 'AFNetworking'
@@ -10,10 +16,10 @@ target 'AlisNetworking_Example' do
   target 'AlisNetworking_Tests' do
     inherit! :search_paths
 
-    pod 'Specta'
-  pod 'Expecta'
-  pod 'FBSnapshotTestCase'
-  pod 'Expecta+Snapshots'
+#    pod 'Specta'
+#  pod 'Expecta'
+#  pod 'FBSnapshotTestCase'
+#  pod 'Expecta+Snapshots'
   
  
   end
